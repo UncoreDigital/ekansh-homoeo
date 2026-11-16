@@ -1,13 +1,14 @@
 /* ==========================================================================
    EKANSH HOMOEOPATHIC CLINIC – DESIGN SYSTEM & GLOBAL TOKENS
    Palette:
-     - Forest Green: #355D48
-     - Sage Green:   #A3B18A
-     - Warm Ivory:   #F6F5EF
-     - Soft Beige:   #E9E4D7
-     - Muted Gold:   #B9A77D
-     - Charcoal:     #303832
-     - White:        #FFFFFF
+     - Forest Green: #355D48 (Primary Authority)
+     - Sage Green:   #A3B18A (Natural Balance)
+     - Warm Ivory:   #F6F5EF (Canvas Baseline)
+     - Soft Beige:   #E9E4D7 (Surface Dividers)
+     - Muted Gold:   #B9A77D (Editorial Polish)
+     - Accent Red:   #A95845 (Rust/Coral Red from 'Ekansh' Logo Mark)
+     - Charcoal:     #303832 (Typography)
+     - White:        #FFFFFF (Base Light)
    Typography:
      - Headings: Playfair Display (Serif)
      - Body:     DM Sans (Sans-Serif)
@@ -30,6 +31,13 @@
   --color-charcoal-muted: #57635A;
   --color-charcoal-light: #7E8D82;
   --color-white: #FFFFFF;
+  
+  /* Logo Accent Red Tokens (Extracted directly from 'Ekansh' logo mark: #A95845) */
+  --color-accent-red: #A95845;
+  --color-accent-red-hover: #934937;
+  --color-accent-red-light: #F7ECE9;
+  --color-accent-red-subtle: rgba(169, 88, 69, 0.12);
+  --color-accent-red-tint: #E89B8C;
   
   /* Status & Notification Tokens */
   --color-amber-bg: #FCF8E3;
@@ -121,6 +129,10 @@ a {
   transition: color var(--transition-fast);
 }
 
+a:hover {
+  color: var(--color-accent-red);
+}
+
 button, input, select, textarea {
   font-family: inherit;
   font-size: inherit;
@@ -202,7 +214,7 @@ p:last-child {
   display: inline-block;
   width: 1.5rem;
   height: 1.5px;
-  background-color: var(--color-gold);
+  background-color: var(--color-accent-red);
 }
 
 .text-muted {
@@ -255,7 +267,7 @@ p:last-child {
   display: inline-block;
   width: 1.5rem;
   height: 1.5px;
-  background-color: var(--color-gold);
+  background-color: var(--color-accent-red);
 }
 
 .section-header h2 {
@@ -336,6 +348,30 @@ p:last-child {
   color: var(--color-forest);
   border-color: var(--color-white);
   transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background-color: var(--color-white);
+  color: var(--color-charcoal);
+  border: 1.5px solid var(--color-accent-red);
+  box-shadow: 0 4px 14px rgba(169, 88, 69, 0.12);
+}
+
+.btn-whatsapp svg {
+  color: var(--color-accent-red);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-whatsapp:hover {
+  background-color: var(--color-accent-red);
+  color: var(--color-white);
+  border-color: var(--color-accent-red);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(169, 88, 69, 0.28);
+}
+
+.btn-whatsapp:hover svg {
+  color: var(--color-white);
 }
 
 .btn-sm {

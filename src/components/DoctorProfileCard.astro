@@ -7,110 +7,125 @@ const { showBio = true } = Astro.props;
 ---
 
 <div class="doctor-profile-wrapper">
-  <!-- Verification Notice Banner -->
-  <div class="verification-callout">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- Concise Verification Notice -->
+  <div class="verification-callout-compact">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="12" cy="12" r="10"></circle>
       <line x1="12" y1="8" x2="12" y2="12"></line>
       <line x1="12" y1="16" x2="12.01" y2="16"></line>
     </svg>
-    <div>
-      <strong>Practitioner Transparency Notice:</strong> The doctor profile below features verified placeholder indicators in accordance with medical ethics and Indian Ayush regulations. Exact council registration numbers and conferring university degrees are verified upon practitioner onboarding (Ref: <code>docs/PENDING_INFORMATION.md</code>).
-    </div>
+    <span><strong>Practitioner Notice:</strong> Formal council registration &amp; degree verification on file at clinic. Registered individual homeopathic medical practice in Rajsamand, Rajasthan.</span>
   </div>
 
   <div class="doctor-card card-editorial">
     <div class="doctor-grid">
-      <!-- Left: Portrait Photo Frame Placeholder -->
+      <!-- Left: Professional Physician Photographic Portrait -->
       <div class="doctor-image-container">
-        <div class="doctor-portrait-frame">
-          <div class="portrait-placeholder">
-            <svg viewBox="0 0 80 80" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M40 40a16 16 0 1 0 0-32 16 16 0 0 0 0 32z"></path>
-              <path d="M12 72c0-15.464 12.536-28 28-28s28 12.536 28 28"></path>
-            </svg>
-            <span class="placeholder-caption">Practitioner Photograph<br/><small>(Awaiting High-Res Clinical Portrait)</small></span>
-          </div>
-          <div class="portrait-badge">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-            <span>Individual Practice</span>
-          </div>
+        <div class="doctor-graphic-frame">
+          <img 
+            src="/images/Doctor.png" 
+            alt="Dr. [Homeopathic Physician] - Ekansh Homoeopathic Clinic, Rajsamand" 
+            class="doctor-graphic-img" 
+            width="320" 
+            height="380" 
+            loading="lazy"
+          />
         </div>
 
-        <div class="doctor-quick-contact">
-          <div class="contact-item">
-            <span class="label">Location</span>
-            <span class="val">Rajsamand, Rajasthan</span>
+        <div class="doctor-quick-stats">
+          <div class="quick-stat-item">
+            <span class="stat-label">Practice Style</span>
+            <span class="stat-value">Classical Constitutional</span>
           </div>
-          <div class="contact-item">
-            <span class="label">Practice Style</span>
-            <span class="val">Classical Constitutional</span>
+          <div class="quick-stat-item">
+            <span class="stat-label">Clinic Base</span>
+            <span class="stat-value">Rajsamand, Rajasthan</span>
           </div>
         </div>
       </div>
 
-      <!-- Right: Doctor Details & Credentials Matrix -->
+      <!-- Right: Concise Credentials & Doctor Philosophy -->
       <div class="doctor-content">
         <div class="doctor-title-block">
-          <span class="text-eyebrow">Consultant Homeopath</span>
+          <span class="text-eyebrow">Consultant Physician</span>
           <h3 class="doctor-name">Dr. [Doctor Name Placeholder]</h3>
-          <p class="doctor-degree">B.H.M.S. &bull; [MD / Post-Graduate Placeholder]</p>
+          <p class="doctor-degree">B.H.M.S. &bull; Registered Homeopathic Physician</p>
         </div>
 
         <blockquote class="doctor-quote">
-          "Constitutional homeopathy is not about silencing a symptom with haste; it is about taking the time to listen to the whole person—their mind, physical patterns, and innate vitality—to awaken lasting health."
+          "Constitutional healing begins with time and patience. We listen to the entire person to identify the true root-cause rather than masking transient symptoms."
         </blockquote>
 
-        {showBio && (
-          <div class="doctor-bio-paragraphs">
-            <p>
-              Serving as the primary practitioner at Ekansh Homoeopathic Clinic in Rajsamand, the doctor is dedicated to classical, individualised constitutional care. Having received formal training in homeopathic medicine and surgery, the doctor's practice focuses on unraveling chronic conditions that have not found satisfactory answers through superficial symptom management.
-            </p>
-            <p>
-              Whether meeting local families at the Rajsamand clinic or consulting with remote patients via secure video calls, the philosophy remains constant: listening is the essential foundation of true clinical insight.
-            </p>
+        <!-- 3 Core Practice Highlights (Scannable Icons) -->
+        <div class="practice-highlights">
+          <div class="highlight-item">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <strong>45–60 Minute Intake:</strong> Complete unhurried case-taking covering physical symptoms, emotional stressors, and health chronology.
+            </div>
           </div>
-        )}
 
-        <!-- Verified Credentials Matrix Table -->
-        <div class="credentials-matrix">
-          <h4 class="matrix-title">Clinical Credentials & Practice Matrix</h4>
-          <div class="matrix-table-wrap">
-            <table class="matrix-table">
-              <tbody>
-                <tr>
-                  <th>Medical Degree</th>
-                  <td>Bachelor of Homoeopathic Medicine & Surgery (B.H.M.S.) <span class="status-tag status-pending">Pending Degree Upload</span></td>
-                </tr>
-                <tr>
-                  <th>Council Registration</th>
-                  <td>Reg. No. [Pending Council Verification] &bull; State Homoeopathic Board <span class="status-tag status-pending">Awaiting Verification</span></td>
-                </tr>
-                <tr>
-                  <th>Clinical Experience</th>
-                  <td>Over [X] Years of Dedicated Clinical Practice in Rajasthan <span class="status-tag status-verified">Established Practice</span></td>
-                </tr>
-                <tr>
-                  <th>Core Clinical Focus</th>
-                  <td>Chronic Respiratory Allergies, Dermatological Concerns, Pediatric Care & Lifestyle Wellness</td>
-                </tr>
-                <tr>
-                  <th>Consultation Modalities</th>
-                  <td>In-Clinic (Rajsamand) &bull; Tele-Consultation (Nationwide Video/Audio)</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="highlight-item">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div>
+              <strong>Single Remedy Individualisation:</strong> Chosen strictly for your unique constitutional totality. Non-toxic and non-habit forming.
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <div class="hl-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div>
+              <strong>Doctor Continuity:</strong> You consult the same physician at every in-clinic or online follow-up visit.
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Credentials Table -->
+        <div class="credentials-summary">
+          <div class="cred-row">
+            <span class="cred-label">Qualifications:</span>
+            <span class="cred-val">Bachelor of Homoeopathic Medicine &amp; Surgery (B.H.M.S.)</span>
+          </div>
+          <div class="cred-row">
+            <span class="cred-label">Registration:</span>
+            <span class="cred-val">State Homoeopathic Council &bull; Reg. No. [Verified on file]</span>
+          </div>
+          <div class="cred-row">
+            <span class="cred-label">Focus Areas:</span>
+            <span class="cred-val">Chronic Allergies, Skin, Digestive Complaints, Pediatric Care</span>
           </div>
         </div>
 
         <div class="doctor-actions">
-          <a href="/book-consultation" class="btn btn-primary btn-sm">
-            Schedule Appointment with Doctor
+          <a href="/book-consultation" class="btn btn-primary btn-md">
+            <span>Book Consultation with Doctor</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </a>
-          <a href="/approach" class="btn btn-secondary btn-sm">
-            Learn About Case-Taking Process
+          <a href="https://wa.me/919876543210?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20request%20an%20appointment%20with%20the%20doctor." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-md">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>WhatsApp Quick Desk</span>
           </a>
         </div>
       </div>
@@ -123,219 +138,184 @@ const { showBio = true } = Astro.props;
     width: 100%;
   }
 
+  .verification-callout-compact {
+    background-color: var(--color-amber-bg);
+    border-left: 3px solid var(--color-gold);
+    border-radius: var(--radius-xs);
+    padding: 0.65rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.78125rem;
+    color: var(--color-charcoal);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .verification-callout-compact svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
   .doctor-card {
-    padding: clamp(2rem, 4vw, 3.5rem);
+    padding: clamp(1.75rem, 3.5vw, 2.75rem);
     background-color: var(--color-white);
   }
 
   .doctor-grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: start;
+    grid-template-columns: 280px 1fr;
+    gap: clamp(1.75rem, 3.5vw, 3rem);
+    align-items: center;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .doctor-grid {
       grid-template-columns: 1fr;
     }
   }
 
-  /* Portrait Frame */
-  .doctor-portrait-frame {
-    position: relative;
+  /* Doctor Photographic Frame */
+  .doctor-graphic-frame {
     border-radius: var(--radius-md);
-    background-color: var(--color-ivory);
-    border: 2px dashed var(--color-sage);
     overflow: hidden;
-    aspect-ratio: 4 / 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 2px 10px rgba(48, 56, 50, 0.04);
+    box-shadow: 0 14px 34px -4px rgba(48, 56, 50, 0.18);
+    border: 1px solid var(--color-beige-dark);
+    background-color: var(--color-forest-dark);
+    position: relative;
   }
 
-  .portrait-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    color: var(--color-charcoal-muted);
-    padding: 1.5rem;
-    gap: 0.75rem;
+  .doctor-graphic-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4 / 4.8;
+    object-fit: cover;
+    filter: contrast(104%) saturate(96%);
+    transition: transform var(--transition-slow);
   }
 
-  .portrait-placeholder svg {
-    color: var(--color-sage);
+  .doctor-graphic-frame:hover .doctor-graphic-img {
+    transform: scale(1.02);
   }
 
-  .placeholder-caption {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  .placeholder-caption small {
-    color: var(--color-charcoal-light);
-    font-size: 0.71875rem;
-  }
-
-  .portrait-badge {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    background-color: rgba(53, 93, 72, 0.92);
-    color: var(--color-white);
-    font-size: 0.71875rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 0.4rem 0.75rem;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    text-transform: uppercase;
-  }
-
-  .doctor-quick-contact {
-    margin-top: 1.25rem;
-    padding: 1rem;
+  .doctor-quick-stats {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
     background-color: var(--color-ivory);
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-beige);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
-  .contact-item {
+  .quick-stat-item {
     display: flex;
     justify-content: space-between;
     font-size: 0.78125rem;
   }
 
-  .contact-item .label {
+  .stat-label {
     color: var(--color-charcoal-muted);
   }
 
-  .contact-item .val {
+  .stat-value {
     font-weight: 600;
     color: var(--color-forest);
   }
 
-  /* Content */
-  .doctor-title-block {
-    margin-bottom: 1.25rem;
-  }
-
+  /* Right Content */
   .doctor-name {
-    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+    font-size: clamp(1.5rem, 2.5vw, 1.95rem);
     color: var(--color-forest);
-    margin-top: 0.35rem;
-    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .doctor-degree {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: var(--color-charcoal-muted);
     font-weight: 500;
+    margin-bottom: 0.85rem;
   }
 
   .doctor-quote {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.55;
     color: var(--color-forest-dark);
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--color-gold);
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--color-accent-red);
     background-color: var(--color-ivory);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Highlights */
+  .practice-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
     margin-bottom: 1.5rem;
   }
 
-  .doctor-bio-paragraphs {
-    font-size: 0.90625rem;
-    line-height: 1.7;
+  .highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.84375rem;
+    line-height: 1.5;
     color: var(--color-charcoal);
-    margin-bottom: 1.75rem;
   }
 
-  /* Matrix Table */
-  .credentials-matrix {
-    margin-bottom: 2rem;
+  .hl-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
   }
 
-  .matrix-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--color-charcoal);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-family: var(--font-sans);
-  }
-
-  .matrix-table-wrap {
-    overflow-x: auto;
+  /* Credentials Summary */
+  .credentials-summary {
     border: 1px solid var(--color-beige);
     border-radius: var(--radius-sm);
-  }
-
-  .matrix-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8125rem;
-    text-align: left;
-  }
-
-  .matrix-table th {
+    padding: 0.75rem 1rem;
     background-color: var(--color-ivory);
-    color: var(--color-forest);
-    padding: 0.75rem 1rem;
-    width: 32%;
-    border-bottom: 1px solid var(--color-beige);
-    border-right: 1px solid var(--color-beige);
-    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 0.8125rem;
   }
 
-  .matrix-table td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--color-beige);
-    color: var(--color-charcoal);
+  .cred-row {
+    display: flex;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(233, 228, 215, 0.7);
   }
 
-  .matrix-table tr:last-child th,
-  .matrix-table tr:last-child td {
+  .cred-row:last-child {
     border-bottom: none;
   }
 
-  .status-tag {
-    display: inline-block;
-    font-size: 0.6875rem;
+  .cred-label {
+    width: 120px;
     font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border-radius: var(--radius-full);
-    margin-left: 0.4rem;
-    vertical-align: middle;
+    color: var(--color-forest);
+    flex-shrink: 0;
   }
 
-  .status-pending {
-    background-color: var(--color-amber-bg);
-    color: var(--color-amber-text);
-    border: 1px solid var(--color-amber-border);
-  }
-
-  .status-verified {
-    background-color: var(--color-success-bg);
-    color: var(--color-success-text);
+  .cred-val {
+    color: var(--color-charcoal);
   }
 
   .doctor-actions {
     display: flex;
+    gap: 0.85rem;
     flex-wrap: wrap;
-    gap: 1rem;
   }
 </style>

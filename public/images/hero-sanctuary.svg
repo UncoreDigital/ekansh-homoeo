@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#355D48"/>
+      <stop offset="100%" stop-color="#244132"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D6C7A5"/>
+      <stop offset="100%" stop-color="#B9A77D"/>
+    </linearGradient>
+    <linearGradient id="sageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EDF1E7"/>
+      <stop offset="100%" stop-color="#A3B18A"/>
+    </linearGradient>
+    <radialGradient id="sunburst" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#A3B18A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#355D48" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#1A2D23" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="600" height="500" rx="24" fill="url(#bgGrad)"/>
+  <circle cx="300" cy="220" r="220" fill="url(#sunburst)"/>
+
+  <!-- Decorative Botanical Geometry Circles -->
+  <circle cx="300" cy="220" r="170" fill="none" stroke="#A3B18A" stroke-width="1.2" stroke-opacity="0.35" stroke-dasharray="6 6"/>
+  <circle cx="300" cy="220" r="130" fill="none" stroke="#B9A77D" stroke-width="1.5" stroke-opacity="0.4"/>
+
+  <!-- Botanical Leaf Arcs Left & Right -->
+  <!-- Left Leaf Arch -->
+  <path d="M 170 340 C 140 260 160 180 230 140 C 210 200 210 270 170 340 Z" fill="#A3B18A" fill-opacity="0.25" stroke="#A3B18A" stroke-width="1.5"/>
+  <path d="M 160 280 C 130 230 145 170 200 130 C 185 180 185 240 160 280 Z" fill="#B9A77D" fill-opacity="0.2" stroke="#B9A77D" stroke-width="1.2"/>
+  
+  <!-- Right Leaf Arch -->
+  <path d="M 430 340 C 460 260 440 180 370 140 C 390 200 390 270 430 340 Z" fill="#A3B18A" fill-opacity="0.25" stroke="#A3B18A" stroke-width="1.5"/>
+  <path d="M 440 280 C 470 230 455 170 400 130 C 415 180 415 240 440 280 Z" fill="#B9A77D" fill-opacity="0.2" stroke="#B9A77D" stroke-width="1.2"/>
+
+  <!-- Central Sanctuary Plinth / Desk -->
+  <ellipse cx="300" cy="385" rx="190" ry="32" fill="#1E372A" filter="url(#softShadow)"/>
+  <ellipse cx="300" cy="380" rx="180" ry="24" fill="#284837" stroke="#A3B18A" stroke-width="1" stroke-opacity="0.5"/>
+
+  <!-- Mortar and Pestle (Natural Medicine Symbol) -->
+  <g transform="translate(230, 260)">
+    <!-- Mortar Bowl -->
+    <path d="M 15 65 C 15 105 125 105 125 65 C 125 60 15 60 15 65 Z" fill="#F6F5EF" stroke="#B9A77D" stroke-width="2"/>
+    <ellipse cx="70" cy="65" rx="55" ry="14" fill="#E9E4D7" stroke="#B9A77D" stroke-width="1.5"/>
+    <!-- Pestle -->
+    <path d="M 85 20 L 105 30 L 72 75 L 56 68 Z" fill="url(#goldGrad)" stroke="#B9A77D" stroke-width="1.5"/>
+    <ellipse cx="95" cy="25" rx="11" ry="6" fill="#F6F5EF" transform="rotate(-30 95 25)"/>
+    <!-- Gentle Healing Leaves Sprouting -->
+    <path d="M 70 58 C 60 42 70 30 85 28 C 85 42 76 52 70 58 Z" fill="#A3B18A" stroke="#355D48" stroke-width="1"/>
+    <path d="M 68 58 C 55 52 50 40 58 32 C 68 36 68 48 68 58 Z" fill="#B9A77D" stroke="#355D48" stroke-width="1"/>
+  </g>
+
+  <!-- Homeopathic Medicine Dropper & Bottle (Left of Mortar) -->
+  <g transform="translate(170, 275)">
+    <!-- Amber Bottle Body -->
+    <rect x="12" y="35" width="34" height="65" rx="6" fill="#B9A77D" fill-opacity="0.85" stroke="#FFFFFF" stroke-width="1.2"/>
+    <rect x="18" y="22" width="22" height="13" fill="#D6C7A5" stroke="#FFFFFF" stroke-width="1"/>
+    <!-- Cap & Dropper Pipette -->
+    <rect x="22" y="10" width="14" height="12" rx="3" fill="#355D48" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M 29 2 C 26 2 24 5 24 10 L 34 10 C 34 5 32 2 29 2 Z" fill="#1E372A"/>
+    <!-- Label on Bottle -->
+    <rect x="16" y="48" width="26" height="36" rx="3" fill="#F6F5EF"/>
+    <line x1="20" y1="58" x2="38" y2="58" stroke="#355D48" stroke-width="1.5"/>
+    <line x1="22" y1="65" x2="36" y2="65" stroke="#A3B18A" stroke-width="1.2"/>
+    <line x1="24" y1="72" x2="34" y2="72" stroke="#B9A77D" stroke-width="1"/>
+  </g>
+
+  <!-- Listening Stethoscope Curve (Right of Mortar) -->
+  <g transform="translate(375, 275)">
+    <!-- Chest Piece -->
+    <circle cx="45" cy="85" r="18" fill="#F6F5EF" stroke="#B9A77D" stroke-width="2"/>
+    <circle cx="45" cy="85" r="11" fill="#A3B18A" stroke="#355D48" stroke-width="1.5"/>
+    <circle cx="45" cy="85" r="4" fill="#355D48"/>
+    <!-- Stethoscope Tube in graceful loop -->
+    <path d="M 45 67 C 45 40 20 30 15 15 C 10 2 25 -10 35 -10" fill="none" stroke="#F6F5EF" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 35 -10 L 45 -22" stroke="#B9A77D" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Golden Healing Sparkles / Stars -->
+  <g fill="#B9A77D">
+    <path d="M 300 90 Q 300 102 312 102 Q 300 102 300 114 Q 300 102 288 102 Q 300 102 300 90 Z"/>
+    <path d="M 210 140 Q 210 148 218 148 Q 210 148 210 156 Q 210 148 202 148 Q 210 148 210 140 Z"/>
+    <path d="M 390 140 Q 390 148 398 148 Q 390 148 390 156 Q 390 148 382 148 Q 390 148 390 140 Z"/>
+  </g>
+
+  <!-- Bottom Caption Pill -->
+  <g transform="translate(160, 435)">
+    <rect width="280" height="38" rx="19" fill="#F6F5EF" filter="url(#softShadow)"/>
+    <circle cx="24" cy="19" r="6" fill="#355D48"/>
+    <text x="42" y="23" font-family="'DM Sans', sans-serif" font-size="12" font-weight="600" fill="#303832" letter-spacing="0.5">
+      EKANSH HOMOEOPATHIC CLINIC
+    </text>
+  </g>
+</svg>

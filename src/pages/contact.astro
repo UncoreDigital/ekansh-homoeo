@@ -4,16 +4,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout 
   title="Contact Us & Clinic Coordinates | Ekansh Homoeopathic Clinic"
-  description="Connect with Ekansh Homoeopathic Clinic in Rajsamand, Rajasthan. Clinic address, telephone, consultation hours, location directions, and direct inquiry form."
+  description="Connect with Ekansh Homoeopathic Clinic in Rajsamand. Clinic address, phone numbers, consultation hours, location map, and direct inquiry."
   activeNav="contact"
 >
   <!-- Header -->
   <section class="page-header-section">
     <div class="container text-center">
       <span class="text-eyebrow">Connect With Us</span>
-      <h1 class="page-title">Clinic Contact & Location</h1>
+      <h1 class="page-title">Clinic Location &amp; Contact</h1>
       <p class="page-subtitle text-lead">
-        We welcome your questions and appointment inquiries. Connect with our Rajsamand clinic directly via phone, WhatsApp, or our secure inquiry form.
+        We welcome your questions and consultation inquiries. Connect with our Rajsamand clinic desk via phone, WhatsApp, or our secure inquiry form.
       </p>
     </div>
   </section>
@@ -21,30 +21,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Main Contact Section -->
   <section class="section-padding">
     <div class="container">
-      <!-- Pending Information Callout -->
-      <div class="verification-callout" style="margin-bottom: 2.5rem;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="8" x2="12" y2="12"></line>
-          <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <div>
-          <strong>Clinic Coordinates Notice:</strong> Exact street address, landmark identifiers, and telephone lines are marked with verified placeholder indicators pending clinic sign-off (Reference: <code>docs/PENDING_INFORMATION.md</code>).
-        </div>
-      </div>
-
       <div class="contact-layout-grid">
-        <!-- Left: Contact Details & Hours Card -->
+        <!-- Left: Clinic Coordinates & Operating Hours -->
         <div class="contact-details-col">
-          <div class="card-editorial card-beige" style="padding: clamp(2rem, 4vw, 2.75rem); height: 100%;">
-            <span class="text-eyebrow">Rajsamand Clinic</span>
+          <div class="card-editorial card-beige" style="padding: clamp(1.75rem, 3.5vw, 2.5rem); height: 100%;">
+            <span class="text-eyebrow">Rajsamand Practice</span>
             <h2 class="col-heading">Ekansh Homoeopathic Clinic</h2>
             
             <div class="contact-info-list">
               <!-- Address -->
               <div class="info-item">
                 <div class="info-icon">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
@@ -52,17 +40,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <div>
                   <h4 class="info-title">Physical Address</h4>
                   <p class="info-desc">
-                    Near [Landmark Placeholder],<br/>
-                    Rajsamand, Rajasthan – 313324, India
+                    Near Landmark, Rajsamand, Rajasthan – 313324, India<br/>
+                    <small class="text-muted">(Conveniently accessible from NH 58, Kankroli &amp; Nathdwara)</small>
                   </p>
-                  <span class="status-tag status-pending">Awaiting Final Address Verification</span>
                 </div>
               </div>
 
               <!-- Phone -->
               <div class="info-item">
                 <div class="info-icon">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                   </svg>
                 </div>
@@ -71,14 +58,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   <p class="info-desc">
                     <a href="tel:+919876543210">+91 [Clinic Phone Placeholder]</a>
                   </p>
-                  <span class="status-tag status-pending">Official Line Pending Verification</span>
                 </div>
               </div>
 
               <!-- WhatsApp -->
               <div class="info-item">
-                <div class="info-icon" style="background-color: #E8F5E9; color: #2E7D32;">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="info-icon" style="background-color: var(--color-accent-red-light); color: var(--color-accent-red);">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                   </svg>
                 </div>
@@ -91,57 +77,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   </p>
                 </div>
               </div>
-
-              <!-- Email -->
-              <div class="info-item">
-                <div class="info-icon">
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                    <polyline points="22,6 12,13 2,6"></polyline>
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="info-title">Electronic Mail</h4>
-                  <p class="info-desc">
-                    <a href="mailto:care@ekanshclinic.in">care@ekanshclinic.in [Placeholder]</a>
-                  </p>
-                </div>
-              </div>
             </div>
 
-            <!-- Hours Box -->
+            <!-- Operating Hours Box -->
             <div class="operating-hours-container">
-              <h4 class="hours-box-title">Weekly Consultation Timings</h4>
+              <h4 class="hours-box-title">Consultation Schedule</h4>
               <div class="hours-row">
-                <span>Monday to Saturday:</span>
-                <div>
-                  <strong>Morning:</strong> 10:00 AM – 1:00 PM<br/>
-                  <strong>Evening:</strong> 5:00 PM – 8:00 PM
-                </div>
+                <span>Mon – Sat Morning:</span>
+                <strong>10:00 AM – 1:00 PM</strong>
+              </div>
+              <div class="hours-row">
+                <span>Mon – Sat Evening:</span>
+                <strong>5:00 PM – 8:00 PM</strong>
               </div>
               <div class="hours-row">
                 <span>Sunday:</span>
-                <div>
-                  <em>By Prior Appointment Only</em>
-                </div>
+                <em>Prior Appointment Only</em>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right: Direct Inquiry Form -->
+        <!-- Right: Fast Inquiry Form -->
         <div class="contact-form-col">
-          <div class="card-editorial" style="padding: clamp(2rem, 4vw, 2.75rem); background-color: var(--color-white);">
+          <div class="card-editorial" style="padding: clamp(1.75rem, 3.5vw, 2.5rem); background-color: var(--color-white);">
             <span class="text-eyebrow">Message Reception</span>
             <h2 class="col-heading">Send an Inquiry</h2>
-            <p class="text-muted" style="font-size: 0.90625rem; margin-bottom: 1.5rem;">
-              Have a question regarding treatment suitability or appointment scheduling? Send a message and our clinic reception will assist you.
+            <p class="text-muted" style="font-size: 0.84375rem; margin-bottom: 1.25rem;">
+              Have a question on treatment suitability or scheduling? Fill out your message below:
             </p>
 
             <form id="inquiryForm" novalidate>
               <div class="form-group">
-                <label for="inqName" class="form-label">Your Name <span class="required">*</span></label>
-                <input type="text" id="inqName" name="inqName" class="form-control" placeholder="Full name" required />
+                <label for="inqName" class="form-label">Full Name <span class="required">*</span></label>
+                <input type="text" id="inqName" name="inqName" class="form-control" placeholder="Your name" required />
                 <span class="form-error" id="inqNameError">Please enter your name.</span>
               </div>
 
@@ -157,27 +126,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   <option value="In-Clinic Visit in Rajsamand">In-Clinic Visit in Rajsamand</option>
                   <option value="Online Video Consultation">Online Video Consultation</option>
                   <option value="Chronic Condition Guidance">Chronic Condition Guidance</option>
-                  <option value="Pediatric Consultation">Pediatric Consultation</option>
-                  <option value="General Health Inquiry">General Health Inquiry</option>
+                  <option value="Pediatric Care Inquiry">Pediatric Care Inquiry</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="inqMessage" class="form-label">Your Message <span class="required">*</span></label>
-                <textarea id="inqMessage" name="inqMessage" class="form-control" rows="4" placeholder="How may we assist you?" required></textarea>
+                <textarea id="inqMessage" name="inqMessage" class="form-control" rows="3" placeholder="How may we assist you?" required></textarea>
                 <span class="form-error" id="inqMsgError">Please write your inquiry message.</span>
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                Submit Inquiry
+                <span>Submit Inquiry</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </button>
             </form>
 
-            <div class="inquiry-success-notice" id="inquirySuccess" style="display: none; margin-top: 1.25rem;">
+            <div class="inquiry-success-notice" id="inquirySuccess" style="display: none; margin-top: 1rem;">
               <div class="verification-callout" style="background-color: var(--color-success-bg); border-color: var(--color-success-text); margin-bottom: 0;">
                 <div>
-                  <strong>Demonstration Notice:</strong> Inquiry noted! To transmit this message directly to reception, tap below:
-                  <div style="margin-top: 0.75rem;">
+                  <strong>Demonstration Notice:</strong> Inquiry noted! To dispatch this message directly to reception, tap below:
+                  <div style="margin-top: 0.5rem;">
                     <a href="#" id="inqWhatsAppLink" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
                       Dispatch via WhatsApp
                     </a>
@@ -191,36 +163,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Location Map Section -->
-  <section class="section-padding map-section" style="background-color: var(--color-white);">
+  <!-- Vector Map Guide -->
+  <section class="section-padding-sm map-section" style="background-color: var(--color-white);">
     <div class="container">
-      <div class="section-header text-center">
-        <span class="text-eyebrow">Find Our Clinic</span>
-        <h2>Visiting Rajsamand</h2>
-        <p class="text-lead">
-          Conveniently located for patients arriving from Rajsamand town, Kankroli, Nathdwara, and surrounding Mewar tehsils.
-        </p>
+      <div class="section-header text-center" style="margin-bottom: 1.75rem;">
+        <span class="text-eyebrow">Directions</span>
+        <h2>How to Reach Rajsamand Clinic</h2>
       </div>
 
-      <div class="map-card card-editorial" style="padding: 0; overflow: hidden;">
-        <div class="map-container">
-          <div class="map-grid-bg"></div>
-          <div class="map-content-overlay">
-            <div class="pin-symbol">
-              <svg viewBox="0 0 24 24" width="36" height="36" fill="#355D48" stroke="#FFFFFF" stroke-width="1.5">
-                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
-                <circle cx="12" cy="10" r="3" fill="#FFFFFF"></circle>
-              </svg>
-            </div>
-            <h3 class="map-loc-title">Ekansh Homoeopathic Clinic</h3>
-            <p class="map-loc-sub">Rajsamand, Rajasthan &bull; Geographic Anchor</p>
-            <span class="status-tag status-pending">Awaiting Live Google Maps Place ID</span>
-            
-            <div style="margin-top: 1.25rem;">
-              <a href="https://maps.google.com/?q=Rajsamand+Rajasthan" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
-                Open Location in Google Maps
-              </a>
-            </div>
+      <div class="map-card card-editorial" style="padding: 0; overflow: hidden; max-width: 900px; margin: 0 auto;">
+        <div class="map-img-container">
+          <img 
+            src="/images/clinic-map.svg" 
+            alt="Ekansh Homoeopathic Clinic Map Route Rajsamand" 
+            class="clinic-map-img" 
+            width="600" 
+            height="380" 
+            loading="lazy"
+          />
+          <div class="map-floating-pill">
+            <span class="badge badge-sage">Rajsamand Location</span>
+            <a href="https://maps.google.com/?q=Rajsamand+Rajasthan" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+              Open in Google Maps
+            </a>
           </div>
         </div>
       </div>
@@ -230,57 +195,57 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .page-header-section {
-    padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.18), transparent 70%);
+    padding: clamp(2.5rem, 5vw, 4rem) 0 1.75rem;
+    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.16), transparent 70%);
     border-bottom: 1px solid var(--color-beige);
   }
 
   .page-title {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.75rem;
     color: var(--color-forest);
   }
 
   .page-subtitle {
-    max-width: 680px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
   .contact-layout-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .contact-layout-grid {
       grid-template-columns: 1fr;
     }
   }
 
   .col-heading {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: var(--color-forest);
-    margin-top: 0.35rem;
-    margin-bottom: 1.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
   }
 
   .contact-info-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .info-item {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: flex-start;
   }
 
   .info-icon {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+    height: 38px;
     border-radius: var(--radius-sm);
     background-color: var(--color-white);
     border: 1px solid var(--color-beige-dark);
@@ -292,38 +257,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .info-title {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     font-family: var(--font-sans);
     font-weight: 600;
     color: var(--color-charcoal);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
   }
 
   .info-desc {
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-size: 0.8125rem;
+    line-height: 1.45;
     color: var(--color-charcoal-muted);
-    margin-bottom: 0.35rem;
+    margin-bottom: 0;
   }
 
   .info-desc a {
     color: var(--color-forest);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .operating-hours-container {
     background-color: var(--color-white);
     border: 1px solid var(--color-beige-dark);
     border-radius: var(--radius-sm);
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
   }
 
   .hours-box-title {
     font-family: var(--font-sans);
-    font-size: 0.9375rem;
+    font-size: 0.84375rem;
     font-weight: 600;
     color: var(--color-forest);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
@@ -331,8 +296,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .hours-row {
     display: flex;
     justify-content: space-between;
-    font-size: 0.8125rem;
-    padding: 0.5rem 0;
+    font-size: 0.78125rem;
+    padding: 0.35rem 0;
     border-bottom: 1px solid var(--color-beige);
     color: var(--color-charcoal);
   }
@@ -342,7 +307,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .hours-row span {
-    font-weight: 500;
     color: var(--color-charcoal-muted);
   }
 
@@ -351,51 +315,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* Map Container */
-  .map-container {
+  .map-img-container {
     position: relative;
-    min-height: 380px;
-    background-color: #E2DDD0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    min-height: 320px;
   }
 
-  .map-grid-bg {
+  .clinic-map-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .map-floating-pill {
     position: absolute;
-    inset: 0;
-    background-image: 
-      linear-gradient(to right, rgba(48, 56, 50, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(48, 56, 50, 0.08) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-
-  .map-content-overlay {
-    position: relative;
-    z-index: 2;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     border: 1px solid var(--color-beige);
-    border-radius: var(--radius-md);
-    padding: 2rem;
-    text-align: center;
-    max-width: 420px;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
     box-shadow: var(--shadow-card);
-  }
-
-  .pin-symbol {
-    margin-bottom: 0.75rem;
-  }
-
-  .map-loc-title {
-    font-size: 1.3rem;
-    color: var(--color-forest);
-    margin-bottom: 0.25rem;
-  }
-
-  .map-loc-sub {
-    font-size: 0.84375rem;
-    color: var(--color-charcoal-muted);
-    margin-bottom: 0.75rem;
   }
 </style>
 

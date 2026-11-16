@@ -2,31 +2,31 @@
 const pillars = [
   {
     step: "01",
-    title: "Understanding Your Concerns",
-    subtitle: "Active Listening & Comprehensive Intake",
-    description: "Every healing relationship begins with an unhurried, attentive dialogue. We listen deeply to your physical symptoms, emotional states, stress factors, and personal health chronology without quick assumptions.",
-    icon: `<path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="currentColor" stroke-width="2"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`
+    title: "Listen Deeply",
+    badge: "45–60 Min Intake",
+    description: "Unhurried, attentive conversation exploring physical symptoms, emotional state, and personal health chronology.",
+    image: "/images/approach-listen.jpg"
   },
   {
     step: "02",
-    title: "Individual Consultation",
-    subtitle: "Constitutional Totality Assessment",
-    description: "Homeopathy recognizes that no two individuals experience illness identically. We analyze the totality of your characteristic signs, thermal sensitivities, and general constitution to discern your singular remedy.",
-    icon: `<path d="M16 4v16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2"/>`
+    title: "Individualize",
+    badge: "Constitutional Totality",
+    description: "Careful repertorisation matching your singular symptom totality to a specific, single constitutional homeopathic remedy.",
+    image: "/images/approach-individualize.jpg"
   },
   {
     step: "03",
-    title: "Tailored Guidance & Remedies",
-    subtitle: "Minimum Dose & Lifestyle Integration",
-    description: "You receive precisely chosen, gentle homeopathic remedies dispensed in minimal therapeutic doses, accompanied by practical lifestyle, dietary, and preventive guidance tailored to your daily routine.",
-    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
+    title: "Prescribe",
+    badge: "Gentle Micro-Dose",
+    description: "High-grade certified remedies dispensed in minimum therapeutic doses, paired with simple dietary & lifestyle precautions.",
+    image: "/images/approach-prescribe.jpg"
   },
   {
     step: "04",
-    title: "Dedicated Follow-up",
-    subtitle: "Sustained Continuity & Healing Trajectory",
-    description: "Constitutional healing is an evolving journey. Structured follow-ups evaluate your body's vital response, fine-tune potencies when necessary, and ensure enduring vitality rather than temporary symptom suppression.",
-    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2"/><polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
+    title: "Follow-Up",
+    badge: "Sustained Vitality",
+    description: "Structured reviews at 3 to 4 weeks to observe constitutional response, fine-tune potencies, and ensure lasting health.",
+    image: "/images/approach-followup.jpg"
   }
 ];
 ---
@@ -34,16 +34,17 @@ const pillars = [
 <div class="approach-grid">
   {pillars.map((item) => (
     <div class="pillar-card card-editorial">
-      <div class="pillar-top">
-        <span class="pillar-step">{item.step}</span>
-        <div class="pillar-icon-box">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" set:html={item.icon}></svg>
-        </div>
+      <div class="pillar-img-wrap">
+        <img src={item.image} alt={item.title} class="pillar-img" loading="lazy" width="320" height="160" />
+        <span class="pillar-step-badge">{item.step}</span>
       </div>
-      <h3 class="pillar-title">{item.title}</h3>
-      <p class="pillar-subtitle">{item.subtitle}</p>
-      <p class="pillar-desc">{item.description}</p>
-      <div class="pillar-accent-line"></div>
+      <div class="pillar-content">
+        <div class="pillar-header-row">
+          <h3 class="pillar-title">{item.title}</h3>
+          <span class="badge badge-sage pillar-badge">{item.badge}</span>
+        </div>
+        <p class="pillar-desc">{item.description}</p>
+      </div>
     </div>
   ))}
 </div>
@@ -52,86 +53,99 @@ const pillars = [
   .approach-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 991px) {
     .approach-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 540px) {
     .approach-grid {
       grid-template-columns: 1fr;
     }
   }
 
   .pillar-card {
-    position: relative;
     display: flex;
     flex-direction: column;
-    padding: 2rem 1.75rem;
+    padding: 0;
+    overflow: hidden;
     height: 100%;
     background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-beige);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   }
 
-  .pillar-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
+  .pillar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
   }
 
-  .pillar-step {
+  .pillar-img-wrap {
+    width: 100%;
+    height: 155px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-forest-dark);
+  }
+
+  .pillar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(106%) saturate(94%);
+    transition: transform var(--transition-slow);
+  }
+
+  .pillar-card:hover .pillar-img {
+    transform: scale(1.05);
+  }
+
+  .pillar-step-badge {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    background-color: var(--color-forest);
+    color: var(--color-gold-light);
     font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-gold);
-    line-height: 1;
-  }
-
-  .pillar-icon-box {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-sm);
-    background-color: var(--color-sage-subtle);
-    color: var(--color-forest);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-sage-light);
-  }
-
-  .pillar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-charcoal);
-    margin-bottom: 0.35rem;
-    line-height: 1.3;
-  }
-
-  .pillar-subtitle {
     font-size: 0.8125rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-forest);
-    margin-bottom: 0.875rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-xs);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   }
 
-  .pillar-desc {
-    font-size: 0.90625rem;
-    line-height: 1.6;
-    color: var(--color-charcoal-muted);
-    margin-bottom: 1.5rem;
+  .pillar-content {
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
   }
 
-  .pillar-accent-line {
-    width: 36px;
-    height: 2px;
-    background-color: var(--color-gold);
-    margin-top: auto;
+  .pillar-header-row {
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.35rem;
+  }
+
+  .pillar-badge {
+    font-size: 0.6875rem;
+    display: inline-block;
+  }
+
+  .pillar-desc {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 0;
   }
 </style>

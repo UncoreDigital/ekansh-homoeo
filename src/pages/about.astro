@@ -5,134 +5,91 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 
 const ethicsPoints = [
   {
+    num: "01",
     title: "Patient-Centered Listening",
-    desc: "Every consultation is conducted without hurry. The patient is treated as a collaborative partner in their healing journey."
+    desc: "45–60 minutes allocated for initial consultations. You are treated as an active partner in your health."
   },
   {
-    title: "Individualized Totality",
-    desc: "Prescriptions are determined by classical constitutional totality, never mass-produced formula combinations."
+    num: "02",
+    title: "Constitutional Totality",
+    desc: "Remedies are selected by individual totality, never generic mass combinations."
   },
   {
-    title: "Honest Prognosis & Ethics",
-    desc: "We strictly observe Ayush guidelines: no exaggerated claims, no miracle cure guarantees, and absolute transparency regarding expected timelines."
+    num: "03",
+    title: "Honest Prognosis",
+    desc: "Strictly compliant with Ayush ethics: zero miracle cure claims and complete honesty regarding timelines."
   },
   {
-    title: "Patient Confidentiality",
-    desc: "All health records, case discussions, and consultation notes are protected under strict medical privacy standards."
+    num: "04",
+    title: "Strict Confidentiality",
+    desc: "Your medical history, emotional discussions, and consultation notes are protected under patient privacy standards."
   },
   {
+    num: "05",
     title: "Non-Emergency Triage",
-    desc: "We promptly direct acute medical emergencies, trauma, and surgical urgencies to appropriate tertiary hospitals."
+    desc: "Acute trauma, surgical urgencies, and critical emergencies are promptly directed to tertiary hospitals."
   },
   {
-    title: "Continuous Professional Learning",
-    desc: "Adherence to peer-reviewed homeopathic literature, clinical repertories, and evidence-informed integrative health perspectives."
+    num: "06",
+    title: "Doctor Continuity",
+    desc: "You consult the same qualified homeopathic physician at every follow-up visit."
   }
 ];
 
 const aboutFAQs = [
   {
-    question: "What is the background and qualification of the doctor?",
-    answer: "The doctor holds a formal university degree in Homeopathic Medicine and Surgery (B.H.M.S.) and is registered with the State Homoeopathic Medical Council. The doctor operates an independent, individual practice in Rajsamand focused on classical constitutional care."
+    question: "What are the doctor's qualifications?",
+    answer: "The doctor holds a formal university Bachelor of Homoeopathic Medicine & Surgery (B.H.M.S.) degree and is registered with the State Homoeopathic Medical Council, operating an independent individual practice in Rajsamand."
   },
   {
-    question: "Why does the doctor operate as a solo practitioner?",
-    answer: "A solo practice ensures complete continuity of care. The doctor who takes your initial 60-minute case history is the same physician who studies your remedy response, evaluates your follow-ups, and refines your treatment plan over time."
+    question: "Why is a solo practitioner beneficial for me?",
+    answer: "A solo practice guarantees complete continuity. The same doctor who conducts your detailed initial case-taking evaluates your remedy response at every follow-up."
   },
   {
-    question: "Can I consult the doctor if I live outside Rajasthan?",
-    answer: "Yes. In accordance with the Indian Telemedicine Practice Guidelines, the doctor conducts structured video and telephonic consultations for patients across India and abroad, with authentic remedies dispatched via insured courier."
+    question: "Can outstation patients consult online?",
+    answer: "Yes. In accordance with Indian Telemedicine Practice Guidelines, the doctor conducts video consultations for patients across India, with medicines dispatched via secure courier."
   }
 ];
 ---
 
 <BaseLayout 
   title="About the Doctor | Ekansh Homoeopathic Clinic, Rajsamand"
-  description="Meet the homeopathic physician at Ekansh Homoeopathic Clinic in Rajsamand, Rajasthan. Formal medical training, individual constitutional care, and ethical practice."
+  description="Meet the homeopathic physician at Ekansh Homoeopathic Clinic in Rajsamand. Formal medical training, individual constitutional care, and ethical practice."
   activeNav="about"
 >
   <!-- Page Header -->
   <section class="page-header-section">
     <div class="container text-center">
-      <span class="text-eyebrow">Practitioner & Philosophy</span>
-      <h1 class="page-title">About the Doctor & Clinic</h1>
+      <span class="text-eyebrow">Practitioner &amp; Ethics</span>
+      <h1 class="page-title">About the Doctor &amp; Practice</h1>
       <p class="page-subtitle text-lead">
-        A clinical practice founded on the conviction that deep listening, individualization, and gentle medicine are the hallmarks of true healing.
+        Dedicated to classical, constitutional homeopathy: listening first, understanding the whole individual, and prescribing gentle, restorative medicine.
       </p>
     </div>
   </section>
 
-  <!-- Section 1: Detailed Doctor Profile Card -->
+  <!-- Doctor Profile Section -->
   <section class="section-padding">
     <div class="container">
-      <DoctorProfileCard showBio={true} />
+      <DoctorProfileCard showBio={false} />
     </div>
   </section>
 
-  <!-- Section 2: Clinic Story & Rajsamand Roots -->
-  <section class="section-padding clinic-story-section">
+  <!-- Clinical Ethics Section -->
+  <section class="section-padding-sm ethics-section" id="ethics">
     <div class="container">
-      <div class="story-grid">
-        <div class="story-content">
-          <span class="text-eyebrow">Our Story</span>
-          <h2 class="story-heading">Rooted in Rajsamand, Caring for Patients Everywhere</h2>
-          <p class="text-lead">
-            Ekansh Homoeopathic Clinic was established in the historic city of Rajsamand, Rajasthan, with a singular mission: to provide classical, personalized healthcare where patients feel seen, heard, and genuinely cared for.
-          </p>
-          <p>
-            In a healthcare environment frequently characterized by hasty five-minute appointments and polypharmacy, our practice chose a different path. We recognized that chronic ailments—whether recurring allergies, eczema, digestive distress, migraine, or pediatric susceptibilities—do not arise in a vacuum. They are shaped by an individual's constitution, thermal environment, emotional stress, and genetic background.
-          </p>
-          <p>
-            By anchoring our physical clinic in Rajsamand while integrating secure digital tele-consultation tools, we offer Mewar residents the warmth of an in-person family doctor alongside the convenience of nationwide digital access for our outstation patients.
-          </p>
-          
-          <div class="clinic-values-pills">
-            <span class="badge badge-sage">Solo Practitioner Care</span>
-            <span class="badge badge-sage">Unhurried Case-Taking</span>
-            <span class="badge badge-sage">Evidence-Informed Homeopathy</span>
-          </div>
-        </div>
-
-        <div class="story-visual">
-          <div class="card-editorial card-forest">
-            <div class="botanical-header-icon">
-              <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor">
-                <circle cx="16" cy="16" r="14" stroke="#FFFFFF" stroke-width="1.5"/>
-                <path d="M16 26V10" stroke="#FFFFFF" stroke-width="2"/>
-                <path d="M16 16C12 14 8 16 6 20C11 21 15 18 16 16Z" fill="#A3B18A" stroke="#FFFFFF"/>
-                <path d="M16 12C20 10 24 12 26 16C21 17 17 14 16 12Z" fill="#B9A77D" stroke="#FFFFFF"/>
-              </svg>
-            </div>
-            <h3 class="forest-card-title">The "Ekansh" Philosophy</h3>
-            <p class="forest-card-quote">
-              "Ekansh signifies 'complete, singular, and undivided.' To us, it represents the holistic vision of health: treating the whole individual rather than an isolated fraction of distress."
-            </p>
-            <div class="forest-card-divider"></div>
-            <div class="forest-card-footer">
-              <p><strong>Practice Location:</strong> Rajsamand, Rajasthan, India</p>
-              <p><strong>Clinical Focus:</strong> Chronic & Constitutional Care</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 3: Clinical Ethics Code -->
-  <section class="section-padding ethics-section" id="ethics">
-    <div class="container">
-      <div class="section-header text-center">
+      <div class="section-header text-center" style="margin-bottom: 2rem;">
         <span class="text-eyebrow">Medical Standards</span>
-        <h2>Our Six-Point Clinical Ethics Pledge</h2>
-        <p class="text-lead">
-          Our clinic operates strictly under the ethical standards established by the Board of Homoeopathy and the Ministry of Ayush.
+        <h2>Our Clinical Ethics Code</h2>
+        <p class="text-muted" style="max-width: 540px; margin: 0 auto;">
+          Operating under the ethical codes of the Board of Homoeopathy and Ministry of Ayush.
         </p>
       </div>
 
       <div class="ethics-grid">
-        {ethicsPoints.map((item, idx) => (
+        {ethicsPoints.map((item) => (
           <div class="ethics-card card-editorial">
-            <div class="ethics-num">{String(idx + 1).padStart(2, '0')}</div>
+            <span class="ethics-num">{item.num}</span>
             <h3 class="ethics-title">{item.title}</h3>
             <p class="ethics-desc">{item.desc}</p>
           </div>
@@ -141,20 +98,22 @@ const aboutFAQs = [
     </div>
   </section>
 
-  <!-- Section 4: FAQs on Doctor & Practice -->
-  <section class="section-padding faq-section">
+  <!-- FAQs Section -->
+  <section class="section-padding-sm faq-section">
     <div class="container">
-      <div class="section-header text-center">
-        <span class="text-eyebrow">Common Queries</span>
-        <h2>Frequently Asked Questions About the Doctor</h2>
+      <div class="section-header text-center" style="margin-bottom: 2rem;">
+        <span class="text-eyebrow">Patient Inquiries</span>
+        <h2>Frequently Asked Questions</h2>
       </div>
 
       <FAQAccordion items={aboutFAQs} />
 
-      <div class="faq-cta text-center" style="margin-top: 2.5rem;">
-        <p class="text-muted" style="margin-bottom: 1rem;">Have a specific health inquiry or wish to consult the doctor directly?</p>
-        <a href="/book-consultation" class="btn btn-primary">
-          Schedule Your Consultation
+      <div class="faq-cta text-center" style="margin-top: 2.25rem;">
+        <a href="/book-consultation" class="btn btn-primary btn-md">
+          <span>Schedule an Appointment</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </a>
       </div>
     </div>
@@ -163,91 +122,31 @@ const aboutFAQs = [
 
 <style>
   .page-header-section {
-    padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.18), transparent 70%);
+    padding: clamp(2.5rem, 5vw, 4rem) 0 1.75rem;
+    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.16), transparent 70%);
     border-bottom: 1px solid var(--color-beige);
   }
 
   .page-title {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.75rem;
     color: var(--color-forest);
   }
 
   .page-subtitle {
-    max-width: 680px;
+    max-width: 600px;
     margin: 0 auto;
-  }
-
-  /* Story Grid */
-  .clinic-story-section {
-    background-color: var(--color-white);
-  }
-
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-  }
-
-  @media (max-width: 991px) {
-    .story-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .story-heading {
-    margin-top: 0.5rem;
-    margin-bottom: 1.25rem;
-    color: var(--color-charcoal);
-  }
-
-  .clinic-values-pills {
-    display: flex;
-    gap: 0.65rem;
-    flex-wrap: wrap;
-    margin-top: 1.75rem;
-  }
-
-  .botanical-header-icon {
-    margin-bottom: 1.25rem;
-  }
-
-  .forest-card-title {
-    font-size: 1.4rem;
-    margin-bottom: 0.85rem;
-  }
-
-  .forest-card-quote {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .forest-card-divider {
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.2);
-    margin-bottom: 1.25rem;
-  }
-
-  .forest-card-footer p {
-    font-size: 0.84375rem;
-    color: var(--color-sage-light);
-    margin-bottom: 0.35rem;
   }
 
   /* Ethics Grid */
   .ethics-section {
-    background-color: var(--color-ivory);
+    background-color: var(--color-white);
   }
 
   .ethics-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   @media (max-width: 991px) {
@@ -256,35 +155,35 @@ const aboutFAQs = [
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 580px) {
     .ethics-grid {
       grid-template-columns: 1fr;
     }
   }
 
   .ethics-card {
-    padding: 2rem 1.75rem;
-    position: relative;
+    padding: 1.5rem;
+    background-color: var(--color-ivory);
   }
 
   .ethics-num {
     font-family: var(--font-serif);
-    font-size: 1.75rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--color-gold);
-    line-height: 1;
-    margin-bottom: 0.75rem;
+    display: block;
+    margin-bottom: 0.4rem;
   }
 
   .ethics-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--color-charcoal);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
   .ethics-desc {
-    font-size: 0.875rem;
-    line-height: 1.6;
+    font-size: 0.8125rem;
+    line-height: 1.5;
     color: var(--color-charcoal-muted);
     margin-bottom: 0;
   }

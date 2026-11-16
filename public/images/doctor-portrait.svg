@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="docBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6F5EF"/>
+      <stop offset="100%" stop-color="#E9E4D7"/>
+    </linearGradient>
+    <linearGradient id="coatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0ECE1"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2BE9B"/>
+      <stop offset="100%" stop-color="#CFA57E"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#303832"/>
+      <stop offset="100%" stop-color="#1E2420"/>
+    </linearGradient>
+    <linearGradient id="docGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D6C7A5"/>
+      <stop offset="100%" stop-color="#B9A77D"/>
+    </linearGradient>
+    <filter id="docShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#303832" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Frame Background -->
+  <rect width="400" height="480" rx="16" fill="url(#docBg)"/>
+  
+  <!-- Subtle Botanical Halo / Laurel in Background -->
+  <circle cx="200" cy="180" r="130" fill="#EDF1E7" stroke="#A3B18A" stroke-width="1.5" stroke-opacity="0.4"/>
+  <circle cx="200" cy="180" r="145" fill="none" stroke="#B9A77D" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="4 6"/>
+
+  <!-- Laurel Leaves Wreath -->
+  <g fill="#A3B18A" fill-opacity="0.35" stroke="#355D48" stroke-width="1">
+    <!-- Left Wreath -->
+    <path d="M 90 220 C 70 180 85 130 115 100 C 105 135 110 175 90 220 Z"/>
+    <path d="M 85 170 C 65 140 75 100 100 80 C 95 110 95 145 85 170 Z"/>
+    <!-- Right Wreath -->
+    <path d="M 310 220 C 330 180 315 130 285 100 C 295 135 290 175 310 220 Z"/>
+    <path d="M 315 170 C 335 140 325 100 300 80 C 305 110 305 145 315 170 Z"/>
+  </g>
+
+  <!-- Doctor Body & Clinical White Coat -->
+  <g filter="url(#docShadow)">
+    <!-- Shoulders & Torso -->
+    <path d="M 85 480 L 105 340 C 115 315 140 295 170 290 L 200 300 L 230 290 C 260 295 285 315 295 340 L 315 480 Z" fill="url(#coatGrad)" stroke="#DCD5C4" stroke-width="1.5"/>
+    
+    <!-- Forest Green Inner Scrub / Shirt -->
+    <path d="M 170 290 L 200 340 L 230 290 Z" fill="#355D48"/>
+    
+    <!-- Neck -->
+    <rect x="180" y="240" width="40" height="60" rx="10" fill="url(#skinGrad)"/>
+
+    <!-- Coat Lapels -->
+    <path d="M 160 290 L 195 400 L 180 480 L 135 480 L 140 340 Z" fill="#FFFFFF" stroke="#E9E4D7" stroke-width="1.2"/>
+    <path d="M 240 290 L 205 400 L 220 480 L 265 480 L 260 340 Z" fill="#FFFFFF" stroke="#E9E4D7" stroke-width="1.2"/>
+
+    <!-- Stethoscope Around Neck -->
+    <!-- Tubing -->
+    <path d="M 155 285 C 145 350 170 410 195 410 C 220 410 245 350 245 285" fill="none" stroke="#303832" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 195 410 L 195 435" stroke="#303832" stroke-width="4"/>
+    <!-- Chest Piece Bell -->
+    <circle cx="195" cy="445" r="14" fill="#B9A77D" stroke="#303832" stroke-width="2"/>
+    <circle cx="195" cy="445" r="8" fill="#F6F5EF"/>
+
+    <!-- Doctor Head & Face -->
+    <!-- Head Base -->
+    <ellipse cx="200" cy="190" rx="55" ry="68" fill="url(#skinGrad)"/>
+    
+    <!-- Professional Hair Style -->
+    <path d="M 140 180 C 135 120 160 100 200 100 C 240 100 265 120 260 180 C 255 160 245 130 200 130 C 155 130 145 160 140 180 Z" fill="url(#hairGrad)"/>
+    <path d="M 140 180 C 142 165 146 150 155 140 C 170 125 230 120 258 148 C 260 160 260 172 260 180 Z" fill="url(#hairGrad)"/>
+
+    <!-- Friendly Facial Features -->
+    <!-- Eyebrows -->
+    <path d="M 165 165 Q 178 160 188 165" fill="none" stroke="#303832" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 212 165 Q 222 160 235 165" fill="none" stroke="#303832" stroke-width="2.5" stroke-linecap="round"/>
+    
+    <!-- Eyes -->
+    <ellipse cx="178" cy="178" rx="5" ry="4" fill="#303832"/>
+    <circle cx="180" cy="176" r="1.5" fill="#FFFFFF"/>
+    <ellipse cx="222" cy="178" rx="5" ry="4" fill="#303832"/>
+    <circle cx="224" cy="176" r="1.5" fill="#FFFFFF"/>
+
+    <!-- Warm Professional Glasses -->
+    <rect x="162" y="168" width="30" height="20" rx="6" fill="none" stroke="#B9A77D" stroke-width="2"/>
+    <rect x="208" y="168" width="30" height="20" rx="6" fill="none" stroke="#B9A77D" stroke-width="2"/>
+    <line x1="192" y1="176" x2="208" y2="176" stroke="#B9A77D" stroke-width="2"/>
+
+    <!-- Nose -->
+    <path d="M 198 180 L 196 198 L 204 200" fill="none" stroke="#B58D68" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Warm Empathetic Smile -->
+    <path d="M 185 218 Q 200 230 215 218" fill="none" stroke="#9E684D" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Doctor Pen in Coat Pocket -->
+    <rect x="135" y="360" width="3" height="18" fill="#B9A77D"/>
+    <circle cx="136.5" cy="358" r="3" fill="#355D48"/>
+  </g>
+
+  <!-- Verified Practitioner Bottom Badge -->
+  <g transform="translate(65, 415)">
+    <rect width="270" height="44" rx="22" fill="#355D48" filter="url(#docShadow)"/>
+    <!-- Shield Icon -->
+    <g transform="translate(18, 12)">
+      <path d="M 10 0 L 2 3 L 2 10 C 2 15 6 19 10 21 C 14 19 18 15 18 10 L 18 3 Z" fill="#A3B18A"/>
+      <path d="M 6 10 L 9 13 L 14 7" fill="none" stroke="#355D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="48" y="22" font-family="'DM Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">
+      QUALIFIED HOMEOPATH (B.H.M.S.)
+    </text>
+    <text x="48" y="34" font-family="'DM Sans', sans-serif" font-size="10" font-weight="500" fill="#A3B18A">
+      Registered Practice &bull; Rajsamand
+    </text>
+  </g>
+</svg>

@@ -9,7 +9,8 @@ const articles = [
     categorySlug: "philosophy",
     date: "November 2026 [Placeholder]",
     readTime: "6 Min Read",
-    excerpt: "In classical constitutional prescribing, two patients with identical migraine symptoms may receive completely different remedies based on their emotional ecology, thermal reactions, and personal chronology.",
+    excerpt: "Why classical prescribing evaluates emotional ecology and thermal responses rather than masking isolated headaches.",
+    image: "/images/journal-featured.jpg",
     isFeatured: true
   },
   {
@@ -19,7 +20,8 @@ const articles = [
     categorySlug: "chronic-care",
     date: "October 2026 [Placeholder]",
     readTime: "5 Min Read",
-    excerpt: "As desert air cools across Southern Rajasthan, dry dust and temperature shifts trigger chronic sneezing and bronchial irritation. How constitutional homeopathy builds respiratory resistance from within.",
+    excerpt: "How constitutional homeopathy builds internal respiratory resistance during Southern Rajasthan's dry seasonal shifts.",
+    image: "/images/condition-allergies.jpg",
     isFeatured: false
   },
   {
@@ -29,7 +31,8 @@ const articles = [
     categorySlug: "pediatric",
     date: "September 2026 [Placeholder]",
     readTime: "4 Min Read",
-    excerpt: "Children respond with remarkable speed to minimal homeopathic micro-doses. Why early constitutional support helps manage recurrent ear infections, tonsillitis, and eczema naturally.",
+    excerpt: "Why minimal non-toxic micro-doses effectively support childhood immunity, recurrent coughs, and tonsillitis.",
+    image: "/images/condition-pediatric.jpg",
     isFeatured: false
   },
   {
@@ -39,7 +42,8 @@ const articles = [
     categorySlug: "science",
     date: "August 2026 [Placeholder]",
     readTime: "7 Min Read",
-    excerpt: "Demystifying the principle of infinitesimal doses and hormesis in modern biological science. How ultra-high dilutions act as nanomedical bio-regulatory informational signals.",
+    excerpt: "Demystifying ultra-dilutions and hormesis as bio-regulatory informational signals for cellular vitality.",
+    image: "/images/approach-prescribe.jpg",
     isFeatured: false
   },
   {
@@ -49,7 +53,8 @@ const articles = [
     categorySlug: "lifestyle",
     date: "July 2026 [Placeholder]",
     readTime: "5 Min Read",
-    excerpt: "Chronic bloating, hyperacidity, and irritable bowel symptoms are rarely isolated gut events. Exploring the deep psychosomatic connections explored during an unhurried homeopathic intake.",
+    excerpt: "Exploring psychosomatic gut triggers, hyperacidity, and functional bowel symptoms during unhurried intake.",
+    image: "/images/condition-gut.jpg",
     isFeatured: false
   },
   {
@@ -59,7 +64,8 @@ const articles = [
     categorySlug: "philosophy",
     date: "June 2026 [Placeholder]",
     readTime: "4 Min Read",
-    excerpt: "Separating fact from folklore regarding coffee, raw onions, mint, and airport X-rays. A practical, evidence-based guide for patients taking daily constitutional remedies.",
+    excerpt: "A practical guide on coffee, mint, aromas, and storing remedies safely for maximum therapeutic potency.",
+    image: "/images/service-followup.jpg",
     isFeatured: false
   }
 ];
@@ -122,15 +128,16 @@ const regularArticles = articles.filter(a => !a.isFeatured);
           </div>
 
           <div class="featured-visual">
-            <div class="featured-symbol-frame">
-              <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor">
-                <circle cx="32" cy="32" r="30" stroke="#355D48" stroke-width="1.5" stroke-dasharray="4 4"/>
-                <path d="M32 50V22" stroke="#355D48" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M32 34C24 31 16 34 12 42C21 43 30 38 32 34Z" fill="#A3B18A" fill-opacity="0.5" stroke="#355D48" stroke-width="2"/>
-                <path d="M32 27C40 24 48 27 52 35C43 36 34 31 32 27Z" fill="#B9A77D" fill-opacity="0.5" stroke="#355D48" stroke-width="2"/>
-                <circle cx="32" cy="14" r="6" fill="#355D48"/>
-              </svg>
-              <span class="symbol-label">Featured Clinical Essay</span>
+            <div class="featured-photo-frame">
+              <img 
+                src={featuredArticle.image} 
+                alt={featuredArticle.title}
+                class="featured-photo-img"
+                width="480"
+                height="340"
+                loading="eager"
+              />
+              <span class="photo-caption-badge">Featured Clinical Essay</span>
             </div>
           </div>
         </div>
@@ -154,24 +161,30 @@ const regularArticles = articles.filter(a => !a.isFeatured);
       <div class="articles-grid" id="articlesGrid">
         {regularArticles.map((art) => (
           <article class="article-card card-editorial" data-category={art.categorySlug}>
-            <div class="article-top">
-              <span class="badge badge-sage">{art.category}</span>
-              <span class="article-time">{art.readTime}</span>
+            <div class="article-img-wrap">
+              <img src={art.image} alt={art.title} class="article-img" loading="lazy" width="360" height="200" />
+              <span class="badge badge-sage article-img-badge">{art.category}</span>
             </div>
 
-            <h3 class="article-card-title">
-              <a href="#">{art.title}</a>
-            </h3>
+            <div class="article-card-body">
+              <div class="article-top">
+                <span class="article-time">{art.readTime}</span>
+                <span class="article-date">{art.date}</span>
+              </div>
 
-            <p class="article-card-excerpt">
-              {art.excerpt}
-            </p>
+              <h3 class="article-card-title">
+                <a href="#">{art.title}</a>
+              </h3>
 
-            <div class="article-card-footer">
-              <span class="article-date">{art.date}</span>
-              <span class="read-more-link">
-                Read Essay &rarr;
-              </span>
+              <p class="article-card-excerpt">
+                {art.excerpt}
+              </p>
+
+              <div class="article-card-footer">
+                <span class="read-more-link">
+                  Read Essay &rarr;
+                </span>
+              </div>
             </div>
           </article>
         ))}
@@ -282,26 +295,43 @@ const regularArticles = articles.filter(a => !a.isFeatured);
     color: var(--color-charcoal-light);
   }
 
-  .featured-symbol-frame {
-    aspect-ratio: 1;
-    background-color: var(--color-white);
+  .featured-photo-frame {
+    position: relative;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-beige);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    overflow: hidden;
     box-shadow: var(--shadow-card);
-    padding: 2rem;
+    border: 1px solid var(--color-beige-dark);
+    background-color: var(--color-forest-dark);
+    height: 100%;
+    min-height: 260px;
   }
 
-  .symbol-label {
-    font-size: 0.75rem;
+  .featured-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(106%) saturate(94%);
+    transition: transform var(--transition-slow);
+  }
+
+  .featured-photo-frame:hover .featured-photo-img {
+    transform: scale(1.03);
+  }
+
+  .photo-caption-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    background-color: rgba(48, 56, 50, 0.88);
+    backdrop-filter: blur(4px);
+    color: var(--color-gold-light);
+    font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-forest);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-xs);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   }
 
   /* Category Filter Bar */
@@ -358,9 +388,53 @@ const regularArticles = articles.filter(a => !a.isFeatured);
   .article-card {
     display: flex;
     flex-direction: column;
-    padding: 2rem 1.75rem;
+    padding: 0;
+    overflow: hidden;
     height: 100%;
     background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-beige);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .article-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .article-img-wrap {
+    width: 100%;
+    height: 185px;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-forest-dark);
+  }
+
+  .article-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(106%) saturate(92%);
+    transition: transform var(--transition-slow);
+  }
+
+  .article-card:hover .article-img {
+    transform: scale(1.05);
+  }
+
+  .article-img-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+  }
+
+  .article-card-body {
+    padding: 1.25rem 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   .article-top {
@@ -368,7 +442,7 @@ const regularArticles = articles.filter(a => !a.isFeatured);
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
   }
 
   .article-time {

@@ -9,6 +9,8 @@ interface Props {
   isPopular?: boolean;
   ctaText?: string;
   ctaHref?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 const {
@@ -17,59 +19,78 @@ const {
   duration,
   description,
   features = [],
-  feePlaceholder = "₹ [Verified On Request]",
+  feePlaceholder = "Verified on Request",
   isPopular = false,
-  ctaText = "Request Consultation",
-  ctaHref = "/book-consultation"
+  ctaText = "Book Consultation",
+  ctaHref = "/book-consultation",
+  image,
+  imageAlt
 } = Astro.props;
 ---
 
-<div class={`service-card card-editorial ${isPopular ? 'popular-card' : ''}`}>
+<div class={`service-card card-editorial ${isPopular ? 'popular-card' : ''} ${image ? 'has-top-image' : ''}`}>
   {isPopular && (
     <div class="popular-ribbon">
-      <span>Most Requested</span>
+      <span>Recommended</span>
     </div>
   )}
 
-  <div class="service-header">
-    <div class="service-badges">
-      <span class="badge badge-sage">{badge}</span>
-      <span class="service-duration">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-        {duration}
-      </span>
+  {image && (
+    <div class="service-image-wrap">
+      <img src={image} alt={imageAlt || title} class="service-card-img" loading="lazy" />
+      <span class="badge badge-sage service-img-badge">{badge}</span>
     </div>
-    <h3 class="service-title">{title}</h3>
-    <p class="service-desc">{description}</p>
-  </div>
+  )}
 
-  <div class="service-divider"></div>
-
-  <div class="service-body">
-    <p class="feature-label">Session Highlights:</p>
-    <ul class="feature-list" role="list">
-      {features.map((item) => (
-        <li>
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="20 6 9 17 4 12"></polyline>
+  <div class="service-card-inner">
+    <div class="service-header">
+      {!image && (
+        <div class="service-badges">
+          <span class="badge badge-sage">{badge}</span>
+          <span class="service-duration">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            {duration}
+          </span>
+        </div>
+      )}
+      {image && (
+        <div class="service-duration-inline">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-
-  <div class="service-footer">
-    <div class="fee-block">
-      <span class="fee-caption">Consultation Fee</span>
-      <span class="fee-amount">{feePlaceholder}</span>
+          <span>{duration}</span>
+        </div>
+      )}
+      <h3 class="service-title">{title}</h3>
+      <p class="service-desc">{description}</p>
     </div>
-    <a href={ctaHref} class={`btn ${isPopular ? 'btn-primary' : 'btn-secondary'} btn-sm`}>
-      {ctaText}
-    </a>
+
+    <div class="service-body">
+      <ul class="feature-list" role="list">
+        {features.map((item) => (
+          <li>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="service-footer">
+      <div class="fee-block">
+        <span class="fee-caption">Consultation Fee</span>
+        <span class="fee-amount">{feePlaceholder}</span>
+      </div>
+      <a href={ctaHref} class={`btn ${isPopular ? 'btn-primary' : 'btn-secondary'} btn-sm`}>
+        {ctaText}
+      </a>
+    </div>
   </div>
 </div>
 
@@ -79,28 +100,84 @@ const {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 2.25rem 2rem;
+    padding: 1.75rem 1.5rem;
     background-color: var(--color-white);
+    border-radius: var(--radius-md);
+  }
+
+  .service-card.has-top-image {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .service-image-wrap {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-forest-dark);
+  }
+
+  .service-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(105%) saturate(94%) brightness(95%);
+    transition: transform var(--transition-slow);
+  }
+
+  .service-card:hover .service-card-img {
+    transform: scale(1.05);
+  }
+
+  .service-img-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(4px);
+  }
+
+  .service-card.has-top-image .service-card-inner {
+    padding: 1.35rem 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .service-duration-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--color-charcoal-muted);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-duration-inline svg {
+    color: var(--color-forest);
   }
 
   .popular-card {
-    border-color: var(--color-forest);
-    box-shadow: 0 12px 36px -4px rgba(53, 93, 72, 0.15);
+    border: 1.5px solid var(--color-forest);
+    box-shadow: 0 10px 28px -4px rgba(53, 93, 72, 0.16);
   }
 
   .popular-ribbon {
     position: absolute;
-    top: -12px;
-    right: 24px;
+    top: 10px;
+    right: 14px;
+    z-index: 2;
     background-color: var(--color-forest);
     color: var(--color-white);
-    font-size: 0.71875rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    padding: 0.25rem 0.85rem;
+    padding: 0.2rem 0.75rem;
     border-radius: var(--radius-full);
-    box-shadow: 0 4px 10px rgba(53, 93, 72, 0.25);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   }
 
   .service-badges {
@@ -108,15 +185,14 @@ const {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
   }
 
   .service-duration {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.78125rem;
+    font-size: 0.75rem;
     color: var(--color-charcoal-muted);
     font-weight: 500;
   }
@@ -126,65 +202,54 @@ const {
   }
 
   .service-title {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     color: var(--color-charcoal);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.4rem;
     line-height: 1.3;
   }
 
   .service-desc {
-    font-size: 0.90625rem;
-    line-height: 1.6;
+    font-size: 0.84375rem;
+    line-height: 1.5;
     color: var(--color-charcoal-muted);
-    margin-bottom: 0;
-  }
-
-  .service-divider {
-    height: 1px;
-    background-color: var(--color-beige);
-    margin: 1.5rem 0;
+    margin-bottom: 1rem;
   }
 
   .service-body {
     flex-grow: 1;
-    margin-bottom: 1.5rem;
-  }
-
-  .feature-label {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-forest);
-    margin-bottom: 0.875rem;
+    margin-bottom: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-beige);
   }
 
   .feature-list {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .feature-list li {
     display: flex;
     align-items: flex-start;
-    gap: 0.625rem;
-    font-size: 0.875rem;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
     color: var(--color-charcoal);
-    margin-bottom: 0.6rem;
-    line-height: 1.5;
+    line-height: 1.45;
   }
 
   .feature-list svg {
     color: var(--color-forest);
     flex-shrink: 0;
-    margin-top: 0.2rem;
+    margin-top: 0.15rem;
   }
 
   .service-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding-top: 1.25rem;
+    gap: 0.75rem;
+    padding-top: 1rem;
     border-top: 1px solid var(--color-beige);
   }
 
@@ -194,15 +259,15 @@ const {
   }
 
   .fee-caption {
-    font-size: 0.71875rem;
+    font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-charcoal-light);
   }
 
   .fee-amount {
-    font-family: var(--font-serif);
-    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
     font-weight: 700;
     color: var(--color-forest);
   }
