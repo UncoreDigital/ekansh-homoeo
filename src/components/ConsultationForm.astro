@@ -1,0 +1,693 @@
+---
+interface Props {
+  defaultModality?: 'in-clinic' | 'online';
+}
+
+const { defaultModality = 'in-clinic' } = Astro.props;
+---
+
+<div class="booking-engine-wrapper">
+  <!-- Frontend Prototype Demo Alert -->
+  <div class="prototype-banner">
+    <div class="banner-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <div class="banner-content">
+      <strong>Frontend Demonstration Notice:</strong> This consultation booking portal is an interactive frontend prototype. Submitting this form displays a demonstration summary and prepares a direct WhatsApp confirmation request. It does not create an automated clinical record until confirmed by the clinic staff.
+    </div>
+  </div>
+
+  <div class="form-card card-editorial">
+    <div class="form-header">
+      <span class="text-eyebrow">Patient Intake Portal</span>
+      <h3 class="form-title">Request a Consultation</h3>
+      <p class="form-subtitle">
+        Fill out your details below. We will connect with you to confirm your appointment slot and provide preparation guidance for your constitutional case-taking.
+      </p>
+    </div>
+
+    <form id="consultationForm" novalidate>
+      <!-- Step 1: Modality Selection -->
+      <div class="form-group">
+        <label class="form-label">Consultation Modality <span class="required">*</span></label>
+        <div class="modality-pills">
+          <label class="modality-pill">
+            <input 
+              type="radio" 
+              name="consultationMode" 
+              value="In-Clinic Visit (Rajsamand)" 
+              checked={defaultModality === 'in-clinic'} 
+            />
+            <div class="pill-card">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <div>
+                <strong>In-Clinic Visit</strong>
+                <small>Physical Clinic, Rajsamand</small>
+              </div>
+            </div>
+          </label>
+
+          <label class="modality-pill">
+            <input 
+              type="radio" 
+              name="consultationMode" 
+              value="Online Video/Audio Consultation" 
+              checked={defaultModality === 'online'} 
+            />
+            <div class="pill-card">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+              </svg>
+              <div>
+                <strong>Online Consultation</strong>
+                <small>Nationwide Video / Tele-Consult</small>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 2: Patient Information -->
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label for="patientName" class="form-label">Full Name of Patient <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="patientName" 
+            name="patientName" 
+            class="form-control" 
+            placeholder="e.g. Ramesh Sharma" 
+            required 
+          />
+          <span class="form-error" id="nameError">Please enter a valid full name (minimum 3 characters).</span>
+        </div>
+
+        <div class="form-group col-half">
+          <label for="patientPhone" class="form-label">Phone Number <span class="required">*</span></label>
+          <input 
+            type="tel" 
+            id="patientPhone" 
+            name="patientPhone" 
+            class="form-control" 
+            placeholder="e.g. 9876543210" 
+            required 
+          />
+          <span class="form-error" id="phoneError">Please enter a valid 10-digit Indian mobile number.</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label for="patientEmail" class="form-label">Email Address <span class="optional">(Optional)</span></label>
+          <input 
+            type="email" 
+            id="patientEmail" 
+            name="patientEmail" 
+            class="form-control" 
+            placeholder="name@example.com" 
+          />
+          <span class="form-error" id="emailError">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-group col-half">
+          <label for="preferredDate" class="form-label">Preferred Date <span class="required">*</span></label>
+          <input 
+            type="date" 
+            id="preferredDate" 
+            name="preferredDate" 
+            class="form-control" 
+            required 
+          />
+          <span class="form-error" id="dateError">Please choose a preferred consultation date.</span>
+        </div>
+      </div>
+
+      <!-- Step 3: Preferred Time Slot -->
+      <div class="form-group">
+        <label for="preferredTime" class="form-label">Preferred Time Window <span class="required">*</span></label>
+        <select id="preferredTime" name="preferredTime" class="form-control" required>
+          <option value="">-- Select Preferred Time Slot --</option>
+          <option value="Morning Session (10:00 AM - 1:00 PM)">Morning Session (10:00 AM - 1:00 PM)</option>
+          <option value="Evening Session (5:00 PM - 8:00 PM)">Evening Session (5:00 PM - 8:00 PM)</option>
+          <option value="Special Prior Appointment (Sunday / Urgent)">Special Prior Appointment</option>
+        </select>
+        <span class="form-error" id="timeError">Please select a time slot.</span>
+      </div>
+
+      <!-- Step 4: Health Concern Message -->
+      <div class="form-group">
+        <label for="healthConcern" class="form-label">Brief Description of Health Concern <span class="optional">(Optional & Confidential)</span></label>
+        <textarea 
+          id="healthConcern" 
+          name="healthConcern" 
+          class="form-control" 
+          rows="3" 
+          placeholder="e.g. Seeking constitutional care for seasonal allergic asthma of 3 years duration..."
+        ></textarea>
+        <p class="form-help">All health information shared is treated with strict medical confidentiality.</p>
+      </div>
+
+      <!-- Consent Agreement -->
+      <div class="form-group consent-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="consentCheck" name="consent" required />
+          <span>I understand that this request is subject to clinic confirmation and that homeopathy does not substitute emergency medical services.</span>
+        </label>
+        <span class="form-error" id="consentError">You must accept the medical notice to proceed.</span>
+      </div>
+
+      <div class="form-submit-row">
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+          <span>Submit Consultation Request</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <p class="security-note">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          Encrypted & Protected Patient Channel
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Interactive Confirmation Demonstration Modal -->
+  <div class="modal-overlay" id="confirmationModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-success-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h4 class="modal-title">Consultation Request Generated</h4>
+        <span class="badge badge-sage">Frontend Demonstration Mode</span>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Thank you, <strong id="modalPatientName">Patient</strong>! Your demonstration appointment inquiry has been formulated successfully.
+        </p>
+
+        <div class="request-summary-box">
+          <div class="summary-line">
+            <span class="summary-key">Consultation Modality:</span>
+            <span class="summary-val" id="modalModality">In-Clinic</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-key">Phone:</span>
+            <span class="summary-val" id="modalPhone">+91</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-key">Preferred Date:</span>
+            <span class="summary-val" id="modalDate">YYYY-MM-DD</span>
+          </div>
+          <div class="summary-line">
+            <span class="summary-key">Time Slot:</span>
+            <span class="summary-val" id="modalTime">Morning</span>
+          </div>
+          <div class="summary-line" id="modalConcernLine">
+            <span class="summary-key">Health Concern:</span>
+            <span class="summary-val" id="modalConcern">None specified</span>
+          </div>
+        </div>
+
+        <div class="whatsapp-prompt-box">
+          <p class="whatsapp-prompt-text">
+            <strong>Instant WhatsApp Confirmation:</strong> To dispatch these inquiry details directly to Ekansh Clinic's reception desk on WhatsApp, click the button below:
+          </p>
+          <a href="#" id="modalWhatsAppBtn" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg" style="width: 100%;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            Confirm on WhatsApp Now
+          </a>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" id="closeModalBtn">
+          Close Demonstration
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .booking-engine-wrapper {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Prototype Alert Banner */
+  .prototype-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1.125rem 1.35rem;
+    background-color: var(--color-amber-bg);
+    border: 1px solid var(--color-amber-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+    font-size: 0.84375rem;
+    line-height: 1.5;
+    color: var(--color-charcoal);
+  }
+
+  .banner-icon {
+    color: var(--color-amber-text);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .banner-content strong {
+    color: var(--color-amber-text);
+  }
+
+  /* Form Card */
+  .form-card {
+    padding: clamp(2rem, 4vw, 3rem);
+    background-color: var(--color-white);
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-beige);
+    padding-bottom: 1.5rem;
+  }
+
+  .form-title {
+    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+    color: var(--color-forest);
+    margin-top: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.90625rem;
+    color: var(--color-charcoal-muted);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .required {
+    color: #C62828;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .col-half {
+    flex: 1;
+  }
+
+  @media (max-width: 640px) {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  /* Modality Pills */
+  .modality-pills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 540px) {
+    .modality-pills {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .modality-pill input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pill-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-ivory);
+    border: 1.5px solid var(--color-beige);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .pill-card svg {
+    color: var(--color-forest);
+    flex-shrink: 0;
+  }
+
+  .pill-card strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-charcoal);
+  }
+
+  .pill-card small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-charcoal-muted);
+  }
+
+  .modality-pill input:checked + .pill-card {
+    border-color: var(--color-forest);
+    background-color: var(--color-sage-subtle);
+    box-shadow: 0 0 0 2px rgba(53, 93, 72, 0.15);
+  }
+
+  /* Consent Check */
+  .consent-group {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--color-ivory);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-beige);
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-charcoal-muted);
+    cursor: pointer;
+  }
+
+  .checkbox-label input {
+    margin-top: 0.2rem;
+    accent-color: var(--color-forest);
+  }
+
+  /* Submit Row */
+  .form-submit-row {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .form-submit-row button {
+    width: 100%;
+  }
+
+  .security-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78125rem;
+    color: var(--color-charcoal-light);
+    margin-bottom: 0;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(48, 56, 50, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .modal-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    max-width: 520px;
+    width: 100%;
+    padding: 2.25rem;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(20px);
+    transition: transform var(--transition-base);
+  }
+
+  .modal-overlay.is-active .modal-card {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-success-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    border: 2px solid var(--color-sage);
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+    color: var(--color-forest);
+    margin-bottom: 0.35rem;
+  }
+
+  .modal-desc {
+    font-size: 0.90625rem;
+    color: var(--color-charcoal-muted);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .request-summary-box {
+    background-color: var(--color-ivory);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.84375rem;
+  }
+
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(233, 228, 215, 0.6);
+  }
+
+  .summary-line:last-child {
+    border-bottom: none;
+  }
+
+  .summary-key {
+    color: var(--color-charcoal-muted);
+  }
+
+  .summary-val {
+    font-weight: 600;
+    color: var(--color-charcoal);
+  }
+
+  .whatsapp-prompt-box {
+    background-color: #E8F5E9;
+    border: 1px solid #C8E6C9;
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .whatsapp-prompt-text {
+    font-size: 0.84375rem;
+    color: #1B5E20;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<script>
+  function setupBookingForm() {
+    const form = document.getElementById('consultationForm') as HTMLFormElement | null;
+    const modal = document.getElementById('confirmationModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const whatsAppBtn = document.getElementById('modalWhatsAppBtn') as HTMLAnchorElement | null;
+    
+    // Set minimum date to tomorrow
+    const dateInput = document.getElementById('preferredDate') as HTMLInputElement | null;
+    if (dateInput) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const yyyy = tomorrow.getFullYear();
+      const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+      const dd = String(tomorrow.getDate()).padStart(2, '0');
+      dateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+
+    if (!form || !modal) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+
+      // Validate Name
+      const nameInput = document.getElementById('patientName') as HTMLInputElement;
+      const nameError = document.getElementById('nameError');
+      if (nameInput.value.trim().length < 3) {
+        nameInput.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        nameInput.classList.remove('is-invalid');
+      }
+
+      // Validate Phone (Indian 10-digit)
+      const phoneInput = document.getElementById('patientPhone') as HTMLInputElement;
+      const phoneError = document.getElementById('phoneError');
+      const cleanPhone = phoneInput.value.replace(/[\s\-\+]/g, '');
+      if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+        phoneInput.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        phoneInput.classList.remove('is-invalid');
+      }
+
+      // Validate Email if present
+      const emailInput = document.getElementById('patientEmail') as HTMLInputElement;
+      if (emailInput.value.trim()) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          emailInput.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          emailInput.classList.remove('is-invalid');
+        }
+      } else {
+        emailInput.classList.remove('is-invalid');
+      }
+
+      // Validate Date
+      const preferredDate = document.getElementById('preferredDate') as HTMLInputElement;
+      if (!preferredDate.value) {
+        preferredDate.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        preferredDate.classList.remove('is-invalid');
+      }
+
+      // Validate Time
+      const preferredTime = document.getElementById('preferredTime') as HTMLSelectElement;
+      if (!preferredTime.value) {
+        preferredTime.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        preferredTime.classList.remove('is-invalid');
+      }
+
+      // Validate Consent
+      const consentCheck = document.getElementById('consentCheck') as HTMLInputElement;
+      const consentError = document.getElementById('consentError');
+      if (!consentCheck.checked) {
+        if (consentError) consentError.style.display = 'block';
+        isValid = false;
+      } else {
+        if (consentError) consentError.style.display = 'none';
+      }
+
+      if (!isValid) return;
+
+      // Extract values
+      const modeEl = form.querySelector('input[name="consultationMode"]:checked') as HTMLInputElement;
+      const modality = modeEl ? modeEl.value : 'In-Clinic';
+      const patientName = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const date = preferredDate.value;
+      const time = preferredTime.value;
+      const concernInput = document.getElementById('healthConcern') as HTMLTextAreaElement;
+      const concern = concernInput ? concernInput.value.trim() : '';
+
+      // Populate Modal
+      const modalPatientEl = document.getElementById('modalPatientName');
+      const modalModalityEl = document.getElementById('modalModality');
+      const modalPhoneEl = document.getElementById('modalPhone');
+      const modalDateEl = document.getElementById('modalDate');
+      const modalTimeEl = document.getElementById('modalTime');
+      const modalConcernEl = document.getElementById('modalConcern');
+
+      if (modalPatientEl) modalPatientEl.textContent = patientName;
+      if (modalModalityEl) modalModalityEl.textContent = modality;
+      if (modalPhoneEl) modalPhoneEl.textContent = phone;
+      if (modalDateEl) modalDateEl.textContent = date;
+      if (modalTimeEl) modalTimeEl.textContent = time;
+      if (modalConcernEl) modalConcernEl.textContent = concern || 'None provided';
+
+      // Build WhatsApp intent URL
+      // Placeholder phone number: 919876543210
+      const textPayload = `Hello Ekansh Homoeopathic Clinic,\n\nI would like to request an appointment:\n- Patient: ${patientName}\n- Phone: ${phone}\n- Mode: ${modality}\n- Date: ${date}\n- Slot: ${time}${concern ? `\n- Concern: ${concern}` : ''}\n\n(Generated via Website Booking Portal)`;
+      const waUrl = `https://wa.me/919876543210?text=${encodeURIComponent(textPayload)}`;
+
+      if (whatsAppBtn) {
+        whatsAppBtn.href = waUrl;
+      }
+
+      // Show Modal
+      modal.classList.add('is-active');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+        form.reset();
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupBookingForm);
+</script>

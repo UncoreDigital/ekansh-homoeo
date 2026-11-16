@@ -1,0 +1,40 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'gold' | 'outline-white';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  className?: string;
+  id?: string;
+  target?: string;
+  rel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  className = '',
+  id,
+  target,
+  rel,
+} = Astro.props;
+
+const classes = [
+  'btn',
+  `btn-${variant}`,
+  size !== 'md' ? `btn-${size}` : '',
+  className
+].filter(Boolean).join(' ');
+---
+
+{href ? (
+  <a href={href} class={classes} id={id} target={target} rel={rel}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes} id={id}>
+    <slot />
+  </button>
+)}

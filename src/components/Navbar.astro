@@ -1,0 +1,502 @@
+---
+interface Props {
+  activeNav?: string;
+}
+
+const { activeNav = "home" } = Astro.props;
+
+const navLinks = [
+  { name: "Home", href: "/", id: "home" },
+  { name: "About the Doctor", href: "/about", id: "about" },
+  { name: "Our Approach", href: "/approach", id: "approach" },
+  { name: "Services", href: "/services", id: "services" },
+  { name: "Health Journal", href: "/journal", id: "journal" },
+  { name: "Contact Us", href: "/contact", id: "contact" },
+];
+---
+
+<header class="site-header">
+  <div class="top-announcement-bar">
+    <div class="container top-bar-inner">
+      <span class="top-bar-item">
+        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        Rajsamand, Rajasthan &bull; Serving Local & Online Patients
+      </span>
+      <span class="top-bar-item hide-on-mobile">
+        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        Mon - Sat: 10:00 AM - 1:00 PM &bull; 5:00 PM - 8:00 PM
+      </span>
+      <span class="top-bar-item">
+        <a href="tel:+919876543210" class="top-bar-link" aria-label="Call clinic">
+          <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span class="phone-placeholder">+91 [Clinic Phone]</span>
+        </a>
+      </span>
+    </div>
+  </div>
+
+  <nav class="main-nav" aria-label="Main Navigation">
+    <div class="container nav-container">
+      <!-- Brand Logo -->
+      <a href="/" class="brand-link" aria-label="Ekansh Homoeopathic Clinic Homepage">
+        <div class="brand-logo-icon">
+          <!-- Botanical Emblem SVG -->
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor">
+            <path d="M16 28V12" stroke="#355D48" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 18C12 16 7 18 5 22C10 23 15 20 16 18Z" fill="#A3B18A" fill-opacity="0.35" stroke="#355D48" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M16 14C20 12 25 14 27 18C22 19 17 16 16 14Z" fill="#B9A77D" fill-opacity="0.35" stroke="#355D48" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="16" cy="8" r="4" fill="#355D48"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">EKANSH</span>
+          <span class="brand-descriptor">HOMOEOPATHIC CLINIC</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links hide-on-mobile" role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a 
+              href={link.href} 
+              class={`nav-link ${activeNav === link.id ? 'is-active' : ''}`}
+            >
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Desktop CTA Button -->
+      <div class="nav-action hide-on-mobile">
+        <a href="/book-consultation" class="btn btn-primary btn-sm">
+          Book Consultation
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button 
+        type="button" 
+        class="mobile-menu-toggle hide-on-desktop" 
+        id="mobileMenuToggle" 
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobileDrawer"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Off-Canvas Drawer -->
+  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="brand-text">
+        <span class="brand-name">EKANSH</span>
+        <span class="brand-descriptor">HOMOEOPATHIC CLINIC</span>
+      </div>
+      <button type="button" class="drawer-close" id="drawerClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <ul class="drawer-nav-list" role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a 
+              href={link.href} 
+              class={`drawer-nav-link ${activeNav === link.id ? 'is-active' : ''}`}
+            >
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="drawer-cta">
+        <a href="/book-consultation" class="btn btn-primary btn-lg" style="width: 100%;">
+          Book Consultation
+        </a>
+      </div>
+
+      <div class="drawer-info-block">
+        <p class="drawer-info-title">Rajsamand Clinic</p>
+        <p class="drawer-info-text">Mon - Sat: 10 AM - 1 PM | 5 PM - 8 PM</p>
+        <p class="drawer-info-text">Online Consultations Available Nationwide</p>
+        <div class="drawer-contact-links">
+          <a href="tel:+919876543210" class="drawer-contact-pill">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Call Clinic
+          </a>
+          <a href="https://wa.me/919876543210?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20enquire%20about%20a%20consultation." target="_blank" rel="noopener noreferrer" class="drawer-contact-pill whatsapp">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-ivory);
+    box-shadow: 0 1px 0 rgba(48, 56, 50, 0.08);
+  }
+
+  /* Top Announcement Bar */
+  .top-announcement-bar {
+    background-color: var(--color-forest);
+    color: var(--color-ivory);
+    font-size: 0.78125rem;
+    padding: 0.4rem 0;
+    letter-spacing: 0.02em;
+  }
+
+  .top-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .top-bar-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .top-icon {
+    color: var(--color-sage);
+    flex-shrink: 0;
+  }
+
+  .top-bar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-gold-light);
+    font-weight: 500;
+  }
+
+  .top-bar-link:hover {
+    color: var(--color-white);
+  }
+
+  /* Main Nav */
+  .main-nav {
+    background-color: rgba(246, 245, 239, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 1.5rem;
+  }
+
+  /* Brand Link */
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: var(--color-charcoal);
+  }
+
+  .brand-logo-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-name {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-forest);
+    letter-spacing: 0.04em;
+  }
+
+  .brand-descriptor {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--color-charcoal-muted);
+  }
+
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.90625rem;
+    font-weight: 500;
+    color: var(--color-charcoal);
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-forest);
+  }
+
+  .nav-link.is-active {
+    color: var(--color-forest);
+    font-weight: 600;
+  }
+
+  .nav-link.is-active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--color-forest);
+    border-radius: var(--radius-full);
+  }
+
+  /* Mobile Hamburger Button */
+  .mobile-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+  }
+
+  .hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-forest);
+    border-radius: 2px;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(48, 56, 50, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .mobile-drawer-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85%;
+    max-width: 360px;
+    background-color: var(--color-ivory);
+    z-index: 1100;
+    box-shadow: var(--shadow-drawer);
+    transform: translateX(100%);
+    transition: transform var(--transition-slow);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .mobile-drawer.is-open {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .drawer-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-charcoal);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+  }
+
+  .drawer-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .drawer-nav-list {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .drawer-nav-link {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .drawer-nav-link.is-active {
+    color: var(--color-forest);
+  }
+
+  .drawer-cta {
+    margin-bottom: 2rem;
+  }
+
+  .drawer-info-block {
+    background-color: var(--color-white);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-beige);
+    padding: 1rem;
+    margin-top: auto;
+  }
+
+  .drawer-info-title {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-forest);
+    margin-bottom: 0.25rem;
+  }
+
+  .drawer-info-text {
+    font-size: 0.78125rem;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .drawer-contact-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .drawer-contact-pill {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-ivory);
+    border: 1px solid var(--color-beige);
+    color: var(--color-forest);
+  }
+
+  .drawer-contact-pill.whatsapp {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+    border-color: #C8E6C9;
+  }
+</style>
+
+<script>
+  function setupMobileMenu() {
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const closeBtn = document.getElementById('drawerClose');
+    const drawer = document.getElementById('mobileDrawer');
+    const overlay = document.getElementById('mobileDrawerOverlay');
+
+    if (!toggleBtn || !drawer || !overlay) return;
+
+    function openMenu() {
+      drawer.classList.add('is-open');
+      overlay.classList.add('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      drawer.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    toggleBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupMobileMenu);
+</script>

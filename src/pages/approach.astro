@@ -1,0 +1,356 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ApproachPillars from '../components/ApproachPillars.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+
+const caseTakingStages = [
+  {
+    stage: "Stage 1",
+    title: "Chief Complaint & Sensation Analysis",
+    time: "First 15 Minutes",
+    desc: "We explore your primary illness in exacting detail: its onset, character of sensation (throbbing, burning, aching), what relieves or aggravates it (temperature, motion, time of day), and its historical chronology."
+  },
+  {
+    stage: "Stage 2",
+    title: "Physical Generals & Thermal Ecology",
+    time: "15 to 30 Minutes",
+    desc: "Homeopathy views physical tendencies as essential constitutional markers. We evaluate appetite, thirst, cravings, aversions, perspiration patterns, thermal comfort (chilly vs warm), and sleep characteristics."
+  },
+  {
+    stage: "Stage 3",
+    title: "Emotional & Mental Disposition",
+    time: "30 to 45 Minutes",
+    desc: "Emotional stresses, life transitions, anxieties, grief, and temperamental traits directly influence neuro-endocrine vitality. We provide a calm, confidential space to share mental stressors without judgment."
+  },
+  {
+    stage: "Stage 4",
+    title: "Repertorisation & Remedy Selection",
+    time: "45 to 60 Minutes",
+    desc: "Synthesizing the totality of your symptoms using classical repertories to select the single, highest-similarity constitutional remedy in minimum therapeutic dose."
+  }
+];
+
+const medicineCareRules = [
+  {
+    rule: "Store Away From Strong Aromas",
+    desc: "Keep remedies away from strong aromatic substances such as camphor, menthol, essential oils, asafoetida (hing), perfumes, and eucalyptus."
+  },
+  {
+    rule: "Take On a Clean Palate",
+    desc: "Administer remedies at least 15 to 20 minutes before or after food, beverages, tea, coffee, or brushing teeth with mint toothpaste."
+  },
+  {
+    rule: "Protect from Direct Sunlight & Radiation",
+    desc: "Store bottles in a cool, dry, shaded drawer. Avoid exposure to intense heat, moisture, microwaves, and airport X-ray scanners where possible."
+  },
+  {
+    rule: "Avoid Direct Finger Contact",
+    desc: "Pour globules directly into the bottle cap or a clean spoon and dissolve under the tongue without handling them with warm hands."
+  }
+];
+
+const approachFAQs = [
+  {
+    question: "Why does the initial consultation take 45 to 60 minutes?",
+    answer: "Unlike conventional consultations that focus solely on the organ in pain, constitutional homeopathy must evaluate the totality of the person: your mind, body temperament, environmental triggers, and genetic medical history. This depth ensures the remedy matches your whole constitution."
+  },
+  {
+    question: "Can I take homeopathic medicines while on allopathic treatments?",
+    answer: "Yes, in many chronic conditions (e.g. hypertension, thyroid, diabetes), homeopathic constitutional remedies can be safely integrated alongside ongoing allopathic prescriptions. You should never abruptly stop prescribed medications without your prescribing physician's consent."
+  },
+  {
+    question: "Do homeopathic remedies have side effects or create dependency?",
+    answer: "When prescribed by a qualified homoeopath in appropriate minimum doses and potencies, homeopathic remedies are non-toxic, gentle, and non-habit forming. They stimulate your vital force rather than forcing chemical dependency."
+  },
+  {
+    question: "How are follow-up appointments conducted for online patients?",
+    answer: "Online patients schedule follow-up video reviews at 3 to 4 week intervals. We review symptom scorecards, assess constitutional shifts, and courier updated refills as required."
+  }
+];
+---
+
+<BaseLayout 
+  title="Our Approach | Ekansh Homoeopathic Clinic, Rajsamand"
+  description="Discover the classical constitutional consultation methodology at Ekansh Homoeopathic Clinic. Unhurried case-taking, root-cause healing, and patient-centered listening."
+  activeNav="approach"
+>
+  <!-- Header -->
+  <section class="page-header-section">
+    <div class="container text-center">
+      <span class="text-eyebrow">The Classical Method</span>
+      <h1 class="page-title">Our Clinical Approach</h1>
+      <p class="page-subtitle text-lead">
+        Care that begins with listening: understanding the individual totality, respecting the body's vital intelligence, and avoiding hasty symptom suppression.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4 Pillars Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="text-eyebrow">Sequential Care Journey</span>
+        <h2>The Four Pillars of Ekansh Care</h2>
+        <p class="text-lead">
+          From your very first consultation to long-term vitality, our treatment framework is designed around these foundational steps:
+        </p>
+      </div>
+
+      <ApproachPillars />
+    </div>
+  </section>
+
+  <!-- Deep Dive: Case Taking Anatomy -->
+  <section class="section-padding case-taking-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="text-eyebrow">Inside the Consultation Room</span>
+        <h2>What to Expect During Your 60-Minute Case-Taking</h2>
+        <p class="text-lead">
+          Your initial consultation is an in-depth clinical discovery session structured across four key phases:
+        </p>
+      </div>
+
+      <div class="stages-grid">
+        {caseTakingStages.map((item) => (
+          <div class="stage-card card-editorial">
+            <div class="stage-top">
+              <span class="stage-tag">{item.stage}</span>
+              <span class="stage-time">{item.time}</span>
+            </div>
+            <h3 class="stage-title">{item.title}</h3>
+            <p class="stage-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Medicine Care & Storage Precautions -->
+  <section class="section-padding storage-section">
+    <div class="container">
+      <div class="storage-box card-editorial card-beige">
+        <div class="storage-header">
+          <div class="storage-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div>
+            <span class="text-eyebrow">Patient Guidelines</span>
+            <h2 class="storage-title">Homeopathic Remedy Care & Antidote Precautions</h2>
+            <p class="storage-lead">
+              Homeopathic remedies are prepared through subtle potentisation. To preserve their efficacy, patients are advised to observe these essential handling rules:
+            </p>
+          </div>
+        </div>
+
+        <div class="rules-grid">
+          {medicineCareRules.map((item, idx) => (
+            <div class="rule-card">
+              <div class="rule-num">{idx + 1}</div>
+              <div>
+                <h4 class="rule-title">{item.rule}</h4>
+                <p class="rule-desc">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Telemedicine & Ayush Ethics Notice -->
+  <section class="section-padding-sm" id="telemedicine">
+    <div class="container">
+      <div class="medical-disclaimer-card">
+        <strong>Ayush Telemedicine Guidelines Notice:</strong> All online tele-consultations conducted by Ekansh Homoeopathic Clinic adhere strictly to the Registered Medical Practitioner Telemedicine Practice Guidelines. Telephonic or video appointments are scheduled by prior consent, patient identification is verified, and prescriptions are documented responsibly. In acute emergency conditions, patients are directed to immediate hospital casualty facilities.
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach FAQs -->
+  <section class="section-padding faq-section">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="text-eyebrow">Clinical Inquiries</span>
+        <h2>Questions About Our Methodology</h2>
+      </div>
+
+      <FAQAccordion items={approachFAQs} />
+
+      <div class="faq-cta text-center" style="margin-top: 2.5rem;">
+        <a href="/book-consultation" class="btn btn-primary btn-lg">
+          Begin Your Constitutional Journey
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header-section {
+    padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.18), transparent 70%);
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .page-title {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-forest);
+  }
+
+  .page-subtitle {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Stages Grid */
+  .case-taking-section {
+    background-color: var(--color-white);
+  }
+
+  .stages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .stages-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .stage-card {
+    padding: 2rem;
+  }
+
+  .stage-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .stage-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    background-color: var(--color-sage-subtle);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+  }
+
+  .stage-time {
+    font-size: 0.78125rem;
+    color: var(--color-gold);
+    font-weight: 600;
+  }
+
+  .stage-title {
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.5rem;
+  }
+
+  .stage-desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 0;
+  }
+
+  /* Storage Box */
+  .storage-box {
+    padding: clamp(2rem, 4vw, 3rem);
+  }
+
+  .storage-header {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 2.25rem;
+    align-items: flex-start;
+  }
+
+  .storage-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-forest);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .storage-title {
+    font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+    color: var(--color-forest);
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .storage-lead {
+    font-size: 0.9375rem;
+    color: var(--color-charcoal-muted);
+    line-height: 1.55;
+    margin-bottom: 0;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .rules-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .rule-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige-dark);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .rule-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .rule-title {
+    font-size: 0.95rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.35rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+
+  .rule-desc {
+    font-size: 0.84375rem;
+    line-height: 1.5;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 0;
+  }
+</style>

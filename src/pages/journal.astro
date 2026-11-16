@@ -1,0 +1,442 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const articles = [
+  {
+    id: 1,
+    title: "Understanding Constitutional Totality: Why Homeopathy Treats the Person, Not Just the Symptom",
+    category: "Clinical Philosophy",
+    categorySlug: "philosophy",
+    date: "November 2026 [Placeholder]",
+    readTime: "6 Min Read",
+    excerpt: "In classical constitutional prescribing, two patients with identical migraine symptoms may receive completely different remedies based on their emotional ecology, thermal reactions, and personal chronology.",
+    isFeatured: true
+  },
+  {
+    id: 2,
+    title: "The Seasonal Transition in Mewar: Gentle Strategies for Allergic Rhinitis & Respiratory Sensitivity",
+    category: "Chronic Care & Immunity",
+    categorySlug: "chronic-care",
+    date: "October 2026 [Placeholder]",
+    readTime: "5 Min Read",
+    excerpt: "As desert air cools across Southern Rajasthan, dry dust and temperature shifts trigger chronic sneezing and bronchial irritation. How constitutional homeopathy builds respiratory resistance from within.",
+    isFeatured: false
+  },
+  {
+    id: 3,
+    title: "Pediatric Wellness & Gentle Medicine: Nurturing a Child's Vital Defense Without Harsh Drugs",
+    category: "Pediatric Wellness",
+    categorySlug: "pediatric",
+    date: "September 2026 [Placeholder]",
+    readTime: "4 Min Read",
+    excerpt: "Children respond with remarkable speed to minimal homeopathic micro-doses. Why early constitutional support helps manage recurrent ear infections, tonsillitis, and eczema naturally.",
+    isFeatured: false
+  },
+  {
+    id: 4,
+    title: "The Science of the Minimum Dose: How Micro-Dilutions Stimulate Innate Cellular Immunity",
+    category: "Homeopathic Science",
+    categorySlug: "science",
+    date: "August 2026 [Placeholder]",
+    readTime: "7 Min Read",
+    excerpt: "Demystifying the principle of infinitesimal doses and hormesis in modern biological science. How ultra-high dilutions act as nanomedical bio-regulatory informational signals.",
+    isFeatured: false
+  },
+  {
+    id: 5,
+    title: "The Gut-Stress Axis: Managing Functional Digestive Disorders Through Holistic Case-Taking",
+    category: "Lifestyle & Seasonal Health",
+    categorySlug: "lifestyle",
+    date: "July 2026 [Placeholder]",
+    readTime: "5 Min Read",
+    excerpt: "Chronic bloating, hyperacidity, and irritable bowel symptoms are rarely isolated gut events. Exploring the deep psychosomatic connections explored during an unhurried homeopathic intake.",
+    isFeatured: false
+  },
+  {
+    id: 6,
+    title: "Homeopathic Medicine Storage & Antidote Myths: What You Actually Need to Know",
+    category: "Clinical Philosophy",
+    categorySlug: "philosophy",
+    date: "June 2026 [Placeholder]",
+    readTime: "4 Min Read",
+    excerpt: "Separating fact from folklore regarding coffee, raw onions, mint, and airport X-rays. A practical, evidence-based guide for patients taking daily constitutional remedies.",
+    isFeatured: false
+  }
+];
+
+const featuredArticle = articles.find(a => a.isFeatured) || articles[0];
+const regularArticles = articles.filter(a => !a.isFeatured);
+---
+
+<BaseLayout 
+  title="Health Journal & Clinical Insights | Ekansh Homoeopathic Clinic"
+  description="Evidence-informed wellness perspectives, constitutional health guides, and gentle medical reflections from Ekansh Homoeopathic Clinic in Rajsamand."
+  activeNav="journal"
+>
+  <!-- Header -->
+  <section class="page-header-section">
+    <div class="container text-center">
+      <span class="text-eyebrow">Perspectives & Education</span>
+      <h1 class="page-title">The Ekansh Health Journal</h1>
+      <p class="page-subtitle text-lead">
+        Thoughtful reflections on holistic healing, constitutional health, pediatric gentleness, and the timeless principles of classical homeopathy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Educational Disclaimer Banner -->
+  <section class="section-padding-sm" style="padding-bottom: 0;">
+    <div class="container">
+      <div class="medical-disclaimer-card">
+        <strong>Educational Purpose Notice:</strong> Articles published in the Ekansh Health Journal are intended solely for general patient education and wellness literacy. They do not constitute individualized medical prescriptions, clinical diagnosis, or self-treatment guides. Always consult a licensed homeopathic medical practitioner before taking any remedy.
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article Section -->
+  <section class="section-padding featured-section">
+    <div class="container">
+      <div class="featured-card card-editorial card-beige">
+        <div class="featured-grid">
+          <div class="featured-content">
+            <div class="article-meta">
+              <span class="badge badge-sage">{featuredArticle.category}</span>
+              <span class="meta-item">&bull; {featuredArticle.readTime}</span>
+              <span class="meta-item">&bull; By Dr. [Doctor Name Placeholder]</span>
+            </div>
+
+            <h2 class="featured-title">
+              <a href="#featured-read">{featuredArticle.title}</a>
+            </h2>
+
+            <p class="featured-excerpt">
+              {featuredArticle.excerpt}
+            </p>
+
+            <div class="featured-footer">
+              <span class="publish-date">{featuredArticle.date}</span>
+              <a href="#featured-read" class="btn btn-primary btn-sm">
+                Read Full Perspective
+              </a>
+            </div>
+          </div>
+
+          <div class="featured-visual">
+            <div class="featured-symbol-frame">
+              <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor">
+                <circle cx="32" cy="32" r="30" stroke="#355D48" stroke-width="1.5" stroke-dasharray="4 4"/>
+                <path d="M32 50V22" stroke="#355D48" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M32 34C24 31 16 34 12 42C21 43 30 38 32 34Z" fill="#A3B18A" fill-opacity="0.5" stroke="#355D48" stroke-width="2"/>
+                <path d="M32 27C40 24 48 27 52 35C43 36 34 31 32 27Z" fill="#B9A77D" fill-opacity="0.5" stroke="#355D48" stroke-width="2"/>
+                <circle cx="32" cy="14" r="6" fill="#355D48"/>
+              </svg>
+              <span class="symbol-label">Featured Clinical Essay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorized Articles Grid with Filter -->
+  <section class="section-padding articles-list-section">
+    <div class="container">
+      <!-- Filter Bar -->
+      <div class="category-filter-bar">
+        <button class="filter-btn is-active" data-filter="all">All Articles</button>
+        <button class="filter-btn" data-filter="philosophy">Clinical Philosophy</button>
+        <button class="filter-btn" data-filter="chronic-care">Chronic Care & Immunity</button>
+        <button class="filter-btn" data-filter="pediatric">Pediatric Wellness</button>
+        <button class="filter-btn" data-filter="science">Homeopathic Science</button>
+        <button class="filter-btn" data-filter="lifestyle">Lifestyle & Gut Health</button>
+      </div>
+
+      <div class="articles-grid" id="articlesGrid">
+        {regularArticles.map((art) => (
+          <article class="article-card card-editorial" data-category={art.categorySlug}>
+            <div class="article-top">
+              <span class="badge badge-sage">{art.category}</span>
+              <span class="article-time">{art.readTime}</span>
+            </div>
+
+            <h3 class="article-card-title">
+              <a href="#">{art.title}</a>
+            </h3>
+
+            <p class="article-card-excerpt">
+              {art.excerpt}
+            </p>
+
+            <div class="article-card-footer">
+              <span class="article-date">{art.date}</span>
+              <span class="read-more-link">
+                Read Essay &rarr;
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter / Consultation Reassurance -->
+  <section class="section-padding-sm newsletter-section">
+    <div class="container">
+      <div class="card-editorial card-forest text-center" style="padding: clamp(2rem, 4vw, 3.5rem);">
+        <span class="text-eyebrow" style="color: var(--color-gold-light);">Personalized Care Inquiries</span>
+        <h2 style="color: var(--color-white); margin-top: 0.5rem; margin-bottom: 1rem;">
+          Have a Question About Your Health Condition?
+        </h2>
+        <p style="max-width: 620px; margin: 0 auto 2rem; color: rgba(246, 245, 239, 0.9);">
+          General articles offer valuable context, but healing requires understanding your unique constitution. Schedule an unhurried consultation with the doctor to explore your individual case.
+        </p>
+        <a href="/book-consultation" class="btn btn-gold btn-lg">
+          Book an Individual Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header-section {
+    padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.18), transparent 70%);
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .page-title {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-forest);
+  }
+
+  .page-subtitle {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Featured Article */
+  .featured-section {
+    padding-top: 2rem;
+  }
+
+  .featured-card {
+    padding: clamp(2rem, 4vw, 3.5rem);
+    border: 1.5px solid var(--color-sage);
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+    color: var(--color-charcoal-muted);
+  }
+
+  .featured-title {
+    font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+    color: var(--color-forest);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .featured-title a:hover {
+    color: var(--color-forest-dark);
+  }
+
+  .featured-excerpt {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 2rem;
+  }
+
+  .featured-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-beige-dark);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .publish-date {
+    font-size: 0.8125rem;
+    color: var(--color-charcoal-light);
+  }
+
+  .featured-symbol-frame {
+    aspect-ratio: 1;
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-beige);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-card);
+    padding: 2rem;
+  }
+
+  .symbol-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+  }
+
+  /* Category Filter Bar */
+  .category-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter-btn {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige-dark);
+    color: var(--color-charcoal);
+    transition: all var(--transition-fast);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-forest);
+    color: var(--color-forest);
+  }
+
+  .filter-btn.is-active {
+    background-color: var(--color-forest);
+    color: var(--color-white);
+    border-color: var(--color-forest);
+  }
+
+  /* Articles Grid */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+
+  @media (max-width: 991px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .articles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.75rem;
+    height: 100%;
+    background-color: var(--color-white);
+  }
+
+  .article-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .article-time {
+    font-size: 0.75rem;
+    color: var(--color-charcoal-light);
+  }
+
+  .article-card-title {
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .article-card-title a:hover {
+    color: var(--color-forest);
+  }
+
+  .article-card-excerpt {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .article-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-beige);
+    font-size: 0.78125rem;
+  }
+
+  .article-date {
+    color: var(--color-charcoal-light);
+  }
+
+  .read-more-link {
+    font-weight: 600;
+    color: var(--color-forest);
+  }
+</style>
+
+<script>
+  function setupJournalFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const articles = document.querySelectorAll('#articlesGrid .article-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        const filter = btn.getAttribute('data-filter');
+
+        articles.forEach(art => {
+          const category = art.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            (art as HTMLElement).style.display = 'flex';
+          } else {
+            (art as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupJournalFilters);
+</script>

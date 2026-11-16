@@ -1,0 +1,71 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: string;
+}
+
+const {
+  title = "Ekansh Homoeopathic Clinic | Rajsamand, Rajasthan",
+  description = "Individualised constitutional homeopathic care in Rajsamand, Rajasthan. In-clinic and online patient consultations. Care that begins with listening.",
+  activeNav = "home"
+} = Astro.props;
+
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#355D48" />
+  
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content="Ekansh Homoeopathic Clinic" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  <!-- Google Fonts: Playfair Display & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org MedicalClinic JSON-LD -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalClinic",
+      "name": "Ekansh Homoeopathic Clinic",
+      "description": "Holistic individualised constitutional homeopathic healthcare clinic in Rajsamand, Rajasthan, offering in-clinic and online patient consultations.",
+      "url": "https://ekanshclinic.in",
+      "medicalSpecialty": "Homeopathic",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Rajsamand",
+        "addressRegion": "Rajasthan",
+        "addressCountry": "IN"
+      },
+      "slogan": "Care That Begins With Listening"
+    }
+  </script>
+</head>
+<body>
+  <Navbar activeNav={activeNav} />
+  <main id="main-content">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

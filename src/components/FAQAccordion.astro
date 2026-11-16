@@ -1,0 +1,102 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+  category?: string;
+}
+
+interface Props {
+  items: FAQItem[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+<div class="faq-accordion-group">
+  {items.map((item, index) => (
+    <details class="faq-item card-editorial">
+      <summary class="faq-question">
+        <span class="faq-q-text">{item.question}</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="faq-answer">
+        <p>{item.answer}</p>
+      </div>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq-accordion-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background-color: var(--color-white);
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--color-beige);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-q-text {
+    flex: 1;
+  }
+
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-ivory);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-forest);
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  details[open] .faq-icon {
+    transform: rotate(180deg);
+    background-color: var(--color-sage-subtle);
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    font-size: 0.90625rem;
+    line-height: 1.65;
+    color: var(--color-charcoal-muted);
+    border-top: 1px solid var(--color-beige);
+    padding-top: 1rem;
+  }
+
+  .faq-answer p {
+    margin-bottom: 0;
+  }
+</style>

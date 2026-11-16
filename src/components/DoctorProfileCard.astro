@@ -1,0 +1,341 @@
+---
+interface Props {
+  showBio?: boolean;
+}
+
+const { showBio = true } = Astro.props;
+---
+
+<div class="doctor-profile-wrapper">
+  <!-- Verification Notice Banner -->
+  <div class="verification-callout">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <div>
+      <strong>Practitioner Transparency Notice:</strong> The doctor profile below features verified placeholder indicators in accordance with medical ethics and Indian Ayush regulations. Exact council registration numbers and conferring university degrees are verified upon practitioner onboarding (Ref: <code>docs/PENDING_INFORMATION.md</code>).
+    </div>
+  </div>
+
+  <div class="doctor-card card-editorial">
+    <div class="doctor-grid">
+      <!-- Left: Portrait Photo Frame Placeholder -->
+      <div class="doctor-image-container">
+        <div class="doctor-portrait-frame">
+          <div class="portrait-placeholder">
+            <svg viewBox="0 0 80 80" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M40 40a16 16 0 1 0 0-32 16 16 0 0 0 0 32z"></path>
+              <path d="M12 72c0-15.464 12.536-28 28-28s28 12.536 28 28"></path>
+            </svg>
+            <span class="placeholder-caption">Practitioner Photograph<br/><small>(Awaiting High-Res Clinical Portrait)</small></span>
+          </div>
+          <div class="portrait-badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Individual Practice</span>
+          </div>
+        </div>
+
+        <div class="doctor-quick-contact">
+          <div class="contact-item">
+            <span class="label">Location</span>
+            <span class="val">Rajsamand, Rajasthan</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Practice Style</span>
+            <span class="val">Classical Constitutional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Doctor Details & Credentials Matrix -->
+      <div class="doctor-content">
+        <div class="doctor-title-block">
+          <span class="text-eyebrow">Consultant Homeopath</span>
+          <h3 class="doctor-name">Dr. [Doctor Name Placeholder]</h3>
+          <p class="doctor-degree">B.H.M.S. &bull; [MD / Post-Graduate Placeholder]</p>
+        </div>
+
+        <blockquote class="doctor-quote">
+          "Constitutional homeopathy is not about silencing a symptom with haste; it is about taking the time to listen to the whole person—their mind, physical patterns, and innate vitality—to awaken lasting health."
+        </blockquote>
+
+        {showBio && (
+          <div class="doctor-bio-paragraphs">
+            <p>
+              Serving as the primary practitioner at Ekansh Homoeopathic Clinic in Rajsamand, the doctor is dedicated to classical, individualised constitutional care. Having received formal training in homeopathic medicine and surgery, the doctor's practice focuses on unraveling chronic conditions that have not found satisfactory answers through superficial symptom management.
+            </p>
+            <p>
+              Whether meeting local families at the Rajsamand clinic or consulting with remote patients via secure video calls, the philosophy remains constant: listening is the essential foundation of true clinical insight.
+            </p>
+          </div>
+        )}
+
+        <!-- Verified Credentials Matrix Table -->
+        <div class="credentials-matrix">
+          <h4 class="matrix-title">Clinical Credentials & Practice Matrix</h4>
+          <div class="matrix-table-wrap">
+            <table class="matrix-table">
+              <tbody>
+                <tr>
+                  <th>Medical Degree</th>
+                  <td>Bachelor of Homoeopathic Medicine & Surgery (B.H.M.S.) <span class="status-tag status-pending">Pending Degree Upload</span></td>
+                </tr>
+                <tr>
+                  <th>Council Registration</th>
+                  <td>Reg. No. [Pending Council Verification] &bull; State Homoeopathic Board <span class="status-tag status-pending">Awaiting Verification</span></td>
+                </tr>
+                <tr>
+                  <th>Clinical Experience</th>
+                  <td>Over [X] Years of Dedicated Clinical Practice in Rajasthan <span class="status-tag status-verified">Established Practice</span></td>
+                </tr>
+                <tr>
+                  <th>Core Clinical Focus</th>
+                  <td>Chronic Respiratory Allergies, Dermatological Concerns, Pediatric Care & Lifestyle Wellness</td>
+                </tr>
+                <tr>
+                  <th>Consultation Modalities</th>
+                  <td>In-Clinic (Rajsamand) &bull; Tele-Consultation (Nationwide Video/Audio)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="doctor-actions">
+          <a href="/book-consultation" class="btn btn-primary btn-sm">
+            Schedule Appointment with Doctor
+          </a>
+          <a href="/approach" class="btn btn-secondary btn-sm">
+            Learn About Case-Taking Process
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .doctor-profile-wrapper {
+    width: 100%;
+  }
+
+  .doctor-card {
+    padding: clamp(2rem, 4vw, 3.5rem);
+    background-color: var(--color-white);
+  }
+
+  .doctor-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .doctor-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Portrait Frame */
+  .doctor-portrait-frame {
+    position: relative;
+    border-radius: var(--radius-md);
+    background-color: var(--color-ivory);
+    border: 2px dashed var(--color-sage);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 2px 10px rgba(48, 56, 50, 0.04);
+  }
+
+  .portrait-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--color-charcoal-muted);
+    padding: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  .portrait-placeholder svg {
+    color: var(--color-sage);
+  }
+
+  .placeholder-caption {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .placeholder-caption small {
+    color: var(--color-charcoal-light);
+    font-size: 0.71875rem;
+  }
+
+  .portrait-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background-color: rgba(53, 93, 72, 0.92);
+    color: var(--color-white);
+    font-size: 0.71875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  .doctor-quick-contact {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background-color: var(--color-ivory);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-beige);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78125rem;
+  }
+
+  .contact-item .label {
+    color: var(--color-charcoal-muted);
+  }
+
+  .contact-item .val {
+    font-weight: 600;
+    color: var(--color-forest);
+  }
+
+  /* Content */
+  .doctor-title-block {
+    margin-bottom: 1.25rem;
+  }
+
+  .doctor-name {
+    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+    color: var(--color-forest);
+    margin-top: 0.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .doctor-degree {
+    font-size: 0.9375rem;
+    color: var(--color-charcoal-muted);
+    font-weight: 500;
+  }
+
+  .doctor-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-forest-dark);
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-gold);
+    background-color: var(--color-ivory);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .doctor-bio-paragraphs {
+    font-size: 0.90625rem;
+    line-height: 1.7;
+    color: var(--color-charcoal);
+    margin-bottom: 1.75rem;
+  }
+
+  /* Matrix Table */
+  .credentials-matrix {
+    margin-bottom: 2rem;
+  }
+
+  .matrix-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: var(--font-sans);
+  }
+
+  .matrix-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-sm);
+  }
+
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+    text-align: left;
+  }
+
+  .matrix-table th {
+    background-color: var(--color-ivory);
+    color: var(--color-forest);
+    padding: 0.75rem 1rem;
+    width: 32%;
+    border-bottom: 1px solid var(--color-beige);
+    border-right: 1px solid var(--color-beige);
+    font-weight: 600;
+  }
+
+  .matrix-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-beige);
+    color: var(--color-charcoal);
+  }
+
+  .matrix-table tr:last-child th,
+  .matrix-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .status-tag {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .status-pending {
+    background-color: var(--color-amber-bg);
+    color: var(--color-amber-text);
+    border: 1px solid var(--color-amber-border);
+  }
+
+  .status-verified {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+  }
+
+  .doctor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+const pillars = [
+  {
+    step: "01",
+    title: "Understanding Your Concerns",
+    subtitle: "Active Listening & Comprehensive Intake",
+    description: "Every healing relationship begins with an unhurried, attentive dialogue. We listen deeply to your physical symptoms, emotional states, stress factors, and personal health chronology without quick assumptions.",
+    icon: `<path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="currentColor" stroke-width="2"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`
+  },
+  {
+    step: "02",
+    title: "Individual Consultation",
+    subtitle: "Constitutional Totality Assessment",
+    description: "Homeopathy recognizes that no two individuals experience illness identically. We analyze the totality of your characteristic signs, thermal sensitivities, and general constitution to discern your singular remedy.",
+    icon: `<path d="M16 4v16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2"/>`
+  },
+  {
+    step: "03",
+    title: "Tailored Guidance & Remedies",
+    subtitle: "Minimum Dose & Lifestyle Integration",
+    description: "You receive precisely chosen, gentle homeopathic remedies dispensed in minimal therapeutic doses, accompanied by practical lifestyle, dietary, and preventive guidance tailored to your daily routine.",
+    icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    step: "04",
+    title: "Dedicated Follow-up",
+    subtitle: "Sustained Continuity & Healing Trajectory",
+    description: "Constitutional healing is an evolving journey. Structured follow-ups evaluate your body's vital response, fine-tune potencies when necessary, and ensure enduring vitality rather than temporary symptom suppression.",
+    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2"/><polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
+  }
+];
+---
+
+<div class="approach-grid">
+  {pillars.map((item) => (
+    <div class="pillar-card card-editorial">
+      <div class="pillar-top">
+        <span class="pillar-step">{item.step}</span>
+        <div class="pillar-icon-box">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" set:html={item.icon}></svg>
+        </div>
+      </div>
+      <h3 class="pillar-title">{item.title}</h3>
+      <p class="pillar-subtitle">{item.subtitle}</p>
+      <p class="pillar-desc">{item.description}</p>
+      <div class="pillar-accent-line"></div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .approach-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pillar-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.75rem;
+    height: 100%;
+    background-color: var(--color-white);
+  }
+
+  .pillar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar-step {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .pillar-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-sage-light);
+  }
+
+  .pillar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .pillar-subtitle {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-forest);
+    margin-bottom: 0.875rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.90625rem;
+    line-height: 1.6;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .pillar-accent-line {
+    width: 36px;
+    height: 2px;
+    background-color: var(--color-gold);
+    margin-top: auto;
+  }
+</style>

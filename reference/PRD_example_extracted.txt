@@ -1,0 +1,84 @@
+Product Requirements Document (PRD)
+Project: Next-Gen Developer Portfolio & Engineering Showcase Platform
+=== TABLE START ===
+Author / Engineer | Sumit Makwana (Sumit11)
+Target Domain | https://sumit11.tech/
+Version & Status | 1.0.0 (Production Release / Approved)
+Technology Stack | React 19, Vite, Tailwind CSS v4, Framer Motion, HTML5 2D Canvas
+=== TABLE END ===
+1. Executive Summary & Product Vision
+The Next-Gen Developer Portfolio is a full-stack engineering showcase built to demonstrate high-level technical capability, product design precision, AI system orchestration, and competitive problem solving. It serves as an active product proof rather than a passive resume.
+=== TABLE START ===
+NOTE: Core Value PropositionUnlike static template sites, this platform integrates two complete engines: a modular React 19 Single Page Application with interactive HTML5 canvas physics, alongside an in-browser 0x88 Chess Engine with heuristic AI move generation.
+=== TABLE END ===
+1.1 Target Audience & User Personas
+Persona 1: Technical Recruiters & HR Specialists: Require instant access to core capabilities, verified contact routes, download links for ATS-compliant resumes, and clear availability status.
+Persona 2: Engineering Managers & CTOs: Evaluate systems thinking, code structure, component modularity, challenge-solution articulation, and handling of edge-cases.
+Persona 3: Developers & Open-Source Peers: Look at custom physics algorithms, design token setups, performance optimization techniques, and clean Git architecture.
+1.2 Key Objectives & Success Metrics
+=== TABLE START ===
+Key Objective | Measurement Metric | Target Benchmark
+Core Web Vitals | Google Lighthouse Performance Score | >= 95 / 100 on Mobile & Desktop
+Rendering Smoothness | Canvas & Framer Motion Animations | Sustained 60 FPS without jank
+Conversion UX | Frictionless Contact & Project Deep-Dive | < 2 clicks to reach any live repository or case study
+Accessibility & Compliance | Reduced motion and contrast audits | WCAG 2.1 AA Compliant
+=== TABLE END ===
+2. Architectural Design & Engineering Stack
+The codebase is constructed around modular separation of concerns. UI state is driven by React 19 concurrent features, styles are managed via Tailwind CSS v4's CSS-first theme tokens, and data is abstracted away into editable schema definitions.
+2.1 Frontend Tech Stack Breakdown
+Core Library: React 19 (react & react-dom ^19.2.7): Modern component tree utilizing state hooks, portals, and concurrency.
+Build Tool: Vite (^8.1.1): Ultra-fast ES module build tool providing lightning-fast HMR and minimal production bundling overhead.
+Styling Framework: Tailwind CSS v4 (^4.3.3): CSS-first configuration using @theme directives in index.css without requiring external legacy JS config files.
+Motion System: Framer Motion (^12.42.2): Production animation orchestrator managing page entrance reveals, modal scale transitions, and spring physics.
+Graphics: HTML5 2D Canvas: Native browser canvas rendering autonomous particle collisions and dynamic proximity networks.
+Tooling: Oxlint (^1.71.0): Rust-powered high-speed linter enforcing clean code quality and catching React anti-patterns.
+2.2 System Flow Architecture
+=== TABLE START ===
++-------------------------------------------------------------------------+|                              index.html                                 ||   +-----------------------------------------------------------------+   ||   |                      ThemeProvider (Context)                    |   ||   |   +---------------------------------------------------------+   |   ||   |   | Interactive Background Canvas (HTML5 2D Particle System)|   |   ||   |   +---------------------------------------------------------+   |   ||   |   | Navbar (Scroll spy + Dynamic Section Highlight)         |   |   ||   |   | ScrollProgressBar (Window Scroll Metric Engine)         |   |   ||   |   +---------------------------------------------------------+   |   ||   |   |  State Router: view === 'home'  vs  view === 'projects-hub' |   |   ||   |   |    ├── Hero (Animated Neural Network SVG + Availability)|   |   ||   |   |    ├── About (CSS 3D Rubik's Cube + Terminal Simulator) |   |   ||   |   |    ├── Skills Matrix (Domain Grouped Architecture)      |   |   ||   |   |    ├── Projects Showcase + ProjectDetailsModal          |   |   ||   |   |    ├── Experience Timeline (Internship Milestones)      |   |   ||   |   |    ├── Achievements (Chess Champion & SIH Accolades)    |   |   ||   |   |    └── Contact Hub (Validated Input State Machine)      |   |   ||   +---+---------------------------------------------------------+---+   |+-------------------------------------------------------------------------+
+=== TABLE END ===
+3. Functional Modules & Implementation Details
+3.1 Interactive Physics & Custom Hooks
+Dynamic Section Tracking: useActiveSection(ids): Observes section elements via IntersectionObserver with weighted intersection ratios to immediately reflect the user's active viewport position in the navbar.
+Scroll Metric Engine: useScrollProgress(): Computes document scroll metrics (scrollTop / (scrollHeight - clientHeight)) with passive event listeners to drive both the progress bar and back-to-top button.
+Performance Cursor Tracker: usePointer(): Directly captures pointer coordinates in a React useRef to prevent triggering 60+ re-renders per second, maintaining maximum UI frame rates.
+Particle Network: InteractiveCanvas.jsx: Employs 65 floating particles calculating Euclidean proximity distance: d = sqrt((x1 - x2)^2 + (y1 - y2)^2). When d < 120px, an alpha-blended connection vector is drawn dynamically.
+Magnetic Micro-Interaction: MagneticButton.jsx: Calculates pointer coordinates relative to the button bounding box, exerting a magnetic spring pull on hover with configurable stiffness and damping.
+3.2 About Section 3D & Vector Widgets
+CSS 3D Engine: Pure CSS 3D Rubik's Cube: Features 6 faces rotated in 3D perspective (transform-style: preserve-3d) with custom continuous keyframe rotations without third-party 3D WebGL bloat.
+Full-Stack Terminal: Terminal REST Simulator: Animated developer console simulating live GET /api/ requests with automated typing steps and pulsing database connection indicators.
+Robot Optics: Cybernetic Sensor Animation: Custom robot scanning eye with sweeping laser beam and radial gradient pupil.
+3.3 Featured Project Case Studies (src/data/projects.js)
+=== TABLE START ===
+Project Name | Domain & Tech Stack | Engineering Challenge & Solution
+1. LeaseEasy | AI Property SaaSReact, Node, LLM Function Calling, Mock PostgreSQL | Challenge: Executing DB queries via LLM without SQL injection risk.Solution: Implemented OpenAI function schema definitions with strict parameter boundaries.
+2. SplitEasy | FinTech Expense AppFlutter, Firebase Firestore, UPI Deep Linking | Challenge: High-frequency DB writes caused UI jitter and lost keyboard focus.Solution: Decoupled text controllers from live Firestore document streams; integrated upi://pay intent schemes.
+3. BeatIT | Music ML ExplorationPython, Streamlit, Scikit-learn, Plotly, PCA | Challenge: Making 7+ dimensional audio metrics interpretable.Solution: Applied StandardScaler followed by Principal Component Analysis (PCA) to render 2D/3D visual cluster projections.
+=== TABLE END ===
+4. Built-in Chess Engine & AI (index.html)
+To create an unforgettable impression reflecting Sumit's 2-Time Inter-College Chess Championship background, an interactive zero-dependency chess engine is embedded directly in the platform:
+Data Structure: 0x88 Board Array Representation: Standard 128-element single-dimensional array where (sq & 0x88 !== 0) instantly filters out illegal off-board calculations in O(1) time.
+Move Validation: Full Legal Move Generation: Evaluates pseudo-moves, applies moves to a cloned board state, verifies king attack security (isAttacked), and enforces castling, en-passant, and pawn promotion.
+Automated Engine: Heuristic AI Evaluator: Evaluates material advantages using classical point metrics (P:1, N:3, B:3, R:5, Q:9, K:0) to generate tactical counter-moves against human players.
+5. UI/UX Design System & Token Specifications
+The application follows the Chessboard Metaphor defined in DESIGN.md. It balances editorial serif typography with technical monospace data indicators and a high-contrast dual theme.
+=== TABLE START ===
+Design Token | Dark Theme (Deep Obsidian) | Light Theme (Warm Alabaster)
+--bg (Main Background) | #08080c (or #0b0c0f) | #fafafc (or #f4efe2)
+--surface (Glass Card) | rgba(255, 255, 255, 0.045) | rgba(10, 10, 25, 0.035)
+--border (Subtle Divider) | rgba(255, 255, 255, 0.09) | rgba(27, 25, 20, 0.12)
+--accent (Primary Tint) | #6d5df6 (Violet) / #c9a15a (Gold) | #8a5a26 (Tactile Amber)
+--font-display / --font-body | Space Grotesk / Inter | Fraunces / Inter
+=== TABLE END ===
+6. Non-Functional Requirements & Security
+Layout Stability: Zero Cumulative Layout Shift (CLS): Explicit dimensioning on all graphical assets and canvas viewports.
+Accessibility: Reduced Motion Auditing: Respects @media (prefers-reduced-motion: reduce) by truncating animation cycles to 0.001ms for vestibular-sensitive users.
+SEO Optimization: Structured Search Data: Integrates schema.org Person entity in JSON-LD format with complete sameAs links and skill taxonomy.
+Security: External Boundary Hardening: All outbound hyperlinks implement rel='noopener noreferrer' to prevent reverse tabnabbing.
+7. Developer Reference & Handover Guide
+To help your friend configure or adapt this repository as a reference architecture, follow this concise step-by-step handover checklist:
+Handover: Step 1 (Dependencies): Run 'npm install' to fetch React 19, Tailwind v4, and Vite.
+Handover: Step 2 (Local Testing): Run 'npm run dev' and open http://localhost:5173 to test HMR.
+Handover: Step 3 (Resume Replacement): Replace public/resume.pdf with the candidate's actual PDF document.
+Handover: Step 4 (Data Personalization): Edit skills in src/data/skills.js, projects in src/data/projects.js, and work experience in src/data/experience.js.
+Handover: Step 5 (Contact Form Wiring): Connect handleSubmit in src/sections/Contact.jsx to an API service (Formspree, EmailJS, or Resend).
+Handover: Step 6 (Production Build): Execute 'npm run build' to output optimized static bundles to dist/.

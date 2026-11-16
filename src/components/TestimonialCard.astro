@@ -1,0 +1,138 @@
+---
+interface Props {
+  quote: string;
+  patientName: string;
+  patientLocation: string;
+  conditionCategory: string;
+  consultationType: string;
+}
+
+const {
+  quote,
+  patientName,
+  patientLocation,
+  conditionCategory,
+  consultationType
+} = Astro.props;
+---
+
+<div class="testimonial-card card-editorial">
+  <div class="testimonial-top">
+    <div class="stars" aria-label="5 out of 5 stars rating">
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+      <span class="star">&#9733;</span>
+    </div>
+    <span class="badge badge-sage">{consultationType}</span>
+  </div>
+
+  <blockquote class="testimonial-quote">
+    "{quote}"
+  </blockquote>
+
+  <div class="testimonial-footer">
+    <div class="patient-avatar">
+      <span>{patientName.charAt(0)}</span>
+    </div>
+    <div class="patient-meta">
+      <p class="patient-name">{patientName} <span class="placeholder-tag">[Placeholder]</span></p>
+      <p class="patient-sub">{conditionCategory} &bull; {patientLocation}</p>
+    </div>
+  </div>
+
+  <div class="testimonial-disclaimer">
+    * De-identified illustrative placeholder. Individual constitutional responses vary; homeopathy makes no guaranteed cure claims.
+  </div>
+</div>
+
+<style>
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem 1.75rem;
+    background-color: var(--color-white);
+  }
+
+  .testimonial-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .stars {
+    color: var(--color-gold);
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+  }
+
+  .testimonial-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-beige);
+    margin-bottom: 0.75rem;
+  }
+
+  .patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-sage);
+  }
+
+  .patient-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .patient-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 0.1rem;
+  }
+
+  .placeholder-tag {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--color-charcoal-light);
+  }
+
+  .patient-sub {
+    font-size: 0.78125rem;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 0;
+  }
+
+  .testimonial-disclaimer {
+    font-size: 0.6875rem;
+    color: var(--color-charcoal-light);
+    font-style: italic;
+    line-height: 1.35;
+  }
+</style>
