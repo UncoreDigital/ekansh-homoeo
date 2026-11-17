@@ -4,42 +4,43 @@ import ApproachPillars from '../components/ApproachPillars.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import DoctorProfileCard from '../components/DoctorProfileCard.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
+import FindHealthConditions from '../components/FindHealthConditions.astro';
 
 const treatedConditions = [
   {
     title: "Chronic Allergies & Asthma",
     desc: "Dust allergies, recurrent sneezing, and bronchial sensitivity treated at the constitutional root.",
-    image: "/images/condition-allergies.jpg",
+    image: "/images/asthma.png",
     icon: `<path d="M12 2a5 5 0 0 1 5 5c0 2.22-1.2 4.16-3 5.2V17h-4v-4.8C8.2 11.16 7 9.22 7 7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="2"/><path d="M9 21h6" stroke="currentColor" stroke-width="2"/>`
   },
   {
     title: "Skin & Dermatological Care",
     desc: "Long-standing eczema, urticaria flare-ups, and recurring acne addressed without harsh suppressants.",
-    image: "/images/condition-skin.jpg",
+    image: "/images/skin.png",
     icon: `<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2"/>`
   },
   {
     title: "Digestive & Gut Health",
     desc: "Acidity, functional dyspepsia, chronic constipation, and stress-triggered irritable bowel patterns.",
-    image: "/images/condition-gut.jpg",
+    image: "/images/gut.png",
     icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2"/>`
   },
   {
     title: "Pediatric & Child Wellness",
     desc: "Gentle micro-dilutions for childhood coughs, tonsillitis, low immunity, and appetite development.",
-    image: "/images/condition-pediatric.jpg",
+    image: "/images/child.png",
     icon: `<circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2"/>`
   },
   {
     title: "Migraines & Stress Support",
     desc: "Recurrent vascular headaches, sleep disruption, and anxiety-related somatic complaints.",
-    image: "/images/condition-migraine.jpg",
+    image: "/images/migraine.png",
     icon: `<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2"/>`
   },
   {
     title: "Joint & Musculoskeletal Care",
     desc: "Arthritic stiffness, cervical spondylosis discomfort, and chronic lumbar strain management.",
-    image: "/images/condition-joints.jpg",
+    image: "/images/joints.png",
     icon: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/>`
   }
 ];
@@ -172,6 +173,11 @@ const treatedConditions = [
   </section>
 
   <!-- =========================================================================
+       SECTION: FIND HEALTH CONDITIONS (Mayo Clinic Inspired A–Z Directory & Search)
+       ========================================================================= -->
+  <FindHealthConditions id="find-conditions" />
+
+  <!-- =========================================================================
        SECTION 3: ABOUT DOCTOR & CLINIC (Concise & Dignified)
        ========================================================================= -->
   <section class="doctor-section section-padding" id="doctor">
@@ -233,7 +239,7 @@ const treatedConditions = [
           badge="Rajsamand Clinic"
           duration="45 – 60 Minutes"
           description="Unhurried, comprehensive face-to-face intake with on-site remedy dispensation in Rajsamand."
-          image="/images/service-in-clinic.jpg"
+          image="/images/inClinic.png"
           imageAlt="Ekansh In-Clinic Consultation Room in Rajsamand"
           features={[
             "45–60 min unhurried physical & mental intake",
@@ -252,7 +258,7 @@ const treatedConditions = [
           badge="Nationwide Video / Call"
           duration="45 – 60 Minutes"
           description="In-depth video or audio appointment for patients across India and overseas."
-          image="/images/service-online.jpg"
+          image="/images/online.png"
           imageAlt="Ekansh Online Tele-Consultation Desk"
           features={[
             "Full 45–60 min clinical depth via video call",
@@ -271,7 +277,7 @@ const treatedConditions = [
           badge="In-Clinic or Online"
           duration="15 – 20 Minutes"
           description="Progress assessment scheduled 3 to 4 weeks after initial prescription."
-          image="/images/service-followup.jpg"
+          image="/images/followup.png"
           imageAlt="Doctor Follow-up Case Register"
           features={[
             "Systematic review of symptom trajectory",
@@ -290,7 +296,7 @@ const treatedConditions = [
           badge="Established Patients"
           duration="20 – 30 Minutes"
           description="Targeted consultation for sudden seasonal flu, viral coughs, or allergies."
-          image="/images/service-acute.jpg"
+          image="/images/acute.png"
           imageAlt="Homeopathic Acute Care Medicine"
           features={[
             "Targeted analysis of acute symptom triggers",

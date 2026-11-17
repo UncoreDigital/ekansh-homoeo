@@ -1,0 +1,918 @@
+---
+import { conditionsDataset, alphabetList, availableLetters } from '../data/conditions';
+
+interface Props {
+  id?: string;
+}
+
+const { id = "find-conditions" } = Astro.props;
+
+// Group default list by letter for initial rendering
+const initialLetters = availableLetters;
+---
+
+<section class="find-conditions-section section-padding" id={id}>
+  <div class="container">
+    <!-- Section Header (Mayo Clinic Inspired) -->
+    <div class="section-header text-center" style="margin-bottom: 2rem;">
+      <span class="text-eyebrow">Directory &amp; Search</span>
+      <h2>Find Health Conditions</h2>
+      <p class="text-muted section-desc-balanced">
+        Browse health conditions alphabetically or search for a specific concern.
+      </p>
+    </div>
+
+    <!-- Navigation & Search Bar (Desktop Alongside / Mobile Stacked) -->
+    <div class="directory-control-bar">
+      <!-- Search Input -->
+      <div class="directory-search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="dirSearchInput" 
+          class="directory-search-input" 
+          placeholder="Search health conditions..." 
+          autocomplete="off"
+          aria-label="Search health conditions"
+        />
+        <button type="button" id="dirClearSearchBtn" class="clear-search-btn" aria-label="Clear search query" style="display: none;">
+          &times;
+        </button>
+      </div>
+
+      <!-- Alphabetical Navigation Row (A-Z) -->
+      <div class="alphabet-nav-container">
+        <span class="nav-label">Browse by Letter:</span>
+        <div class="alphabet-track" role="toolbar" aria-label="A to Z condition filter">
+          <button type="button" class="dir-alpha-btn" data-letter="ALL" aria-pressed="false">
+  All
+</button>
+          {alphabetList.map((letter) => {
+            const hasItems = availableLetters.includes(letter);
+            return (
+              <button 
+                type="button" 
+                class={`dir-alpha-btn ${hasItems ? '' : 'is-empty'}`} 
+                data-letter={letter} 
+                aria-pressed="false"
+                title={hasItems ? `Conditions starting with ${letter}` : `No conditions currently listed under ${letter}`}
+              >
+                {letter}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Status Bar -->
+    <!-- Dynamic Status Bar -->
+<div class="directory-status-bar">
+  <div class="dir-active-filter-badge" id="dirActiveFilterBadge" style="display: none;">
+    <span id="dirActiveFilterLabel">Letter: A</span>
+    <button type="button" id="dirResetFilterPill" aria-label="Reset filter">&times;</button>
+  </div>
+
+  <div class="dir-results-count" id="dirResultsCount">
+    Start typing a condition, or pick a letter to begin
+  </div>
+</div>
+
+    <!-- Conditions Directory Grid (Minimal, Clean, Editorial) -->
+    <div class="directory-list-grid" id="directoryListGrid" style="display: none;">
+      {conditionsDataset.map((item) => (
+        <article 
+          class="dir-condition-item"
+          data-id={item.id}
+          data-name={item.name.toLowerCase()}
+          data-letter={item.letter.toUpperCase()}
+          data-category={item.category.toLowerCase()}
+          data-summary={item.summary.toLowerCase()}
+        >
+          <div class="dir-item-content">
+            <div class="dir-item-header">
+              <span class="dir-letter-tag">{item.letter}</span>
+              <span class="badge badge-sage dir-category-badge">{item.category}</span>
+            </div>
+            <h3 class="dir-condition-title">{item.name}</h3>
+            <p class="dir-condition-summary">{item.summary}</p>
+          </div>
+
+          <div class="dir-item-action">
+            <button 
+              type="button" 
+              class="dir-view-details-btn"
+              data-name={item.name}
+              data-category={item.category}
+              data-summary={item.summary}
+              data-triggers={item.triggers || "Individual constitutional and lifestyle factors."}
+              data-approach={item.approach}
+              aria-label={`View clinical details for ${item.name}`}
+            >
+              <span>View Clinical Approach</span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Friendly Empty State (When no results found) -->
+    <div class="directory-empty-state" id="dirEmptyState" style="display: none;">
+      <div class="empty-icon-box">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3 class="empty-title">No matching conditions found</h3>
+      <p class="empty-desc">
+        We could not find any conditions matching your current filter. Constitutional homeopathy treats a wide spectrum of individual health concerns.
+      </p>
+      <div class="empty-actions">
+        <button type="button" id="dirResetAllBtn" class="btn btn-secondary btn-sm">
+          <span>Reset Search &amp; Letter Filter</span>
+        </button>
+        <a href="https://wa.me/917947107147?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20enquire%20about%20a%20specific%20health%20condition." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm">
+          <span>Enquire on WhatsApp Desk</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible Condition Detail Modal Dialog -->
+  <div class="directory-modal-backdrop" id="directoryModalBackdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modalConditionTitle">
+    <div class="directory-modal-card">
+      <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close details modal">&times;</button>
+      
+      <div class="modal-header-block">
+        <span class="badge badge-sage" id="modalCategoryBadge">Health Category</span>
+        <h3 class="modal-title" id="modalConditionTitle">Condition Name</h3>
+      </div>
+
+      <div class="modal-body-content">
+        <div class="modal-info-section">
+          <h4 class="modal-section-title">Clinical Presentation &amp; Symptoms</h4>
+          <p class="modal-section-p" id="modalSummaryText">Summary text goes here.</p>
+        </div>
+
+        <div class="modal-info-section">
+          <h4 class="modal-section-title">Typical Constitutional Triggers</h4>
+          <p class="modal-section-p" id="modalTriggersText">Triggers text goes here.</p>
+        </div>
+
+        <div class="modal-info-section highlight-box">
+          <h4 class="modal-section-title">Constitutional Homeopathic Approach</h4>
+          <p class="modal-section-p" id="modalApproachText">Approach text goes here.</p>
+          <small class="modal-disclaimer">*Informational note: Remedies are chosen through individual repertorisation of your total symptom totality, not pre-set generic formulas.</small>
+        </div>
+      </div>
+
+      <div class="modal-footer-actions">
+        <a href="/book-consultation" id="modalBookLink" class="btn btn-primary btn-sm">
+          <span>Book Consultation for this Condition</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+        <a href="https://wa.me/917947107147" id="modalWhatsAppLink" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm">
+          <span>WhatsApp Quick Desk</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Client-side Interactive Filter Script -->
+<script is:inline>
+  function initFindHealthConditions() {
+    const searchInput = document.getElementById('dirSearchInput');
+    const clearBtn = document.getElementById('dirClearSearchBtn');
+    const alphaBtns = document.querySelectorAll('.dir-alpha-btn');
+    const items = document.querySelectorAll('.dir-condition-item');
+    const countDisplay = document.getElementById('dirResultsCount');
+    const emptyState = document.getElementById('dirEmptyState');
+    const listGrid = document.getElementById('directoryListGrid');
+    const activeBadge = document.getElementById('dirActiveFilterBadge');
+    const activeLabel = document.getElementById('dirActiveFilterLabel');
+    const resetPill = document.getElementById('dirResetFilterPill');
+    const resetAllBtn = document.getElementById('dirResetAllBtn');
+
+    // Modal elements
+    const modalBackdrop = document.getElementById('directoryModalBackdrop');
+    const modalClose = document.getElementById('modalCloseBtn');
+    const modalTitle = document.getElementById('modalConditionTitle');
+    const modalCategory = document.getElementById('modalCategoryBadge');
+    const modalSummary = document.getElementById('modalSummaryText');
+    const modalTriggers = document.getElementById('modalTriggersText');
+    const modalApproach = document.getElementById('modalApproachText');
+    const modalBookLink = document.getElementById('modalBookLink');
+    const modalWhatsAppLink = document.getElementById('modalWhatsAppLink');
+
+    if (!items.length) return;
+
+    let selectedLetter = '';
+    let searchQuery = '';
+
+    function applyDirectoryFilter() {
+  const q = searchQuery.trim().toLowerCase();
+  const hasLetter = selectedLetter !== '';
+  const hasFilter = hasLetter || q !== '';
+
+  // Nothing typed and no letter picked: show no cards
+  if (!hasFilter) {
+    items.forEach(item => { item.style.display = 'none'; });
+    if (listGrid) listGrid.style.display = 'none';
+    if (emptyState) emptyState.style.display = 'none';
+    if (activeBadge) activeBadge.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (countDisplay) countDisplay.innerHTML = 'Start typing a condition, or pick a letter to begin';
+    return;
+  }
+
+  let count = 0;
+  items.forEach(item => {
+    const name = item.getAttribute('data-name') || '';
+    const letter = item.getAttribute('data-letter') || '';
+    const category = item.getAttribute('data-category') || '';
+    const summary = item.getAttribute('data-summary') || '';
+
+    const matchLetter = selectedLetter === 'ALL' || !hasLetter || letter === selectedLetter;
+    const matchQuery = !q || name.includes(q) || category.includes(q) || summary.includes(q);
+
+    const show = matchLetter && matchQuery;
+    item.style.display = show ? 'flex' : 'none';
+    if (show) count++;
+  });
+
+  if (countDisplay) {
+    countDisplay.innerHTML = (selectedLetter === 'ALL' && !q)
+      ? `Showing all <strong>${count}</strong> conditions`
+      : `Found <strong>${count}</strong> condition${count === 1 ? '' : 's'} matching criteria`;
+  }
+
+  if (emptyState && listGrid) {
+    emptyState.style.display = count === 0 ? 'block' : 'none';
+    listGrid.style.display = count === 0 ? 'none' : 'grid';
+  }
+
+  if (activeBadge && activeLabel) {
+  const parts = [];
+  if (selectedLetter === 'ALL') {
+    if (!q) parts.push('All conditions');
+  } else if (hasLetter) {
+    parts.push(`Letter: ${selectedLetter}`);
+  }
+  if (q) parts.push(`"${q}"`);
+
+  if (parts.length) {
+    activeBadge.style.display = 'inline-flex';
+    activeLabel.textContent = parts.join(' • ');
+  } else {
+    activeBadge.style.display = 'none';
+  }
+}
+
+  if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
+}
+
+    // Search Input Listener
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value;
+        applyDirectoryFilter();
+      });
+    }
+
+    // Clear Search Input Button
+    if (clearBtn && searchInput) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        applyDirectoryFilter();
+        searchInput.focus();
+      });
+    }
+
+    // Letter buttons (narrow the typed search)
+alphaBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('is-empty')) return;
+    const letter = btn.getAttribute('data-letter') || '';
+    const wasActive = btn.classList.contains('is-active');
+
+    alphaBtns.forEach(b => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+
+    if (wasActive) {
+      selectedLetter = '';   // click again to deselect
+    } else {
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      selectedLetter = letter;
+    }
+    applyDirectoryFilter();
+  });
+});
+
+// Reset Function
+function resetFilters() {
+  if (searchInput) searchInput.value = '';
+  searchQuery = '';
+  selectedLetter = '';
+  alphaBtns.forEach(b => {
+    b.classList.remove('is-active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  applyDirectoryFilter();
+}
+
+    if (resetPill) resetPill.addEventListener('click', resetFilters);
+    if (resetAllBtn) resetAllBtn.addEventListener('click', resetFilters);
+    applyDirectoryFilter();
+
+    // Detail Modal Handlers
+    document.querySelectorAll('.dir-view-details-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name') || '';
+        const category = btn.getAttribute('data-category') || '';
+        const summary = btn.getAttribute('data-summary') || '';
+        const triggers = btn.getAttribute('data-triggers') || '';
+        const approach = btn.getAttribute('data-approach') || '';
+
+        if (modalTitle) modalTitle.textContent = name;
+        if (modalCategory) modalCategory.textContent = category;
+        if (modalSummary) modalSummary.textContent = summary;
+        if (modalTriggers) modalTriggers.textContent = triggers;
+        if (modalApproach) modalApproach.textContent = approach;
+
+        if (modalBookLink) {
+          modalBookLink.href = `/book-consultation?condition=${encodeURIComponent(name)}`;
+        }
+        if (modalWhatsAppLink) {
+          modalWhatsAppLink.href = `https://wa.me/917947107147?text=${encodeURIComponent(`Hello Ekansh Clinic, I would like to enquire about homeopathic consultation for ${name}.`)}`;
+        }
+
+        if (modalBackdrop) {
+          modalBackdrop.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    function closeModal() {
+      if (modalBackdrop) {
+        modalBackdrop.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) closeModal();
+      });
+    }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalBackdrop && modalBackdrop.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initFindHealthConditions);
+  document.addEventListener('astro:page-load', initFindHealthConditions);
+</script>
+
+<style>
+  /* =========================================================================
+     FIND HEALTH CONDITIONS (Mayo Clinic Inspired Directory Section)
+     ========================================================================= */
+  .find-conditions-section {
+    background-color: var(--color-ivory);
+    border-top: 1px solid var(--color-beige);
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .section-desc-balanced {
+    max-width: 580px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* Control Bar: Dual Layout (Search & Alphabet Navigation) */
+  .directory-control-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem 1.65rem;
+    box-shadow: 0 4px 16px rgba(48, 56, 50, 0.04);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Search Input Wrapper */
+  .directory-search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 320px;
+    min-width: 260px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1.1rem;
+    color: var(--color-forest);
+    pointer-events: none;
+  }
+
+  .directory-search-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.85rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-charcoal);
+    background-color: var(--color-ivory);
+    border: 1.5px solid var(--color-beige);
+    border-radius: var(--radius-full);
+    outline: none;
+    transition: all var(--transition-fast);
+  }
+
+  .directory-search-input:focus {
+    background-color: var(--color-white);
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 3px rgba(53, 93, 72, 0.12);
+  }
+
+  .clear-search-btn {
+    position: absolute;
+    right: 0.85rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--color-beige);
+    color: var(--color-charcoal);
+    border: none;
+    font-size: 1.1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+  }
+
+  .clear-search-btn:hover {
+    background-color: var(--color-sage);
+    color: var(--color-white);
+  }
+
+  /* Alphabet Navigation */
+  .alphabet-nav-container {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex: 2 1 480px;
+    flex-wrap: wrap;
+  }
+
+  .nav-label {
+    font-size: 0.78125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest);
+    white-space: nowrap;
+  }
+
+  .alphabet-track {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .dir-alpha-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--color-beige);
+    background-color: var(--color-ivory);
+    color: var(--color-forest);
+    font-family: var(--font-sans);
+    font-size: 0.78125rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    padding: 0;
+  }
+
+  .dir-alpha-btn[data-letter="ALL"] {
+    width: auto;
+    padding: 0 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .dir-alpha-btn:hover:not(.is-empty) {
+    background-color: var(--color-sage-subtle);
+    border-color: var(--color-forest);
+    transform: translateY(-1px);
+  }
+
+  .dir-alpha-btn.is-active {
+    background-color: var(--color-forest);
+    color: var(--color-white);
+    border-color: var(--color-forest);
+    box-shadow: 0 2px 8px rgba(53, 93, 72, 0.32);
+  }
+
+  .dir-alpha-btn.is-empty {
+    opacity: 0.35;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: default;
+    color: var(--color-charcoal-muted);
+  }
+
+  /* Status Bar */
+  .directory-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-charcoal-muted);
+    flex-wrap: wrap;
+  }
+
+  .dir-results-count strong {
+    color: var(--color-forest);
+  }
+
+  .dir-active-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--color-sage-subtle);
+  color: var(--color-forest);
+  border: 1px solid var(--color-sage);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.4rem 0.3rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.dir-active-filter-badge button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-forest);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.dir-active-filter-badge button:hover {
+  background-color: var(--color-accent-red);
+  transform: scale(1.1);
+}
+
+  /* Directory Grid (Minimal Editorial Directory Layout) */
+  .directory-list-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    .directory-list-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .directory-list-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Directory Condition Item Card */
+  .dir-condition-item {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(48, 56, 50, 0.03);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .dir-condition-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-sage);
+    box-shadow: 0 8px 20px -4px rgba(48, 56, 50, 0.08);
+  }
+
+  .dir-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .dir-letter-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--color-ivory);
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.78125rem;
+    border: 1px solid var(--color-beige);
+  }
+
+  .dir-category-badge {
+    font-size: 0.6875rem;
+  }
+
+  .dir-condition-title {
+    font-size: 1.1rem;
+    color: var(--color-charcoal);
+    margin-bottom: 0.45rem;
+    line-height: 1.3;
+  }
+
+  .dir-condition-summary {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 1.15rem;
+    flex-grow: 1;
+  }
+
+  /* Action Button inside card */
+  .dir-item-action {
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(233, 228, 215, 0.8);
+  }
+
+  .dir-view-details-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--font-sans);
+    font-size: 0.78125rem;
+    font-weight: 600;
+    color: var(--color-forest);
+    cursor: pointer;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .dir-view-details-btn svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .dir-view-details-btn:hover {
+    color: var(--color-accent-red);
+  }
+
+  .dir-view-details-btn:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Empty State */
+  .directory-empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background-color: var(--color-white);
+    border: 1px dashed var(--color-sage);
+    border-radius: var(--radius-lg);
+    max-width: 580px;
+    margin: 1.5rem auto 0;
+  }
+
+  .empty-icon-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+
+  .empty-title {
+    font-size: 1.25rem;
+    color: var(--color-forest);
+    margin-bottom: 0.45rem;
+  }
+
+  .empty-desc {
+    font-size: 0.84375rem;
+    color: var(--color-charcoal-muted);
+    max-width: 440px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  .empty-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  /* =========================================================================
+     MODAL DIALOG (Accessible Clinical Approach View)
+     ========================================================================= */
+  .directory-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(30, 56, 42, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    animation: modalFadeIn 0.25s ease-out;
+  }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .directory-modal-card {
+    position: relative;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+    animation: modalCardPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalCardPop {
+    from {
+      opacity: 0;
+      transform: scale(0.94) translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--color-beige);
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .modal-close-btn:hover {
+    background-color: var(--color-sage);
+    color: var(--color-white);
+  }
+
+  .modal-header-block {
+    margin-bottom: 1.5rem;
+    padding-right: 2rem;
+  }
+
+  .modal-title {
+    font-size: clamp(1.4rem, 2.8vw, 1.75rem);
+    color: var(--color-forest);
+    margin: 0.5rem 0 0;
+  }
+
+  .modal-body-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .modal-section-title {
+    font-family: var(--font-sans);
+    font-size: 0.78125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .modal-section-p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-charcoal);
+    margin: 0;
+  }
+
+  .highlight-box {
+    background-color: var(--color-ivory);
+    border-left: 3px solid var(--color-forest);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.15rem;
+  }
+
+  .modal-disclaimer {
+    display: block;
+    font-size: 0.71875rem;
+    color: var(--color-charcoal-muted);
+    font-style: italic;
+    margin-top: 0.65rem;
+    line-height: 1.45;
+  }
+
+  .modal-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-beige);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 860px) {
+    .directory-control-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+      padding: 1.25rem;
+    }
+
+    .directory-search-wrapper {
+      flex: 1 1 100%;
+      min-width: 100%;
+    }
+
+    .alphabet-nav-container {
+      flex: 1 1 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .alphabet-track {
+      justify-content: flex-start;
+    }
+  }
+</style>
