@@ -1,0 +1,518 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqCategories = [
+  {
+    id: "general",
+    title: "General Questions",
+    description: "Overview of Ekansh Homoeopathic Clinic, our philosophy, and clinic base in Rajsamand.",
+    faqs: [
+      {
+        q: "What is Ekansh Homoeopathic Clinic?",
+        a: "Ekansh Homoeopathic Clinic is an independent homeopathic medical practice located in Rajsamand, Rajasthan. Founded on the principle of 'Care That Begins With Listening', we specialize in classical constitutional care, unhurried 45–60 minute consultations, and gentle non-suppressive healing."
+      },
+      {
+        q: "Where is the clinic located?",
+        a: "The clinic is located Near Vijay Travels, Vivekanand Choraya, Bhilwara Road, Kankroli, Rajsamand – 313324, Rajasthan, India. It is easily accessible from NH 58, Kankroli, and Nathdwara."
+      },
+      {
+        q: "Who can benefit from constitutional homeopathic treatment?",
+        a: "Patients of all ages—from young infants and children to elderly adults—seeking holistic, individualized care for chronic, recurring, or stress-related conditions benefit from constitutional treatment."
+      }
+    ]
+  },
+  {
+    id: "homoeopathy",
+    title: "About Homoeopathy",
+    description: "Principles of classical constitutional homeopathy, safety, and integrative use.",
+    faqs: [
+      {
+        q: "What is classical constitutional homeopathy?",
+        a: "Classical constitutional homeopathy treats the whole individual rather than prescribing for isolated disease labels. The physician studies your physical symptoms, emotional state, thermal preferences, sleep, and lifestyle to select the single, highest-similarity natural remedy."
+      },
+      {
+        q: "Are homeopathic medicines safe and free from side effects?",
+        a: "Yes. Homeopathic remedies are prepared through systematic serial micro-dilutions under rigorous pharmacopoeial standards. They are non-toxic, gentle, non-habit forming, and safe for all age groups including infants and pregnant individuals when prescribed by a registered physician."
+      },
+      {
+        q: "Can I take homeopathic medicines alongside my existing allopathic treatments?",
+        a: "Yes. Homeopathy can safely be integrated alongside ongoing conventional medications for blood pressure, diabetes, thyroid disorders, or other chronic conditions. We advise patients never to stop existing prescribed medications without consulting their attending physician."
+      },
+      {
+        q: "Does homeopathy take a long time to work?",
+        a: "Acute conditions (such as sudden seasonal coughs or mild flare-ups) often respond rapidly within hours to days. Long-standing chronic ailments require systematic constitutional treatment over several months to address the deep-rooted predisposition."
+      }
+    ]
+  },
+  {
+    id: "doctors",
+    title: "Doctors & Clinic",
+    description: "Qualifications, medical council registrations, and physician continuity.",
+    faqs: [
+      {
+        q: "Who are the consulting physicians at Ekansh Clinic?",
+        a: "The clinic is led by Dr. Akshat Chaplot (B.H.M.S.) and Dr. Neha Sukhwal (B.H.M.S.), both registered Homeopathic Physicians holding Bachelor of Homoeopathic Medicine & Surgery degrees with formal university training and state council registrations on file."
+      },
+      {
+        q: "What are the focus areas of the physicians?",
+        a: "Dr. Akshat Chaplot focuses on chronic respiratory allergies, skin & dermatological care, and digestive health. Dr. Neha Sukhwal specializes in pediatric wellness, women's health, and stress-related lifestyle disorders."
+      },
+      {
+        q: "Will I consult the same doctor at every follow-up visit?",
+        a: "Yes. Doctor continuity is a foundational pillar of our clinic. You consult the same qualified physician at every in-clinic or online visit, ensuring consistent case tracking and personal care."
+      }
+    ]
+  },
+  {
+    id: "process",
+    title: "Consultation Process",
+    description: "What to expect during the 45–60 minute deep intake and how to prepare.",
+    faqs: [
+      {
+        q: "What happens during an initial consultation?",
+        a: "An initial consultation lasts 45 to 60 minutes. The doctor explores your chief health complaint, onset timeline, sensations, thermal comfort, emotional stressors, family medical history, and daily habits to formulate your constitutional totality."
+      },
+      {
+        q: "What documents should I prepare for my appointment?",
+        a: "Please keep all previous medical records, diagnostic blood reports, imaging scans, and a comprehensive list of your current allopathic or Ayurvedic prescriptions handy."
+      },
+      {
+        q: "How often are follow-up reviews required?",
+        a: "For chronic conditions, follow-up consultations are typically scheduled every 3 to 4 weeks to evaluate vital progress, observe healing according to Hering's Law of Cure, and refine remedy potencies."
+      }
+    ]
+  },
+  {
+    id: "online",
+    title: "Online Consultation",
+    description: "Virtual tele-consultations for patients across India and overseas.",
+    faqs: [
+      {
+        q: "How does an online video/audio tele-consultation work?",
+        a: "In accordance with Ayush Telemedicine Practice Guidelines, you connect directly with the doctor via a secure video or voice call. The doctor conducts the same thorough 45–60 minute constitutional case-taking as an in-person visit."
+      },
+      {
+        q: "Does the clinic courier medicines to online patients?",
+        a: "No. The clinic does not courier medicines. For online tele-consultations, our physician provides a formal digital prescription with clear guidance on medicine names, potencies, and dosage instructions for procurement from local licensed homeopathic pharmacies."
+      },
+      {
+        q: "How do I connect for my scheduled online consultation?",
+        a: "Once your appointment slot is verified and accepted by our clinic desk, you will receive connection details via WhatsApp or telephone prior to your scheduled time slot."
+      }
+    ]
+  },
+  {
+    id: "timings",
+    title: "Appointments & Timings",
+    description: "Consultation hours, booking request policy, and contacting the desk.",
+    faqs: [
+      {
+        q: "What are the clinic's operating days and timings?",
+        a: "The clinic is open Monday through Saturday with two daily sessions: Morning Session from 10:00 AM to 2:00 PM, and Evening Session from 4:00 PM to 8:00 PM. On Sundays, the clinic is open from 10:00 AM to 2:00 PM."
+      },
+      {
+        q: "Does submitting a consultation request confirm my appointment?",
+        a: "No. Submitting the online intake form is a consultation request, not an automatic confirmation. All requests are subject to practitioner availability and must be confirmed directly by our clinic desk."
+      },
+      {
+        q: "How will I know when my appointment is confirmed?",
+        a: "Our reception desk reviews your requested date and slot against the clinic schedule and will reach out to you directly via telephone, WhatsApp, or email to verify and confirm your appointment."
+      },
+      {
+        q: "How can I contact the clinic desk directly?",
+        a: "You can reach our clinic desk via phone at +91 9799988138 or +91 9521646525, or message directly on WhatsApp at +91 9799988138."
+      }
+    ]
+  }
+];
+---
+
+<BaseLayout 
+  title="Frequently Asked Questions (FAQs) | Ekansh Homoeopathic Clinic"
+  description="Comprehensive patient FAQ guide: constitutional homeopathy, doctor credentials, 45-60 min intake process, online tele-consultations, and verified clinic timings in Rajsamand."
+  activeNav="faqs"
+>
+  <!-- Page Header -->
+  <section class="page-header-section">
+    <div class="container text-center">
+      <span class="text-eyebrow">Patient Knowledge Base</span>
+      <h1 class="page-title">Frequently Asked Questions</h1>
+      <p class="page-subtitle text-lead">
+        Clear, transparent answers about our clinical approach, doctor credentials, consultation process, and appointment scheduling.
+      </p>
+    </div>
+  </section>
+
+  <!-- Category Filter Pills / Jump Links -->
+  <section class="faq-nav-section">
+    <div class="container">
+      <div class="faq-nav-track">
+        {faqCategories.map((cat) => (
+          <a href={`#${cat.id}`} class="faq-nav-pill">
+            {cat.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs Accordion Main Content -->
+  <section class="section-padding faq-main-section">
+    <div class="container faq-container">
+      <!-- Prominent Appointment Request Notice Banner -->
+      <div class="faq-request-disclaimer card-editorial">
+        <div class="disclaimer-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="disclaimer-content">
+          <span class="disclaimer-eyebrow">Important Appointment Notice</span>
+          <h3 class="disclaimer-heading">Consultation Requests Require Desk Confirmation</h3>
+          <p class="disclaimer-text">
+            Submitting a consultation request through our website logs your details into our clinic reception database, but does <strong>NOT</strong> constitute an automatic appointment confirmation. Preferred dates and slots are subject to practitioner availability. Our clinic desk will review your intake and contact you directly via phone or WhatsApp to verify and confirm your appointment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Categories Loop -->
+      {faqCategories.map((cat) => (
+        <div class="faq-category-block" id={cat.id}>
+          <div class="faq-category-header">
+            <span class="faq-category-eyebrow">Category</span>
+            <h2 class="faq-category-title">{cat.title}</h2>
+            <p class="faq-category-desc">{cat.description}</p>
+          </div>
+
+          <div class="faq-accordion-list">
+  {cat.faqs.map((faq) => (
+    <details class="faq-item card-editorial" name="clinic-faq">
+      <summary class="faq-question">
+        <span class="faq-q-text">{faq.q}</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </summary>
+      <div class="faq-answer">
+        <p>{faq.a}</p>
+      </div>
+    </details>
+  ))}
+</div>
+        </div>
+      ))}
+
+      <!-- Still Have Questions CTA Banner -->
+      <div class="still-questions-banner card-editorial text-center">
+        <div class="banner-icon-wrap">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+        </div>
+        <h3 class="banner-title">Still Have Questions About Your Health Concerns?</h3>
+        <p class="banner-desc">
+          Our clinic reception desk is happy to guide you on consultation suitability, doctor availability, and appointment planning.
+        </p>
+        <div class="banner-actions">
+          <a href="/contact" class="btn btn-secondary btn-md">
+            <span>Send Clinic Inquiry</span>
+          </a>
+          <a href="https://wa.me/919799988138?text=Hello%20Ekansh%20Clinic,%20I%20have%20a%20question%20regarding%20consultations." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-md">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            <span>WhatsApp Desk (+91 9799988138)</span>
+          </a>
+          <a href="/book-consultation" class="btn btn-primary btn-md">
+            <span>Request Consultation</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header-section {
+    padding: clamp(2.5rem, 5vw, 4rem) 0 2rem;
+    background: radial-gradient(circle at top center, rgba(163, 177, 138, 0.16), transparent 70%);
+    border-bottom: 1px solid var(--color-beige);
+  }
+
+  .page-title {
+    margin-top: 0.4rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-forest);
+  }
+
+  .page-subtitle {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* Sticky Navigation Track */
+  .faq-nav-section {
+    background-color: var(--color-ivory);
+    border-bottom: 1px solid var(--color-beige);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 64px;
+    z-index: 40;
+    backdrop-filter: blur(8px);
+  }
+
+  .faq-nav-track {
+    display: flex;
+    gap: 0.65rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .faq-nav-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq-nav-pill {
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige-dark);
+    color: var(--color-forest);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .faq-nav-pill:hover {
+    background-color: var(--color-forest);
+    color: var(--color-ivory);
+    border-color: var(--color-forest);
+  }
+
+  /* Main Section & Layout */
+  .faq-main-section {
+    background-color: var(--color-beige-subtle, #FAF9F5);
+  }
+
+  .faq-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Disclaimer Callout Banner */
+  .faq-request-disclaimer {
+    background-color: #FEF9E7;
+    border: 1.5px solid #F9E79F;
+    border-left: 5px solid #D4AC0D;
+    border-radius: var(--radius-sm);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .disclaimer-icon {
+    color: #B7950B;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .disclaimer-eyebrow {
+    font-size: 0.71875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9A7D0A;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .disclaimer-heading {
+    font-size: 1.05rem;
+    color: #7D6608;
+    margin: 0 0 0.35rem 0;
+    font-weight: 700;
+  }
+
+  .disclaimer-text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #6E5B09;
+    margin: 0;
+  }
+
+  /* Category Block */
+  .faq-category-block {
+    margin-bottom: 3rem;
+    scroll-margin-top: 140px;
+  }
+
+  .faq-category-header {
+    margin-bottom: 1.25rem;
+    border-bottom: 2px solid var(--color-beige);
+    padding-bottom: 0.75rem;
+  }
+
+  .faq-category-eyebrow {
+    font-size: 0.71875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-red);
+  }
+
+  .faq-category-title {
+    font-size: 1.45rem;
+    color: var(--color-forest);
+    margin: 0.2rem 0 0.25rem 0;
+  }
+
+  .faq-category-desc {
+    font-size: 0.875rem;
+    color: var(--color-charcoal-muted);
+    margin: 0;
+  }
+
+  /* Accordion Item Styling */
+  .faq-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .faq-item {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-sage-dark);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  }
+
+  .faq-question {
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-forest);
+    user-select: none;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-ivory);
+    color: var(--color-forest);
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: transform var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+    background-color: var(--color-sage);
+    color: var(--color-ivory);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-charcoal);
+    border-top: 1px solid var(--color-beige-subtle);
+    padding-top: 0.85rem;
+  }
+
+  .faq-answer p {
+    margin: 0;
+  }
+
+  /* Still Questions Banner */
+  .still-questions-banner {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-radius: var(--radius-md);
+    padding: clamp(2rem, 4vw, 3rem);
+    margin-top: 3.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .banner-icon-wrap {
+    width: 54px;
+    height: 54px;
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .banner-title {
+    font-size: 1.35rem;
+    color: var(--color-forest);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .banner-desc {
+    font-size: 0.9rem;
+    color: var(--color-charcoal-muted);
+    max-width: 520px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.55;
+  }
+
+  .banner-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+</style>
+
+
+<script>
+  const faqItems = document.querySelectorAll<HTMLDetailsElement>('.faq-item');
+
+  faqItems.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        faqItems.forEach((other) => {
+          if (other !== item && other.open) {
+            other.open = false;
+          }
+        });
+      }
+    });
+  });
+</script>

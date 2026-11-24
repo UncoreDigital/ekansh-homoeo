@@ -5,20 +5,20 @@ import FAQAccordion from '../components/FAQAccordion.astro';
 
 const bookingFAQs = [
   {
-    question: "How will I know when my consultation is confirmed?",
-    answer: "Because this platform is a frontend demonstration, your submitted request generates an immediate data summary and pre-filled WhatsApp link. Once you dispatch the request to WhatsApp or telephone, our clinic desk will confirm your appointment time."
+    question: "Does submitting this form confirm my appointment?",
+    answer: "No. Submitting this form is a consultation request, not an automatic confirmation. Your preferred date and time slot are subject to clinic schedule availability. Our reception desk will review your intake and contact you directly via phone or WhatsApp to verify and confirm your appointment."
   },
   {
     question: "What documents should I prepare for my first appointment?",
-    answer: "Please keep previous laboratory test reports, allopathic or Ayurvedic prescription slips, an outline of past major surgeries or illnesses, and a list of your current symptoms and their timings."
+    answer: "Please keep previous laboratory test reports, allopathic or other prescription slips, an outline of past major surgeries or illnesses, and a list of your current symptoms and their timings."
   },
   {
-    question: "Can I book for a family member or child?",
-    answer: "Yes. You can enter the patient's name and details in the form. For young pediatric patients, both parents are encouraged to be present during the intake conversation."
+    question: "Can I request a consultation for a child or family member?",
+    answer: "Yes. You can enter the patient's name and details in the form. For pediatric patients, a parent or legal guardian should be present during both in-clinic and online intake sessions."
   },
   {
     question: "What if I need to cancel or reschedule my time slot?",
-    answer: "Please notify the clinic via WhatsApp or phone at least 24 hours prior to your scheduled slot so another patient may be accommodated."
+    answer: "Please notify the clinic via WhatsApp (+91 9799988138) or telephone at least 24 hours prior to your scheduled slot so our desk may accommodate other waiting patients."
   }
 ];
 ---
@@ -89,13 +89,13 @@ const bookingFAQs = [
                 If you prefer speaking directly with our clinic desk to check immediate walk-in availability in Rajsamand:
               </p>
               <div class="direct-btns">
-                <a href="tel:+919876543210" class="btn btn-secondary btn-sm" style="width: 100%;">
+                <a href="tel:+919799988138" class="btn btn-secondary btn-sm" style="width: 100%;">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                   </svg>
-                  Call +91 7947107147
+                  Call +91 9799988138
                 </a>
-                <a href="https://wa.me/919876543210?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm" style="width: 100%;">
+                <a href="https://wa.me/919799988138?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm" style="width: 100%;">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                   </svg>
@@ -127,6 +127,16 @@ const bookingFAQs = [
       </div>
 
       <FAQAccordion items={bookingFAQs} />
+
+      <div class="text-center" style="margin-top: 2rem;">
+        <a href="/faqs" class="btn btn-secondary btn-md">
+          <span>Have more questions? View All FAQs</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

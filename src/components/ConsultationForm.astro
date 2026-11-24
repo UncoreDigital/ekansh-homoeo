@@ -7,7 +7,7 @@ const { defaultModality = 'in-clinic' } = Astro.props;
 ---
 
 <div class="booking-engine-wrapper">
-  <!-- Frontend Prototype Demo Alert -->
+  <!-- Patient Intake Notice Banner -->
   <div class="prototype-banner">
     <div class="banner-icon">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -17,7 +17,7 @@ const { defaultModality = 'in-clinic' } = Astro.props;
       </svg>
     </div>
     <div class="banner-content">
-      <strong>Frontend Demonstration Notice:</strong> This consultation booking portal is an interactive frontend prototype. Submitting this form displays a demonstration summary and prepares a direct WhatsApp confirmation request. It does not create an automated clinical record until confirmed by the clinic staff.
+      <strong>Patient Intake Portal:</strong> Submitting this request logs your details directly into our clinic reception database and dispatches an instant alert to the practitioner. Our clinic desk will confirm your appointment slot via phone or WhatsApp.
     </div>
   </div>
 
@@ -31,6 +31,11 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     </div>
 
     <form id="consultationForm" novalidate>
+      <!-- Anti-bot Honeypot Field (Hidden from real users) -->
+      <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+        <label for="consultation_hp">Leave this field blank</label>
+        <input type="text" id="consultation_hp" name="website_hp" tabindex="-1" autocomplete="off" />
+      </div>
       <!-- Step 1: Modality Selection -->
       <div class="form-group">
         <label class="form-label">Consultation Modality <span class="required">*</span></label>
@@ -97,7 +102,7 @@ const { defaultModality = 'in-clinic' } = Astro.props;
             id="patientPhone" 
             name="patientPhone" 
             class="form-control" 
-            placeholder="e.g. 9876543210" 
+            placeholder="e.g. 9799988138" 
             required 
           />
           <span class="form-error" id="phoneError">Please enter a valid 10-digit Indian mobile number.</span>
@@ -106,15 +111,16 @@ const { defaultModality = 'in-clinic' } = Astro.props;
 
       <div class="form-row">
         <div class="form-group col-half">
-          <label for="patientEmail" class="form-label">Email Address <span class="optional">(Optional)</span></label>
+          <label for="patientEmail" class="form-label">Email Address <span class="required">*</span></label>
           <input 
             type="email" 
             id="patientEmail" 
             name="patientEmail" 
             class="form-control" 
             placeholder="name@example.com" 
+            required 
           />
-          <span class="form-error" id="emailError">Please enter a valid email address.</span>
+          <span class="form-error" id="emailError">Please enter a valid email address for receiving your appointment confirmation.</span>
         </div>
 
         <div class="form-group col-half">
@@ -135,9 +141,9 @@ const { defaultModality = 'in-clinic' } = Astro.props;
         <label for="preferredTime" class="form-label">Preferred Time Window <span class="required">*</span></label>
         <select id="preferredTime" name="preferredTime" class="form-control" required>
           <option value="">-- Select Preferred Time Slot --</option>
-          <option value="Morning Session (10:00 AM - 1:00 PM)">Morning Session (10:00 AM - 1:00 PM)</option>
-          <option value="Evening Session (5:00 PM - 8:00 PM)">Evening Session (5:00 PM - 8:00 PM)</option>
-          <option value="Special Prior Appointment (Sunday / Urgent)">Special Prior Appointment</option>
+          <option value="Morning Session (10:00 AM - 2:00 PM)">Morning Session (10:00 AM - 2:00 PM)</option>
+          <option value="Evening Session (4:00 PM - 8:00 PM)">Evening Session (4:00 PM - 8:00 PM)</option>
+          <option value="Sunday Session (10:00 AM - 2:00 PM)">Sunday Session (10:00 AM - 2:00 PM)</option>
         </select>
         <span class="form-error" id="timeError">Please select a time slot.</span>
       </div>
@@ -164,10 +170,15 @@ const { defaultModality = 'in-clinic' } = Astro.props;
         <span class="form-error" id="consentError">You must accept the medical notice to proceed.</span>
       </div>
 
+      <!-- Server / API Error Notice -->
+      <div id="bookingErrorAlert" class="booking-error-alert" style="display: none;" role="alert">
+        <span id="bookingErrorMessage"></span>
+      </div>
+
       <div class="form-submit-row">
         <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-          <span>Submit Consultation Request</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <span id="submitBtnText">Submit Consultation Request</span>
+          <svg id="submitBtnIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
@@ -183,24 +194,35 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     </form>
   </div>
 
-  <!-- Interactive Confirmation Demonstration Modal -->
-  <div class="modal-overlay" id="confirmationModal" aria-hidden="true">
+  <!-- Interactive Confirmation Modal -->
+  <div class="modal-overlay" id="confirmationModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="confirmationModalTitle">
     <div class="modal-card">
       <div class="modal-header">
+        <button type="button" class="modal-close-icon-btn" id="modalTopCloseBtn" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
         <div class="modal-success-icon">
           <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
         </div>
-        <h4 class="modal-title">Consultation Request Generated</h4>
-        <span class="badge badge-sage">Frontend Demonstration Mode</span>
+        <h4 class="modal-title" id="confirmationModalTitle">Consultation Request Received</h4>
+        <span class="badge badge-sage">AWAITING CLINIC CONFIRMATION</span>
       </div>
 
       <div class="modal-body">
         <p class="modal-desc">
-          Thank you, <strong id="modalPatientName">Patient</strong>! Your demonstration appointment inquiry has been formulated successfully.
+          Thank you, <strong id="modalPatientName">Patient</strong>! Your consultation request has been successfully received by our clinic.
         </p>
+
+        <!-- Prominently Highlighted Status Notice -->
+        <div class="request-pending-notice" style="background-color: #FEF9E7; border: 1.5px solid #F9E79F; border-left: 4px solid #D4AC0D; border-radius: var(--radius-sm, 6px); padding: 0.95rem 1.15rem; margin-bottom: 1.25rem; font-size: 0.84375rem; color: #7D6608; line-height: 1.55;">
+          <strong>IMPORTANT:</strong> This is a consultation <em>REQUEST</em>, not a confirmed appointment. Your preferred date and time are subject to availability. Our clinic desk will review your request and contact you once your appointment has been accepted or rejected.
+        </div>
 
         <div class="request-summary-box">
           <div class="summary-line">
@@ -226,21 +248,22 @@ const { defaultModality = 'in-clinic' } = Astro.props;
         </div>
 
         <div class="whatsapp-prompt-box">
-          <p class="whatsapp-prompt-text">
-            <strong>Instant WhatsApp Confirmation:</strong> To dispatch these inquiry details directly to Ekansh Clinic's reception desk on WhatsApp, click the button below:
+          <h5 style="margin: 0 0 0.35rem 0; font-size: 0.9375rem; color: var(--color-forest, #355D48); font-weight: 600;">Need assistance?</h5>
+          <p class="whatsapp-prompt-text" style="margin-bottom: 0.75rem; font-size: 0.84375rem; color: var(--color-charcoal-muted, #5A665D);">
+            Contact our clinic desk directly for any questions regarding your request.
           </p>
           <a href="#" id="modalWhatsAppBtn" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg" style="width: 100%;">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
-            Confirm on WhatsApp Now
+            Contact Clinic on WhatsApp
           </a>
         </div>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-sm" id="closeModalBtn">
-          Close Demonstration
+          Close Window
         </button>
       </div>
     </div>
@@ -426,20 +449,29 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     margin-bottom: 0;
   }
 
-  /* Modal Overlay */
+  /* Modal Overlay - Centered, Responsive, Full Viewport Guard */
   .modal-overlay {
     position: fixed;
-    inset: 0;
-    background-color: rgba(48, 56, 50, 0.6);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: rgba(48, 56, 50, 0.65);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: clamp(0.75rem, 3vh, 1.5rem) clamp(0.75rem, 3vw, 1.5rem);
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--transition-base), visibility var(--transition-base);
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .modal-overlay.is-active {
@@ -447,59 +479,130 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     visibility: visible;
   }
 
+  /* Modal Card - Constrained to 90vh/90dvh with Flex Structure for Internal Scrolling */
   .modal-card {
     background-color: var(--color-white);
     border-radius: var(--radius-md);
-    max-width: 520px;
     width: 100%;
-    padding: 2.25rem;
-    box-shadow: var(--shadow-hover);
-    transform: translateY(20px);
+    max-width: 530px;
+    max-height: 90vh;
+    max-height: 90dvh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    transform: translateY(16px);
     transition: transform var(--transition-base);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .modal-overlay.is-active .modal-card {
     transform: translateY(0);
   }
 
+  /* Modal Header - Fixed Top Area */
   .modal-header {
+    flex-shrink: 0;
     text-align: center;
-    margin-bottom: 1.5rem;
+    padding: 1.5rem 1.75rem 0.85rem;
+    border-bottom: 1px solid var(--color-beige, #E9E4D7);
+    position: relative;
+    background-color: var(--color-white);
+  }
+
+  .modal-close-icon-btn {
+    position: absolute;
+    top: 0.85rem;
+    right: 1rem;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: var(--color-charcoal-muted);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .modal-close-icon-btn:hover {
+    background-color: var(--color-beige, #E9E4D7);
+    color: var(--color-forest);
   }
 
   .modal-success-icon {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background-color: var(--color-sage-subtle);
     color: var(--color-forest);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
+    margin: 0 auto 0.65rem;
     border: 2px solid var(--color-sage);
   }
 
   .modal-title {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     color: var(--color-forest);
     margin-bottom: 0.35rem;
+    line-height: 1.25;
+  }
+
+  /* Modal Body - Internally Scrollable Middle Area */
+  .modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 1.25rem 1.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sage, #829B88) var(--color-ivory, #FAF8F5);
+  }
+
+  .modal-body::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .modal-body::-webkit-scrollbar-track {
+    background: var(--color-ivory, #FAF8F5);
+  }
+
+  .modal-body::-webkit-scrollbar-thumb {
+    background-color: var(--color-sage, #829B88);
+    border-radius: 3px;
   }
 
   .modal-desc {
     font-size: 0.90625rem;
     color: var(--color-charcoal-muted);
     line-height: 1.5;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.15rem;
     text-align: center;
+  }
+
+  .request-pending-notice {
+    background-color: #FEF9E7;
+    border: 1.5px solid #F9E79F;
+    border-left: 4px solid #D4AC0D;
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1.15rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.84375rem;
+    color: #7D6608;
+    line-height: 1.55;
   }
 
   .request-summary-box {
     background-color: var(--color-ivory);
     border: 1px solid var(--color-beige);
     border-radius: var(--radius-sm);
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.15rem;
+    margin-bottom: 1.25rem;
     font-size: 0.84375rem;
   }
 
@@ -527,21 +630,60 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     background-color: #E8F5E9;
     border: 1px solid #C8E6C9;
     border-radius: var(--radius-sm);
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
+    padding: 1.15rem;
+    margin-bottom: 0.5rem;
     text-align: center;
   }
 
   .whatsapp-prompt-text {
     font-size: 0.84375rem;
     color: #1B5E20;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     line-height: 1.5;
   }
 
+  /* Booking Error Alert Box */
+  .booking-error-alert {
+    width: 100%;
+    padding: 0.875rem 1.15rem;
+    background-color: #FDF2F2;
+    border: 1px solid #F8B4B4;
+    border-radius: var(--radius-sm);
+    color: #9B1C1C;
+    font-size: 0.84375rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Modal Footer - Fixed Bottom Area */
   .modal-footer {
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
+    padding: 0.85rem 1.75rem 1rem;
+    border-top: 1px solid var(--color-beige, #E9E4D7);
+    background-color: #FAF8F5;
+  }
+
+  @media (max-width: 640px) {
+    .modal-overlay {
+      padding: 0.5rem;
+    }
+    .modal-card {
+      max-width: 100%;
+      max-height: 94vh;
+      max-height: 94dvh;
+      border-radius: var(--radius-sm);
+    }
+    .modal-header {
+      padding: 1.25rem 1rem 0.75rem;
+    }
+    .modal-body {
+      padding: 1rem;
+    }
+    .modal-footer {
+      padding: 0.75rem 1rem;
+    }
   }
 </style>
 
@@ -551,6 +693,10 @@ const { defaultModality = 'in-clinic' } = Astro.props;
     const modal = document.getElementById('confirmationModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
     const whatsAppBtn = document.getElementById('modalWhatsAppBtn') as HTMLAnchorElement | null;
+    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
+    const submitBtnText = document.getElementById('submitBtnText');
+    const errorAlert = document.getElementById('bookingErrorAlert');
+    const errorMessage = document.getElementById('bookingErrorMessage');
     
     // Set minimum date to tomorrow
     const dateInput = document.getElementById('preferredDate') as HTMLInputElement | null;
@@ -563,15 +709,29 @@ const { defaultModality = 'in-clinic' } = Astro.props;
       dateInput.min = `${yyyy}-${mm}-${dd}`;
     }
 
+    // Autofill condition/concern from URL query parameter if present
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const conditionParam = urlParams.get('condition') || urlParams.get('concern');
+      const concernInput = document.getElementById('healthConcern') as HTMLTextAreaElement | null;
+      if (conditionParam && concernInput && !concernInput.value.trim()) {
+        concernInput.value = conditionParam;
+      }
+    } catch (e) {
+      // Graceful fallback
+    }
+
     if (!form || !modal) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       let isValid = true;
 
+      // Hide prior errors
+      if (errorAlert) errorAlert.style.display = 'none';
+
       // Validate Name
       const nameInput = document.getElementById('patientName') as HTMLInputElement;
-      const nameError = document.getElementById('nameError');
       if (nameInput.value.trim().length < 3) {
         nameInput.classList.add('is-invalid');
         isValid = false;
@@ -581,7 +741,6 @@ const { defaultModality = 'in-clinic' } = Astro.props;
 
       // Validate Phone (Indian 10-digit)
       const phoneInput = document.getElementById('patientPhone') as HTMLInputElement;
-      const phoneError = document.getElementById('phoneError');
       const cleanPhone = phoneInput.value.replace(/[\s\-\+]/g, '');
       if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
         phoneInput.classList.add('is-invalid');
@@ -590,16 +749,13 @@ const { defaultModality = 'in-clinic' } = Astro.props;
         phoneInput.classList.remove('is-invalid');
       }
 
-      // Validate Email if present
+      // Validate Email (Required for appointment confirmation)
       const emailInput = document.getElementById('patientEmail') as HTMLInputElement;
-      if (emailInput.value.trim()) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput.value.trim())) {
-          emailInput.classList.add('is-invalid');
-          isValid = false;
-        } else {
-          emailInput.classList.remove('is-invalid');
-        }
+      const emailVal = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailVal || !emailRegex.test(emailVal)) {
+        emailInput.classList.add('is-invalid');
+        isValid = false;
       } else {
         emailInput.classList.remove('is-invalid');
       }
@@ -636,55 +792,132 @@ const { defaultModality = 'in-clinic' } = Astro.props;
 
       // Extract values
       const modeEl = form.querySelector('input[name="consultationMode"]:checked') as HTMLInputElement;
-      const modality = modeEl ? modeEl.value : 'In-Clinic';
+      const modality = modeEl ? modeEl.value : 'In-Clinic Visit (Rajsamand)';
       const patientName = nameInput.value.trim();
       const phone = phoneInput.value.trim();
+      const email = emailInput ? emailInput.value.trim() : '';
       const date = preferredDate.value;
       const time = preferredTime.value;
       const concernInput = document.getElementById('healthConcern') as HTMLTextAreaElement;
       const concern = concernInput ? concernInput.value.trim() : '';
+      const hpInput = document.getElementById('consultation_hp') as HTMLInputElement;
+      const website_hp = hpInput ? hpInput.value : '';
 
-      // Populate Modal
-      const modalPatientEl = document.getElementById('modalPatientName');
-      const modalModalityEl = document.getElementById('modalModality');
-      const modalPhoneEl = document.getElementById('modalPhone');
-      const modalDateEl = document.getElementById('modalDate');
-      const modalTimeEl = document.getElementById('modalTime');
-      const modalConcernEl = document.getElementById('modalConcern');
-
-      if (modalPatientEl) modalPatientEl.textContent = patientName;
-      if (modalModalityEl) modalModalityEl.textContent = modality;
-      if (modalPhoneEl) modalPhoneEl.textContent = phone;
-      if (modalDateEl) modalDateEl.textContent = date;
-      if (modalTimeEl) modalTimeEl.textContent = time;
-      if (modalConcernEl) modalConcernEl.textContent = concern || 'None provided';
-
-      // Build WhatsApp intent URL
-      // Placeholder phone number: 919876543210
-      const textPayload = `Hello Ekansh Homoeopathic Clinic,\n\nI would like to request an appointment:\n- Patient: ${patientName}\n- Phone: ${phone}\n- Mode: ${modality}\n- Date: ${date}\n- Slot: ${time}${concern ? `\n- Concern: ${concern}` : ''}\n\n(Generated via Website Booking Portal)`;
-      const waUrl = `https://wa.me/919876543210?text=${encodeURIComponent(textPayload)}`;
-
-      if (whatsAppBtn) {
-        whatsAppBtn.href = waUrl;
+      // UI Loading State
+      if (submitBtn) {
+        submitBtn.disabled = true;
+      }
+      if (submitBtnText) {
+        submitBtnText.textContent = 'Submitting Request...';
       }
 
-      // Show Modal
-      modal.classList.add('is-active');
-      modal.setAttribute('aria-hidden', 'false');
+      try {
+        const response = await fetch('/api/consultation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            patientName,
+            patientPhone: phone,
+            patientEmail: email,
+            consultationMode: modality,
+            preferredDate: date,
+            preferredTime: time,
+            healthConcern: concern,
+            website_hp,
+          }),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.success) {
+          const errMsg = result.error || 'Unable to submit your consultation request at this time. Please try again or reach out directly on WhatsApp.';
+          if (errorAlert && errorMessage) {
+            errorMessage.textContent = errMsg;
+            errorAlert.style.display = 'block';
+          }
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitBtnText) submitBtnText.textContent = 'Submit Consultation Request';
+          return;
+        }
+
+        // Populate Modal
+        const modalPatientEl = document.getElementById('modalPatientName');
+        const modalModalityEl = document.getElementById('modalModality');
+        const modalPhoneEl = document.getElementById('modalPhone');
+        const modalDateEl = document.getElementById('modalDate');
+        const modalTimeEl = document.getElementById('modalTime');
+        const modalConcernEl = document.getElementById('modalConcern');
+
+        if (modalPatientEl) modalPatientEl.textContent = patientName;
+        if (modalModalityEl) modalModalityEl.textContent = modality;
+        if (modalPhoneEl) modalPhoneEl.textContent = phone;
+        if (modalDateEl) modalDateEl.textContent = date;
+        if (modalTimeEl) modalTimeEl.textContent = time;
+        if (modalConcernEl) modalConcernEl.textContent = concern || 'None provided';
+
+        // Build WhatsApp intent URL
+        const textPayload = `Hello Ekansh Homoeopathic Clinic,\n\nI have submitted a consultation request on your website:\n- Patient: ${patientName}\n- Phone: ${phone}\n- Mode: ${modality}\n- Requested Date: ${date}\n- Slot: ${time}${concern ? `\n- Concern: ${concern}` : ''}\n\nI am contacting the clinic desk regarding my request.`;
+        const waUrl = `https://wa.me/919799988138?text=${encodeURIComponent(textPayload)}`;
+
+        if (whatsAppBtn) {
+          whatsAppBtn.href = waUrl;
+        }
+
+        // Show Modal with Scroll Lock
+        openModal();
+
+        // Reset form fields
+        form.reset();
+
+      } catch (networkErr) {
+        if (errorAlert && errorMessage) {
+          errorMessage.textContent = 'Network or connection error. Please check your internet connection or reach out directly on WhatsApp (+91 9799988138).';
+          errorAlert.style.display = 'block';
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitBtnText) submitBtnText.textContent = 'Submit Consultation Request';
+      }
     });
 
+    const topCloseBtn = document.getElementById('modalTopCloseBtn');
+
+    function openModal() {
+      if (!modal) return;
+      const modalBody = modal.querySelector('.modal-body');
+      if (modalBody) modalBody.scrollTop = 0;
+      modal.classList.add('is-active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+
     if (closeModalBtn) {
-      closeModalBtn.addEventListener('click', () => {
-        modal.classList.remove('is-active');
-        modal.setAttribute('aria-hidden', 'true');
-        form.reset();
-      });
+      closeModalBtn.addEventListener('click', closeModal);
+    }
+    if (topCloseBtn) {
+      topCloseBtn.addEventListener('click', closeModal);
     }
 
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        modal.classList.remove('is-active');
-        modal.setAttribute('aria-hidden', 'true');
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('is-active')) {
+        closeModal();
       }
     });
   }

@@ -1,0 +1,2317 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="Clinic Desk Dashboard | Ekansh Homoeopathic Clinic" showLogout={true}>
+  <!-- Loading Splash Screen while checking auth -->
+  <div id="dashboardAuthSplash" class="admin-auth-splash">
+    <div class="splash-spinner"></div>
+    <p>Verifying clinic staff authorization...</p>
+  </div>
+
+  <div id="dashboardApp" class="dashboard-container" style="display: none;">
+    <!-- Top Action & Welcome Bar -->
+    <div class="dashboard-header-bar">
+      <div>
+        <span class="text-eyebrow">Ekansh Practice Desk</span>
+        <h1 class="dashboard-title">Clinical Management Console</h1>
+        <p class="dashboard-desc">
+          Manage patient intake requests, review scheduled slots, and track incoming patient inquiries.
+        </p>
+      </div>
+
+      <div class="header-action-group">
+        <span class="last-sync-tag" id="lastSyncTime">Synced: Just now</span>
+        <button type="button" class="btn btn-secondary btn-sm btn-refresh" id="manualRefreshBtn" title="Reload live data">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>Refresh Data</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Alert / Banner Area -->
+    <div id="dashboardAlertBanner" class="admin-banner-alert" style="display: none;" role="alert">
+      <span id="dashboardAlertMessage"></span>
+      <button type="button" class="btn-close-alert" id="closeAlertBtn">&times;</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="admin-nav-tabs">
+      <button type="button" class="tab-btn active" data-tab="overviewTab">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Overview</span>
+      </button>
+
+      <button type="button" class="tab-btn" data-tab="consultationsTab">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          <path d="M9 14l2 2 4-4"></path>
+        </svg>
+        <span>Consultation Requests</span>
+        <span class="tab-badge" id="pendingTabBadge" style="display: none;">0</span>
+      </button>
+
+      <button type="button" class="tab-btn" data-tab="enquiriesTab">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        <span>Contact Enquiries</span>
+        <span class="tab-badge tab-badge-sage" id="newInquiryBadge" style="display: none;">0</span>
+      </button>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: OVERVIEW METRICS                                         -->
+    <!-- ============================================================== -->
+    <div id="overviewTab" class="tab-pane active">
+      <!-- Summary Metric Cards -->
+      <div class="metrics-grid">
+        <button type="button" class="metric-card card-editorial metric-card-interactive" onclick="window.navigateToTab('consultationsTab', 'pending')" aria-label="View Pending Consultation Requests" title="View pending consultation requests">
+          <div class="metric-card-top">
+            <div class="metric-icon-wrap icon-amber">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <span class="metric-card-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Pending Requests</span>
+            <strong class="metric-value text-amber" id="statPendingCount">-</strong>
+          </div>
+          <span class="metric-subtext">Awaiting clinic desk review</span>
+        </button>
+
+        <button type="button" class="metric-card card-editorial metric-card-interactive" onclick="window.navigateToTab('consultationsTab', 'confirmed')" aria-label="View Confirmed Appointments" title="View confirmed appointments">
+          <div class="metric-card-top">
+            <div class="metric-icon-wrap icon-forest">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <span class="metric-card-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Confirmed Appointments</span>
+            <strong class="metric-value text-forest" id="statConfirmedCount">-</strong>
+          </div>
+          <span class="metric-subtext">Slot verified &amp; patient notified</span>
+        </button>
+
+        <button type="button" class="metric-card card-editorial metric-card-interactive" onclick="window.navigateToTab('consultationsTab', 'all')" aria-label="View Total Consultations" title="View all consultation requests">
+          <div class="metric-card-top">
+            <div class="metric-icon-wrap icon-charcoal">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <span class="metric-card-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total Consultations</span>
+            <strong class="metric-value" id="statTotalCount">-</strong>
+          </div>
+          <span class="metric-subtext">All-time intake requests</span>
+        </button>
+
+        <button type="button" class="metric-card card-editorial metric-card-interactive" onclick="window.navigateToTab('consultationsTab', 'rejected')" aria-label="View Rejected Requests" title="View rejected consultation requests">
+          <div class="metric-card-top">
+            <div class="metric-icon-wrap icon-red">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <span class="metric-card-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Rejected Requests</span>
+            <strong class="metric-value text-muted" id="statRejectedCount">-</strong>
+          </div>
+          <span class="metric-subtext">Declined or unsuitable</span>
+        </button>
+
+        <button type="button" class="metric-card card-editorial metric-card-interactive" onclick="window.navigateToTab('enquiriesTab', 'new')" aria-label="View New Contact Enquiries" title="View new contact inquiries">
+          <div class="metric-card-top">
+            <div class="metric-icon-wrap icon-sage">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span class="metric-card-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">New Enquiries</span>
+            <strong class="metric-value text-forest" id="statNewInqCount">-</strong>
+          </div>
+          <span class="metric-subtext">General messages received</span>
+        </button>
+      </div>
+
+      <!-- Recent Tables Split -->
+      <div class="overview-dual-grid">
+        <!-- Recent Consultations -->
+        <div class="table-card card-editorial">
+          <div class="table-card-header">
+            <div>
+              <h3 class="table-card-title">Recent Consultation Requests</h3>
+              <span class="table-card-sub">Latest 5 patient bookings received</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm btn-view-all" onclick="window.navigateToTab('consultationsTab', 'all')">
+              <span>View All Requests</span> <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="overview-list-container" id="recentConsultationsContainer">
+            <div class="overview-records-list" id="recentConsultationsList">
+              <div class="overview-loading-state">Loading recent requests...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Contact Enquiries -->
+        <div class="table-card card-editorial">
+          <div class="table-card-header">
+            <div>
+              <h3 class="table-card-title">Recent Contact Inquiries</h3>
+              <span class="table-card-sub">Latest website messages received</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm btn-view-all" onclick="window.navigateToTab('enquiriesTab', 'all')">
+              <span>View All Inquiries</span> <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <div class="overview-list-container" id="recentEnquiriesContainer">
+            <div class="overview-records-list" id="recentEnquiriesList">
+              <div class="overview-loading-state">Loading recent messages...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: CONSULTATION REQUESTS                                    -->
+    <!-- ============================================================== -->
+    <div id="consultationsTab" class="tab-pane">
+      <div class="section-toolbar">
+        <div class="filter-pills" id="consultationFilterPills">
+          <button type="button" class="filter-pill active" data-filter="all">All (<span id="countAll">0</span>)</button>
+          <button type="button" class="filter-pill" data-filter="pending">Pending (<span id="countPending">0</span>)</button>
+          <button type="button" class="filter-pill" data-filter="confirmed">Confirmed (<span id="countConfirmed">0</span>)</button>
+          <button type="button" class="filter-pill" data-filter="rejected">Rejected (<span id="countRejected">0</span>)</button>
+          <button type="button" class="filter-pill" data-filter="completed">Completed (<span id="countCompleted">0</span>)</button>
+          <button type="button" class="filter-pill" data-filter="cancelled">Cancelled (<span id="countCancelled">0</span>)</button>
+        </div>
+
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="consultationSearchInput" placeholder="Search by patient, phone or email..." class="search-input" />
+        </div>
+      </div>
+
+      <div class="table-card card-editorial">
+        <div class="table-responsive">
+          <table class="admin-table full-consultations-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Patient Details</th>
+                <th style="width: 16%;">Consultation Mode</th>
+                <th style="width: 17%;">Preferred Slot</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 12%;">Confirmation Email</th>
+                <th style="width: 10%;">Submitted</th>
+                <th style="width: 13%; min-width: 130px;">Desk Actions</th>
+              </tr>
+            </thead>
+            <tbody id="allConsultationsTbody">
+              <tr><td colspan="7" class="table-loading">Loading consultation requests from database...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: CONTACT ENQUIRIES                                        -->
+    <!-- ============================================================== -->
+    <div id="enquiriesTab" class="tab-pane">
+      <div class="section-toolbar">
+        <div class="filter-pills" id="enquiryFilterPills">
+          <button type="button" class="filter-pill active" data-filter="all">All Inquiries</button>
+          <button type="button" class="filter-pill" data-filter="new">New</button>
+          <button type="button" class="filter-pill" data-filter="read">Read</button>
+          <button type="button" class="filter-pill" data-filter="replied">Replied</button>
+          <button type="button" class="filter-pill" data-filter="resolved">Resolved</button>
+        </div>
+
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="enquirySearchInput" placeholder="Search by sender name, phone or topic..." class="search-input" />
+        </div>
+      </div>
+
+      <div class="table-card card-editorial">
+        <div class="table-responsive">
+          <table class="admin-table full-enquiries-table">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Sender Details</th>
+                <th style="width: 20%;">Topic</th>
+                <th style="width: 28%;">Message Content</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 10%;">Received</th>
+                <th style="width: 10%; min-width: 100px;">Desk Actions</th>
+              </tr>
+            </thead>
+            <tbody id="allEnquiriesTbody">
+              <tr><td colspan="6" class="table-loading">Loading inquiries from database...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL 1: ACCEPT CONSULTATION MODAL                              -->
+    <!-- ============================================================== -->
+    <div class="admin-modal-overlay" id="acceptModal" aria-hidden="true">
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <div class="modal-icon-badge icon-forest">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h3 class="admin-modal-title">Accept Consultation Request</h3>
+            <span class="admin-modal-subtitle">Verify doctor availability and dispatch patient confirmation email</span>
+          </div>
+          <button type="button" class="btn-close-modal" data-close-modal="acceptModal">&times;</button>
+        </div>
+
+        <div class="admin-modal-body">
+          <div class="modal-summary-box">
+            <div class="summary-field">
+              <span class="field-label">Patient Name:</span>
+              <strong id="acceptModalPatient">-</strong>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Contact Phone:</span>
+              <span id="acceptModalPhone">-</span>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Patient Email:</span>
+              <span id="acceptModalEmail">-</span>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Requested Date:</span>
+              <strong id="acceptModalDate" class="text-forest">-</strong>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Requested Slot:</span>
+              <strong id="acceptModalSlot" class="text-forest">-</strong>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Modality:</span>
+              <span id="acceptModalMode">-</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 1.25rem;">
+            <label for="acceptAdminNote" class="form-label">Internal Desk Note / Special Instructions <span class="optional">(Optional - included in email)</span></label>
+            <textarea id="acceptAdminNote" class="form-control" rows="2" placeholder="e.g. Please bring prior thyroid reports, or Dr. Sharma will call directly via WhatsApp."></textarea>
+          </div>
+
+          <div class="checkbox-confirm-box">
+            <label class="checkbox-label">
+              <input type="checkbox" id="acceptAvailabilityCheck" required />
+              <span><strong>I confirm that I have checked the clinic schedule</strong> and verified the practitioner's availability for this date and time slot.</span>
+            </label>
+          </div>
+
+          <div id="acceptModalEmailAlert" class="notice-callout-amber" style="display: none; margin-top: 1rem;">
+            ⚠️ <strong>Notice:</strong> This patient record does not contain an email address. The appointment will be confirmed in the system, but no confirmation email can be dispatched. Please contact the patient directly via phone or WhatsApp.
+          </div>
+        </div>
+
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-close-modal="acceptModal">Cancel</button>
+          <button type="button" class="btn btn-primary btn-sm" id="confirmAcceptBtn" disabled>
+            <span>Confirm &amp; Send Email</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL 2: REJECT CONSULTATION MODAL                              -->
+    <!-- ============================================================== -->
+    <div class="admin-modal-overlay" id="rejectModal" aria-hidden="true">
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <div class="modal-icon-badge icon-red">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 class="admin-modal-title">Decline Consultation Request</h3>
+            <span class="admin-modal-subtitle">Mark request as rejected in clinic records</span>
+          </div>
+          <button type="button" class="btn-close-modal" data-close-modal="rejectModal">&times;</button>
+        </div>
+
+        <div class="admin-modal-body">
+          <p style="font-size: 0.875rem; color: var(--color-charcoal-muted); line-height: 1.5; margin-bottom: 1rem;">
+            Are you sure you want to decline the intake request for <strong id="rejectModalPatient" class="text-charcoal">-</strong>?
+            This will mark the record as <em>rejected</em> and send a polite notification email informing the patient that the requested appointment slot cannot be accommodated at this time.
+          </p>
+
+          <div class="form-group">
+            <label for="rejectAdminNote" class="form-label">Reason for Rejection <span class="optional">(Included in polite patient update)</span></label>
+            <textarea id="rejectAdminNote" class="form-control" rows="2" placeholder="e.g. Schedule fully booked, practitioner unavailable during selected hours, or condition requires emergency intervention."></textarea>
+          </div>
+        </div>
+
+        <div class="admin-modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-close-modal="rejectModal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm" id="confirmRejectBtn">
+            <span>Decline Request</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL 3: VIEW CONSULTATION DETAILS MODAL                        -->
+    <!-- ============================================================== -->
+    <div class="admin-modal-overlay" id="detailsModal" aria-hidden="true">
+      <div class="admin-modal-card admin-modal-lg">
+        <div class="admin-modal-header">
+          <div>
+            <span class="text-eyebrow" id="detailModalCategory">Intake Record</span>
+            <h3 class="admin-modal-title" id="detailModalTitle">Patient Details</h3>
+          </div>
+          <button type="button" class="btn-close-modal" data-close-modal="detailsModal">&times;</button>
+        </div>
+
+        <div class="admin-modal-body" id="detailModalBody">
+          <!-- Dynamic Content -->
+        </div>
+
+        <div class="admin-modal-footer" id="detailModalFooter">
+          <button type="button" class="btn btn-secondary btn-sm" data-close-modal="detailsModal">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL 4: INQUIRY DETAILS MODAL                                  -->
+    <!-- ============================================================== -->
+    <div class="admin-modal-overlay" id="inquiryModal" aria-hidden="true">
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <div>
+            <span class="text-eyebrow">General Clinic Inquiry</span>
+            <h3 class="admin-modal-title" id="inqModalSender">Sender Name</h3>
+          </div>
+          <button type="button" class="btn-close-modal" data-close-modal="inquiryModal">&times;</button>
+        </div>
+
+        <div class="admin-modal-body">
+          <div class="modal-summary-box" style="margin-bottom: 1rem;">
+            <div class="summary-field">
+              <span class="field-label">Phone:</span>
+              <span id="inqModalPhone">-</span>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Email:</span>
+              <span id="inqModalEmail">Not provided</span>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Topic:</span>
+              <strong id="inqModalTopic">-</strong>
+            </div>
+            <div class="summary-field">
+              <span class="field-label">Received:</span>
+              <span id="inqModalReceived">-</span>
+            </div>
+          </div>
+
+          <div class="message-full-box">
+            <strong style="display: block; font-size: 0.78125rem; color: var(--color-forest); text-transform: uppercase; margin-bottom: 0.35rem;">Inquiry Message:</strong>
+            <p id="inqModalMessage" style="margin: 0; line-height: 1.6; font-size: 0.875rem; white-space: pre-wrap;"></p>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="inqAdminNote" class="form-label">Internal Desk Note / Follow-up Status</label>
+            <textarea id="inqAdminNote" class="form-control" rows="2" placeholder="e.g. Called patient on 20th Nov, confirmed in-clinic consultation for skin allergy."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="inqStatusSelect" class="form-label">Inquiry Resolution Status</label>
+            <select id="inqStatusSelect" class="form-control">
+              <option value="new">New (Unreviewed)</option>
+              <option value="read">Read / In-Progress</option>
+              <option value="replied">Replied via Call / WhatsApp</option>
+              <option value="resolved">Resolved / Closed</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-modal-footer">
+          <a href="#" id="inqModalWhatsAppBtn" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm" style="margin-right: auto;">
+            <span>Open WhatsApp Desk</span>
+          </a>
+          <button type="button" class="btn btn-secondary btn-sm" data-close-modal="inquiryModal">Cancel</button>
+          <button type="button" class="btn btn-primary btn-sm" id="saveInqStatusBtn">
+            <span>Save Updates</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  /* Splash Loading Screen */
+  .admin-auth-splash {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 1rem;
+    color: var(--color-forest, #355D48);
+    font-size: 0.9375rem;
+  }
+
+  .splash-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(53, 93, 72, 0.2);
+    border-top-color: var(--color-forest, #355D48);
+    border-radius: 50%;
+    animation: adminSpin 0.8s linear infinite;
+  }
+
+  @keyframes adminSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Dashboard Header */
+  .dashboard-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--color-beige, #E9E4D7);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    gap: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    color: var(--color-forest, #355D48);
+    margin: 0.25rem 0 0.35rem;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+  }
+
+  .dashboard-desc {
+    color: var(--color-charcoal-muted, #5A665D);
+    font-size: 0.90625rem;
+    margin: 0;
+    max-width: 650px;
+  }
+
+  .header-action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .last-sync-tag {
+    font-size: 0.75rem;
+    color: var(--color-charcoal-light, #768379);
+    background: #FFFFFF;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-sm, 6px);
+  }
+
+  .btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  /* Alert Banner */
+  .admin-banner-alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm, 6px);
+    margin-bottom: 1.5rem;
+    font-size: 0.84375rem;
+    background-color: #EBF5FB;
+    border: 1px solid #AED6F1;
+    color: #1B4F72;
+  }
+
+  .admin-banner-alert.alert-success {
+    background-color: #E8F8F5;
+    border-color: #A3E4D7;
+    color: #0E6251;
+  }
+
+  .admin-banner-alert.alert-error {
+    background-color: #FDF2F2;
+    border-color: #F8B4B4;
+    color: #9B1C1C;
+  }
+
+  .btn-close-alert {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: inherit;
+    line-height: 1;
+    padding: 0 0.25rem;
+  }
+
+  /* Navigation Tabs */
+  .admin-nav-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1.5px solid var(--color-beige, #E9E4D7);
+    margin-bottom: 2rem;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    font-size: 0.90625rem;
+    font-weight: 600;
+    color: var(--color-charcoal-muted, #5A665D);
+    cursor: pointer;
+    transition: all var(--transition-fast, 150ms ease);
+    white-space: nowrap;
+    margin-bottom: -2px;
+  }
+
+  .tab-btn:hover {
+    color: var(--color-forest, #355D48);
+  }
+
+  .tab-btn.active {
+    color: var(--color-forest, #355D48);
+    border-bottom-color: var(--color-forest, #355D48);
+  }
+
+  .tab-badge {
+    background-color: #C35137;
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 9999px;
+    font-weight: 700;
+  }
+
+  .tab-badge-sage {
+    background-color: var(--color-sage, #A3B18A);
+  }
+
+  .tab-pane {
+    display: none;
+  }
+
+  .tab-pane.active {
+    display: block;
+  }
+
+  /* Summary Metric Cards */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    text-align: left;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  button.metric-card-interactive {
+    appearance: none;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: transform var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease);
+  }
+
+  button.metric-card-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(53, 93, 72, 0.08);
+    border-color: var(--color-forest, #355D48);
+  }
+
+  button.metric-card-interactive:active {
+    transform: translateY(0);
+  }
+
+  button.metric-card-interactive:focus-visible {
+    outline: 2px solid var(--color-forest, #355D48);
+    outline-offset: 2px;
+  }
+
+  .metric-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.85rem;
+  }
+
+  .metric-card-top .metric-icon-wrap {
+    margin-bottom: 0;
+  }
+
+  .metric-card-arrow {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-charcoal-light, #768379);
+    transition: transform 150ms ease, color 150ms ease;
+    line-height: 1;
+  }
+
+  button.metric-card-interactive:hover .metric-card-arrow {
+    transform: translateX(3px);
+    color: var(--color-forest, #355D48);
+  }
+
+  .metric-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm, 6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+  }
+
+  .icon-amber { background-color: #FEF9E7; color: #B7950B; border: 1px solid #F9E79F; }
+  .icon-forest { background-color: #E8F8F5; color: #117864; border: 1px solid #A3E4D7; }
+  .icon-charcoal { background-color: #F2F4F4; color: #34495E; border: 1px solid #D5D8DC; }
+  .icon-red { background-color: #FDEDEC; color: #C0392B; border: 1px solid #F5B7B1; }
+  .icon-sage { background-color: #F0F4EE; color: #355D48; border: 1px solid #C8D6C0; }
+
+  .metric-label {
+    font-size: 0.78125rem;
+    font-weight: 600;
+    color: var(--color-charcoal-muted, #5A665D);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+    line-height: 1;
+    color: var(--color-charcoal, #303832);
+    display: block;
+  }
+
+  .text-amber { color: #B7950B !important; }
+  .text-forest { color: var(--color-forest, #355D48) !important; }
+  .text-muted { color: #7F8C8D !important; }
+
+  .metric-subtext {
+    font-size: 0.72rem;
+    color: var(--color-charcoal-light, #768379);
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* Dual Grid Tables in Overview */
+  .overview-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .overview-dual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .table-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+
+  .table-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--color-beige, #E9E4D7);
+    background-color: var(--color-ivory, #F6F5EF);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .table-card-title {
+    font-size: 1.15rem;
+    color: var(--color-forest, #355D48);
+    margin: 0;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+  }
+
+  .table-card-sub {
+    font-size: 0.75rem;
+    color: var(--color-charcoal-muted, #5A665D);
+    display: block;
+  }
+
+  .btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 150ms ease;
+  }
+
+  .btn-view-all:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .btn-arrow {
+    display: inline-block;
+    transition: transform 150ms ease;
+  }
+
+  /* Toolbar */
+  .section-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-pills {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    background: #FFFFFF;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.78125rem;
+    font-weight: 600;
+    color: var(--color-charcoal-muted, #5A665D);
+    cursor: pointer;
+    transition: all var(--transition-fast, 150ms ease);
+  }
+
+  .filter-pill:hover {
+    border-color: var(--color-forest, #355D48);
+    color: var(--color-forest, #355D48);
+  }
+
+  .filter-pill.active {
+    background: var(--color-forest, #355D48);
+    color: #FFFFFF;
+    border-color: var(--color-forest, #355D48);
+  }
+
+  .search-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-charcoal-light, #768379);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.45rem 0.85rem 0.45rem 2.25rem;
+    border: 1.5px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.8125rem;
+    font-family: inherit;
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--color-forest, #355D48);
+    box-shadow: 0 0 0 2px rgba(53, 93, 72, 0.12);
+  }
+
+  /* Admin Tables */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84375rem;
+    text-align: left;
+  }
+
+  .admin-table th {
+    background: var(--color-ivory, #F6F5EF);
+    padding: 0.75rem 1rem;
+    color: var(--color-charcoal, #303832);
+    font-weight: 700;
+    border-bottom: 1px solid var(--color-beige, #E9E4D7);
+    white-space: nowrap;
+    font-size: 0.78125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .admin-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #F0EDE6;
+    color: var(--color-charcoal, #303832);
+    vertical-align: middle;
+  }
+
+  .admin-table tr:hover td {
+    background-color: #FAF9F6;
+  }
+
+  .table-loading, .table-empty {
+    text-align: center;
+    padding: 2.5rem 1rem !important;
+    color: var(--color-charcoal-muted, #5A665D);
+    font-style: italic;
+  }
+
+  /* Overview Compact Card-Row List Layout */
+  .overview-list-container {
+    padding: 1rem 1.25rem;
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .overview-records-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .overview-record-card {
+    background-color: #FAF9F6;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: background-color var(--transition-fast, 150ms ease), border-color var(--transition-fast, 150ms ease), box-shadow var(--transition-fast, 150ms ease);
+  }
+
+  .overview-record-card:hover {
+    background-color: #FFFFFF;
+    border-color: #D3CCA5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .record-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .record-primary-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .record-name {
+    font-size: 0.90625rem;
+    color: var(--color-charcoal, #303832);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+
+  .record-meta-dot {
+    color: var(--color-charcoal-light, #768379);
+    font-size: 0.75rem;
+  }
+
+  .record-phone {
+    font-size: 0.8125rem;
+    color: var(--color-charcoal-muted, #5A665D);
+    font-weight: 500;
+  }
+
+  .record-secondary-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--color-charcoal-muted, #5A665D);
+  }
+
+  .record-modality-badge {
+    background-color: var(--color-ivory, #F6F5EF);
+    border: 1px solid var(--color-beige, #E9E4D7);
+    color: var(--color-charcoal, #303832);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .record-topic-badge {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.72rem;
+    border-radius: 4px;
+  }
+
+  .record-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--color-charcoal-muted, #5A665D);
+  }
+
+  .record-action-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    min-width: 85px;
+  }
+
+  .record-badge-wrap {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .overview-loading-state,
+  .overview-empty-state {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--color-charcoal-muted, #5A665D);
+    font-style: italic;
+    font-size: 0.84375rem;
+  }
+
+  /* Full Data Tables */
+  .full-consultations-table {
+    min-width: 880px;
+  }
+
+  .full-enquiries-table {
+    min-width: 820px;
+  }
+
+  /* Topic Badges */
+  .topic-badge {
+    display: inline-block;
+    max-width: 170px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.35;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm, 6px);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    text-align: left;
+  }
+
+  .badge-sage {
+    background-color: #F0F4EE;
+    color: #2E5A44;
+    border: 1px solid #C8D6C0;
+  }
+
+  /* Status Badges */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .status-pending { background-color: #FEF9E7; color: #9A7D0A; border: 1px solid #F9E79F; }
+  .status-confirmed { background-color: #E8F8F5; color: #117864; border: 1px solid #A3E4D7; }
+  .status-rejected { background-color: #FDEDEC; color: #C0392B; border: 1px solid #F5B7B1; }
+  .status-completed { background-color: #EBF5FB; color: #2471A3; border: 1px solid #AED6F1; }
+  .status-cancelled { background-color: #F2F4F4; color: #7F8C8D; border: 1px solid #D5D8DC; }
+  .status-new { background-color: #F0F4EE; color: #2E5A44; border: 1px solid #C8D6C0; }
+  .status-read { background-color: #E8F8F5; color: #16A085; border: 1px solid #A3E4D7; }
+  .status-replied { background-color: #EBF5FB; color: #2980B9; border: 1px solid #AED6F1; }
+  .status-resolved { background-color: #E8F8F5; color: #1E8449; border: 1px solid #A9DFBF; }
+
+  /* Buttons & Action Controls */
+  .table-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 28px;
+    padding: 0.32rem 0.68rem;
+    border-radius: var(--radius-sm, 6px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all var(--transition-fast, 150ms ease);
+    text-decoration: none;
+    font-family: inherit;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  .btn-action:focus-visible {
+    outline: 2px solid var(--color-forest, #355D48);
+    outline-offset: 2px;
+  }
+
+  .btn-accept {
+    background-color: var(--color-forest, #355D48);
+    border-color: var(--color-forest, #355D48);
+    color: #FFFFFF;
+  }
+  .btn-accept:hover {
+    background-color: #264434;
+    border-color: #264434;
+    color: #FFFFFF;
+  }
+
+  .btn-reject {
+    background-color: #FFFFFF;
+    border-color: #F5B7B1;
+    color: #C0392B;
+  }
+  .btn-reject:hover {
+    background-color: #FDEDEC;
+    border-color: #E74C3C;
+    color: #922B21;
+  }
+
+  .btn-details {
+    background-color: #FFFFFF;
+    border-color: #D3CCA5;
+    color: var(--color-charcoal, #303832);
+  }
+  .btn-details:hover {
+    background-color: var(--color-ivory, #F6F5EF);
+    border-color: var(--color-forest, #355D48);
+    color: var(--color-forest, #355D48);
+  }
+
+  .btn-view {
+    background-color: #FFFFFF;
+    border-color: var(--color-forest, #355D48);
+    color: var(--color-forest, #355D48);
+    padding: 0.32rem 0.75rem;
+  }
+  .btn-view:hover {
+    background-color: #EAF1EC;
+    border-color: #264434;
+    color: #264434;
+  }
+
+  .btn-retry-mail {
+    background-color: #FEF9E7;
+    border-color: #F9E79F;
+    color: #9A7D0A;
+  }
+  .btn-retry-mail:hover {
+    background-color: #F9E79F;
+    border-color: #F4D03F;
+    color: #7D6608;
+  }
+
+  .btn-danger {
+    background-color: #C0392B;
+    color: #FFFFFF;
+    border: 1px solid #C0392B;
+  }
+  .btn-danger:hover { background-color: #A93226; }
+
+  .email-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .email-sent {
+    background-color: #E8F8F5;
+    color: #117864;
+    border: 1px solid #A3E4D7;
+  }
+
+  .email-failed {
+    background-color: #FDEDEC;
+    color: #C0392B;
+    border: 1px solid #F5B7B1;
+  }
+
+  .email-none {
+    background-color: #F2F4F4;
+    color: #7F8C8D;
+  }
+
+  /* Modals */
+  .admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(48, 56, 50, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base, 250ms ease), visibility var(--transition-base, 250ms ease);
+  }
+
+  .admin-modal-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .admin-modal-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-md, 8px);
+    max-width: 540px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(15px);
+    transition: transform var(--transition-base, 250ms ease);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .admin-modal-lg {
+    max-width: 680px;
+  }
+
+  .admin-modal-overlay.is-active .admin-modal-card {
+    transform: translateY(0);
+  }
+
+  .admin-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-beige, #E9E4D7);
+    padding-bottom: 1rem;
+    position: relative;
+  }
+
+  .modal-icon-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .admin-modal-title {
+    font-size: 1.35rem;
+    color: var(--color-forest, #355D48);
+    margin: 0 0 0.2rem;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+  }
+
+  .admin-modal-subtitle {
+    font-size: 0.78125rem;
+    color: var(--color-charcoal-muted, #5A665D);
+    display: block;
+  }
+
+  .btn-close-modal {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-charcoal-light, #768379);
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .admin-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--color-beige, #E9E4D7);
+    padding-top: 1rem;
+  }
+
+  .modal-summary-box {
+    background-color: var(--color-ivory, #F6F5EF);
+    border: 1px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1.25rem;
+    font-size: 0.84375rem;
+  }
+
+  .summary-field .field-label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-charcoal-muted, #5A665D);
+    margin-bottom: 0.15rem;
+  }
+
+  .checkbox-confirm-box {
+    margin-top: 1.25rem;
+    background: #E8F8F5;
+    border: 1.5px solid #A3E4D7;
+    border-radius: var(--radius-sm, 6px);
+    padding: 0.85rem 1rem;
+  }
+
+  .notice-callout-amber {
+    background-color: #FEF9E7;
+    border: 1px solid #F9E79F;
+    border-radius: var(--radius-sm, 6px);
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    color: #7D6608;
+    line-height: 1.5;
+  }
+
+  .message-full-box {
+    background: #FAF9F6;
+    border: 1px solid var(--color-beige, #E9E4D7);
+    border-radius: var(--radius-sm, 6px);
+    padding: 1rem;
+    color: var(--color-charcoal, #303832);
+  }
+</style>
+
+<script>
+  // State store for admin dashboard
+  let currentToken = '';
+  let consultationsCache: any[] = [];
+  let enquiriesCache: any[] = [];
+  let activeConsultationFilter = 'all';
+  let activeEnquiryFilter = 'all';
+  let activeAcceptId = '';
+  let activeRejectId = '';
+  let activeInquiryId = '';
+
+  // DOM Elements
+  const authSplash = document.getElementById('dashboardAuthSplash');
+  const appContainer = document.getElementById('dashboardApp');
+  const alertBanner = document.getElementById('dashboardAlertBanner');
+  const alertMessage = document.getElementById('dashboardAlertMessage');
+  const lastSyncTimeEl = document.getElementById('lastSyncTime');
+
+  // Verify auth session immediately on client mount
+  async function checkAuthAndInit() {
+    currentToken = sessionStorage.getItem('admin_token') || localStorage.getItem('admin_token') || '';
+
+    try {
+      const res = await fetch('/api/admin/auth/verify', {
+        headers: currentToken ? { Authorization: `Bearer ${currentToken}` } : {},
+      });
+
+      if (!res.ok) {
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      const data = await res.json();
+      if (!data.authenticated || !data.authorized) {
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      // Display user email in layout pill
+      const userEmailEl = document.getElementById('adminUserEmail');
+      const userPill = document.getElementById('adminUserPill');
+      const logoutBtn = document.getElementById('adminLogoutBtn');
+      if (userEmailEl && data.user?.email) userEmailEl.textContent = data.user.email;
+      if (userPill) userPill.style.display = 'inline-flex';
+      if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+
+      // Hide splash, show app
+      if (authSplash) authSplash.style.display = 'none';
+      if (appContainer) appContainer.style.display = 'block';
+
+      // Load initial dashboard data
+      await loadAllDashboardData();
+    } catch (err) {
+      console.error('Auth verification error:', err);
+      window.location.href = '/admin/login';
+    }
+  }
+
+  // Load all dashboard datasets
+  async function loadAllDashboardData() {
+    await Promise.all([loadOverview(), loadConsultations(), loadEnquiries()]);
+    if (lastSyncTimeEl) {
+      const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      lastSyncTimeEl.textContent = `Synced: ${now}`;
+    }
+  }
+
+  // Fetch overview statistics
+  async function loadOverview() {
+    try {
+      const res = await fetch('/api/admin/overview', {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (!data.success) return;
+
+      const stats = data.stats;
+      document.getElementById('statPendingCount')!.textContent = String(stats.pending_consultations);
+      document.getElementById('statConfirmedCount')!.textContent = String(stats.confirmed_consultations);
+      document.getElementById('statTotalCount')!.textContent = String(stats.total_consultations);
+      document.getElementById('statRejectedCount')!.textContent = String(stats.rejected_consultations);
+      document.getElementById('statNewInqCount')!.textContent = String(stats.new_enquiries);
+
+      // Tab badges
+      const pendingBadge = document.getElementById('pendingTabBadge');
+      if (pendingBadge) {
+        pendingBadge.textContent = String(stats.pending_consultations);
+        pendingBadge.style.display = stats.pending_consultations > 0 ? 'inline-block' : 'none';
+      }
+
+      const inqBadge = document.getElementById('newInquiryBadge');
+      if (inqBadge) {
+        inqBadge.textContent = String(stats.new_enquiries);
+        inqBadge.style.display = stats.new_enquiries > 0 ? 'inline-block' : 'none';
+      }
+
+      // Render recent tables
+      renderRecentConsultations(data.recent_consultations || []);
+      renderRecentEnquiries(data.recent_enquiries || []);
+    } catch (err) {
+      console.error('Failed to load overview:', err);
+    }
+  }
+
+  // Render recent consultations in Overview
+  function renderRecentConsultations(items: any[]) {
+    const listEl = document.getElementById('recentConsultationsList');
+    if (!listEl) return;
+
+    if (items.length === 0) {
+      listEl.innerHTML = '<div class="overview-empty-state">No consultation requests recorded yet.</div>';
+      return;
+    }
+
+    listEl.innerHTML = items.map((item) => `
+      <div class="overview-record-card">
+        <div class="record-main-col">
+          <div class="record-primary-row">
+            <strong class="record-name" title="${escapeHtml(item.patient_name)}">${escapeHtml(item.patient_name)}</strong>
+            <span class="record-meta-dot" aria-hidden="true">•</span>
+            <span class="record-phone">${escapeHtml(item.phone)}</span>
+          </div>
+          <div class="record-secondary-row">
+            <span class="record-modality-badge">${escapeHtml(item.consultation_type)}</span>
+            <span class="record-date">📅 ${escapeHtml(item.preferred_date)}${item.preferred_time ? ` &bull; ${escapeHtml(item.preferred_time)}` : ''}</span>
+          </div>
+        </div>
+        <div class="record-action-col">
+          <div class="record-badge-wrap">
+            ${renderStatusBadge(item.status)}
+          </div>
+          <button type="button" class="btn-action btn-view" onclick="window.openConsultationDetails('${item.id}')" title="View intake details">
+            View
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Render recent enquiries in Overview
+  function renderRecentEnquiries(items: any[]) {
+    const listEl = document.getElementById('recentEnquiriesList');
+    if (!listEl) return;
+
+    if (items.length === 0) {
+      listEl.innerHTML = '<div class="overview-empty-state">No contact messages received yet.</div>';
+      return;
+    }
+
+    listEl.innerHTML = items.map((item) => `
+      <div class="overview-record-card">
+        <div class="record-main-col">
+          <div class="record-primary-row">
+            <strong class="record-name" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</strong>
+            <span class="record-meta-dot" aria-hidden="true">•</span>
+            <span class="record-phone">${escapeHtml(item.phone)}</span>
+          </div>
+          <div class="record-secondary-row">
+            <span class="badge badge-sage record-topic-badge" title="${escapeHtml(item.interest)}">${escapeHtml(item.interest)}</span>
+            <span class="record-date">🕒 ${formatDate(item.created_at)}</span>
+          </div>
+        </div>
+        <div class="record-action-col">
+          <div class="record-badge-wrap">
+            ${renderStatusBadge(item.status)}
+          </div>
+          <button type="button" class="btn-action btn-view" onclick="window.openInquiryModal('${item.id}')" title="View message inquiry">
+            View
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Fetch all consultations
+  async function loadConsultations() {
+    try {
+      const res = await fetch('/api/admin/consultations', {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (!data.success) return;
+
+      consultationsCache = data.consultations || [];
+      updateConsultationCounts(consultationsCache);
+      renderConsultationsTable();
+    } catch (err) {
+      console.error('Failed to load consultations:', err);
+    }
+  }
+
+  function updateConsultationCounts(items: any[]) {
+    document.getElementById('countAll')!.textContent = String(items.length);
+    document.getElementById('countPending')!.textContent = String(items.filter(c => c.status === 'pending').length);
+    document.getElementById('countConfirmed')!.textContent = String(items.filter(c => c.status === 'confirmed').length);
+    document.getElementById('countRejected')!.textContent = String(items.filter(c => c.status === 'rejected').length);
+    document.getElementById('countCompleted')!.textContent = String(items.filter(c => c.status === 'completed').length);
+    document.getElementById('countCancelled')!.textContent = String(items.filter(c => c.status === 'cancelled').length);
+  }
+
+  // Filter and render consultations table
+  function renderConsultationsTable() {
+    const tbody = document.getElementById('allConsultationsTbody');
+    if (!tbody) return;
+
+    const search = (document.getElementById('consultationSearchInput') as HTMLInputElement)?.value.toLowerCase() || '';
+
+    const filtered = consultationsCache.filter((item) => {
+      const matchesStatus = activeConsultationFilter === 'all' || item.status === activeConsultationFilter;
+      const matchesSearch = !search ||
+        (item.patient_name && item.patient_name.toLowerCase().includes(search)) ||
+        (item.phone && item.phone.toLowerCase().includes(search)) ||
+        (item.email && item.email.toLowerCase().includes(search));
+      return matchesStatus && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="table-empty">No matching consultation requests found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map((c) => {
+      const hasEmail = Boolean(c.email);
+      let emailStatusHtml = '';
+
+      if (c.status === 'confirmed') {
+        if (c.confirmation_email_sent_at) {
+          emailStatusHtml = `<span class="email-status-pill email-sent" title="Confirmation sent at ${c.confirmation_email_sent_at}">✓ Confirm Sent</span>`;
+        } else if (c.confirmation_email_error) {
+          emailStatusHtml = `<span class="email-status-pill email-failed" title="${escapeHtml(c.confirmation_email_error)}">⚠️ Confirm Failed</span>`;
+        } else if (!hasEmail) {
+          emailStatusHtml = `<span class="email-status-pill email-none">No Email</span>`;
+        } else {
+          emailStatusHtml = `<span class="email-status-pill email-none">Unsent</span>`;
+        }
+      } else if (c.status === 'rejected') {
+        if (c.rejection_email_sent_at) {
+          emailStatusHtml = `<span class="email-status-pill email-sent" title="Rejection update sent at ${c.rejection_email_sent_at}">✓ Reject Sent</span>`;
+        } else if (c.rejection_email_error) {
+          emailStatusHtml = `<span class="email-status-pill email-failed" title="${escapeHtml(c.rejection_email_error)}">⚠️ Reject Failed</span>`;
+        } else if (!hasEmail) {
+          emailStatusHtml = `<span class="email-status-pill email-none">No Email</span>`;
+        } else {
+          emailStatusHtml = `<span class="email-status-pill email-none">Unsent</span>`;
+        }
+      } else {
+        emailStatusHtml = `<span class="email-status-pill email-none">-</span>`;
+      }
+
+      return `
+        <tr>
+          <td>
+            <strong>${escapeHtml(c.patient_name)}</strong><br>
+            <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" style="color: var(--color-forest); font-size: 0.78125rem; font-weight: 600;">
+              📞 ${escapeHtml(c.phone)}
+            </a><br>
+            <small style="color: var(--color-charcoal-light);">${hasEmail ? escapeHtml(c.email) : '<em>No email provided</em>'}</small>
+          </td>
+          <td>
+            <small>${escapeHtml(c.consultation_type)}</small>
+          </td>
+          <td>
+            <strong>${escapeHtml(c.preferred_date)}</strong><br>
+            <small class="text-muted">${escapeHtml(c.preferred_time)}</small>
+          </td>
+          <td>${renderStatusBadge(c.status)}</td>
+          <td>${emailStatusHtml}</td>
+          <td><small>${formatDate(c.created_at)}</small></td>
+          <td>
+            <div class="table-actions">
+              ${c.status === 'pending' ? `
+                <button type="button" class="btn-action btn-accept" onclick="window.openAcceptModal('${c.id}')" title="Accept appointment & send confirmation email">
+                  Accept
+                </button>
+                <button type="button" class="btn-action btn-reject" onclick="window.openRejectModal('${c.id}')" title="Decline request & send update email">
+                  Reject
+                </button>
+              ` : ''}
+
+              ${(c.status === 'confirmed' && (c.confirmation_email_error || !c.confirmation_email_sent_at) && hasEmail) ? `
+                <button type="button" class="btn-action btn-retry-mail" onclick="window.retryPatientEmail('${c.id}', 'confirmed')" title="Retry sending patient confirmation email">
+                  Retry Email
+                </button>
+              ` : ''}
+
+              ${(c.status === 'rejected' && (c.rejection_email_error || !c.rejection_email_sent_at) && hasEmail) ? `
+                <button type="button" class="btn-action btn-retry-mail" onclick="window.retryPatientEmail('${c.id}', 'rejected')" title="Retry sending patient rejection email">
+                  Retry Email
+                </button>
+              ` : ''}
+
+              <button type="button" class="btn-action btn-details" onclick="window.openConsultationDetails('${c.id}')" title="View complete details">
+                Details
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Fetch all contact enquiries
+  async function loadEnquiries() {
+    try {
+      const res = await fetch('/api/admin/enquiries', {
+        headers: { Authorization: `Bearer ${currentToken}` },
+      });
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (!data.success) return;
+
+      enquiriesCache = data.enquiries || [];
+      renderEnquiriesTable();
+    } catch (err) {
+      console.error('Failed to load enquiries:', err);
+    }
+  }
+
+  // Render enquiries table
+  function renderEnquiriesTable() {
+    const tbody = document.getElementById('allEnquiriesTbody');
+    if (!tbody) return;
+
+    const search = (document.getElementById('enquirySearchInput') as HTMLInputElement)?.value.toLowerCase() || '';
+
+    const filtered = enquiriesCache.filter((item) => {
+      const matchesStatus = activeEnquiryFilter === 'all' || item.status === activeEnquiryFilter;
+      const matchesSearch = !search ||
+        (item.name && item.name.toLowerCase().includes(search)) ||
+        (item.phone && item.phone.toLowerCase().includes(search)) ||
+        (item.interest && item.interest.toLowerCase().includes(search)) ||
+        (item.message && item.message.toLowerCase().includes(search));
+      return matchesStatus && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No matching contact inquiries found.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = filtered.map((e) => `
+      <tr>
+        <td>
+          <strong>${escapeHtml(e.name)}</strong><br>
+          <a href="https://wa.me/${e.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" style="color: var(--color-forest); font-size: 0.78125rem; font-weight: 600;">
+            📞 ${escapeHtml(e.phone)}
+          </a>
+        </td>
+        <td><span class="badge badge-sage topic-badge">${escapeHtml(e.interest)}</span></td>
+        <td>
+          <div style="max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8125rem; color: var(--color-charcoal-muted);">
+            ${escapeHtml(e.message)}
+          </div>
+        </td>
+        <td>${renderStatusBadge(e.status)}</td>
+        <td><small>${formatDate(e.created_at)}</small></td>
+        <td>
+          <div class="table-actions">
+            <button type="button" class="btn-action btn-view" onclick="window.openInquiryModal('${e.id}')">
+              View &amp; Update
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Accept Modal Logic
+  (window as any).openAcceptModal = function(id: string) {
+    const item = consultationsCache.find(c => c.id === id);
+    if (!item) return;
+
+    activeAcceptId = id;
+    document.getElementById('acceptModalPatient')!.textContent = item.patient_name;
+    document.getElementById('acceptModalPhone')!.textContent = item.phone;
+    document.getElementById('acceptModalEmail')!.textContent = item.email || 'None provided';
+    document.getElementById('acceptModalDate')!.textContent = item.preferred_date;
+    document.getElementById('acceptModalSlot')!.textContent = item.preferred_time;
+    document.getElementById('acceptModalMode')!.textContent = item.consultation_type;
+    (document.getElementById('acceptAdminNote') as HTMLTextAreaElement).value = '';
+
+    const check = document.getElementById('acceptAvailabilityCheck') as HTMLInputElement;
+    check.checked = false;
+    (document.getElementById('confirmAcceptBtn') as HTMLButtonElement).disabled = true;
+
+    // Show/hide no-email warning
+    const emailNotice = document.getElementById('acceptModalEmailAlert');
+    if (emailNotice) {
+      emailNotice.style.display = !item.email ? 'block' : 'none';
+    }
+
+    openModal('acceptModal');
+  };
+
+  // Reject Modal Logic
+  (window as any).openRejectModal = function(id: string) {
+    const item = consultationsCache.find(c => c.id === id);
+    if (!item) return;
+
+    activeRejectId = id;
+    document.getElementById('rejectModalPatient')!.textContent = item.patient_name;
+    (document.getElementById('rejectAdminNote') as HTMLTextAreaElement).value = '';
+
+    openModal('rejectModal');
+  };
+
+  // Consultation Details Modal Logic
+  (window as any).openConsultationDetails = function(id: string) {
+    const item = consultationsCache.find(c => c.id === id);
+    if (!item) return;
+
+    document.getElementById('detailModalTitle')!.textContent = `Intake: ${item.patient_name}`;
+    const body = document.getElementById('detailModalBody');
+    if (!body) return;
+
+    body.innerHTML = `
+      <div class="modal-summary-box" style="margin-bottom: 1.25rem;">
+        <div class="summary-field">
+          <span class="field-label">Patient Name:</span>
+          <strong>${escapeHtml(item.patient_name)}</strong>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Phone:</span>
+          <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" rel="noopener noreferrer" style="color: var(--color-forest); font-weight: 600;">
+            ${escapeHtml(item.phone)} (WhatsApp)
+          </a>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Email:</span>
+          <span>${item.email ? escapeHtml(item.email) : '<em>No email recorded</em>'}</span>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Modality:</span>
+          <strong>${escapeHtml(item.consultation_type)}</strong>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Scheduled Date:</span>
+          <strong>${escapeHtml(item.preferred_date)}</strong>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Scheduled Time Slot:</span>
+          <strong>${escapeHtml(item.preferred_time)}</strong>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Current Status:</span>
+          <span>${renderStatusBadge(item.status)}</span>
+        </div>
+        <div class="summary-field">
+          <span class="field-label">Submission Date:</span>
+          <span>${formatDate(item.created_at)}</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <strong style="display: block; font-size: 0.78125rem; color: var(--color-forest); text-transform: uppercase; margin-bottom: 0.35rem;">
+          Patient Reported Health Concern / Description:
+        </strong>
+        <div class="message-full-box">
+          ${item.message ? escapeHtml(item.message) : '<em>No health description was provided at intake.</em>'}
+        </div>
+      </div>
+
+      ${item.admin_note ? `
+        <div style="margin-bottom: 1.25rem;">
+          <strong style="display: block; font-size: 0.78125rem; color: #7D6608; text-transform: uppercase; margin-bottom: 0.35rem;">
+            Clinic Desk Note / Internal Remarks:
+          </strong>
+          <div class="notice-callout-amber">
+            ${escapeHtml(item.admin_note)}
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="modal-summary-box" style="background-color: #FAFAFA;">
+        <div class="summary-field">
+          <span class="field-label">Reviewed By:</span>
+          <span>${item.reviewed_by ? escapeHtml(item.reviewed_by) : 'Not yet reviewed'}</span>
+        </div>
+        ${item.status === 'confirmed' ? `
+          <div class="summary-field">
+            <span class="field-label">Confirmation Email Dispatched:</span>
+            <span>${item.confirmation_email_sent_at ? formatDate(item.confirmation_email_sent_at) : (item.confirmation_email_error ? `<span style="color:#C0392B;">Error: ${escapeHtml(item.confirmation_email_error)}</span>` : 'None')}</span>
+          </div>
+        ` : ''}
+        ${item.status === 'rejected' ? `
+          <div class="summary-field">
+            <span class="field-label">Rejection Email Dispatched:</span>
+            <span>${item.rejection_email_sent_at ? formatDate(item.rejection_email_sent_at) : (item.rejection_email_error ? `<span style="color:#C0392B;">Error: ${escapeHtml(item.rejection_email_error)}</span>` : 'None')}</span>
+          </div>
+        ` : ''}
+      </div>
+
+      ${item.status === 'confirmed' ? `
+        <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; justify-content: flex-end; align-items: center; flex-wrap: wrap;">
+          ${(item.confirmation_email_error || !item.confirmation_email_sent_at) && item.email ? `
+            <button type="button" class="btn btn-gold btn-sm" onclick="window.retryPatientEmail('${item.id}', 'confirmed'); window.closeModal('detailsModal');">
+              Retry Confirmation Email
+            </button>
+          ` : ''}
+          <button type="button" class="btn btn-secondary btn-sm" onclick="window.markAppointmentStatus('${item.id}', 'completed')">
+            Mark Completed
+          </button>
+          <button type="button" class="btn btn-reject btn-sm" onclick="window.markAppointmentStatus('${item.id}', 'cancelled')">
+            Cancel Appointment
+          </button>
+        </div>
+      ` : ''}
+
+      ${item.status === 'rejected' && (item.rejection_email_error || !item.rejection_email_sent_at) && item.email ? `
+        <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-gold btn-sm" onclick="window.retryPatientEmail('${item.id}', 'rejected'); window.closeModal('detailsModal');">
+            Retry Rejection Email
+          </button>
+        </div>
+      ` : ''}
+    `;
+
+    openModal('detailsModal');
+  };
+
+  // Inquiry Modal Logic
+  (window as any).openInquiryModal = function(id: string) {
+    const item = enquiriesCache.find(e => e.id === id);
+    if (!item) return;
+
+    activeInquiryId = id;
+    document.getElementById('inqModalSender')!.textContent = item.name;
+    document.getElementById('inqModalPhone')!.textContent = item.phone;
+    document.getElementById('inqModalEmail')!.textContent = item.email || 'None provided';
+    document.getElementById('inqModalTopic')!.textContent = item.interest;
+    document.getElementById('inqModalReceived')!.textContent = formatDate(item.created_at);
+    document.getElementById('inqModalMessage')!.textContent = item.message;
+    (document.getElementById('inqAdminNote') as HTMLTextAreaElement).value = item.admin_note || '';
+    (document.getElementById('inqStatusSelect') as HTMLSelectElement).value = item.status || 'new';
+
+    const waBtn = document.getElementById('inqModalWhatsAppBtn') as HTMLAnchorElement;
+    if (waBtn) {
+      const text = `Hello ${item.name}, this is Ekansh Homoeopathic Clinic regarding your inquiry about ${item.interest}.`;
+      waBtn.href = `https://wa.me/${item.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
+    }
+
+    openModal('inquiryModal');
+  };
+
+  // Helper functions
+  function openModal(id: string) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('is-active');
+      el.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeModal(id: string) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('is-active');
+      el.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  function showBannerAlert(msg: string, type: 'success' | 'error' = 'success') {
+    if (!alertBanner || !alertMessage) return;
+    alertMessage.textContent = msg;
+    alertBanner.className = `admin-banner-alert alert-${type}`;
+    alertBanner.style.display = 'flex';
+  }
+
+  function renderStatusBadge(status: string) {
+    const s = status || 'pending';
+    return `<span class="status-badge status-${s}">${escapeHtml(s)}</span>`;
+  }
+
+  function formatDate(d?: string) {
+    if (!d) return '-';
+    try {
+      return new Date(d).toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch {
+      return d;
+    }
+  }
+
+  function escapeHtml(str: string = '') {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Unified Tab & Filter Navigation with smooth scrolling
+  (window as any).navigateToTab = function(tabId: string, filterStatus?: string) {
+    const tabBtn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+    if (tabBtn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      tabBtn.classList.add('active');
+    }
+
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    const targetPane = document.getElementById(tabId);
+    if (targetPane) {
+      targetPane.classList.add('active');
+    }
+
+    if (tabId === 'consultationsTab') {
+      const targetFilter = filterStatus || 'all';
+      activeConsultationFilter = targetFilter;
+      document.querySelectorAll('#consultationFilterPills .filter-pill').forEach(pill => {
+        if (pill.getAttribute('data-filter') === targetFilter) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+      const searchInput = document.getElementById('consultationSearchInput') as HTMLInputElement;
+      if (searchInput) searchInput.value = '';
+      renderConsultationsTable();
+    } else if (tabId === 'enquiriesTab') {
+      const targetFilter = filterStatus || 'all';
+      activeEnquiryFilter = targetFilter;
+      document.querySelectorAll('#enquiryFilterPills .filter-pill').forEach(pill => {
+        if (pill.getAttribute('data-filter') === targetFilter) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+      const searchInput = document.getElementById('enquirySearchInput') as HTMLInputElement;
+      if (searchInput) searchInput.value = '';
+      renderEnquiriesTable();
+    }
+
+    if (targetPane) {
+      targetPane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // DOM Event Listeners Setup
+  function setupDashboardEvents() {
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const targetTab = (e.currentTarget as HTMLElement).getAttribute('data-tab');
+        if (targetTab) {
+          (window as any).navigateToTab(targetTab);
+        }
+      });
+    });
+
+    // Close alert banner
+    document.getElementById('closeAlertBtn')?.addEventListener('click', () => {
+      if (alertBanner) alertBanner.style.display = 'none';
+    });
+
+    // Refresh button
+    document.getElementById('manualRefreshBtn')?.addEventListener('click', async () => {
+      await loadAllDashboardData();
+      showBannerAlert('Clinic dashboard data refreshed from Supabase.', 'success');
+    });
+
+    // Consultation status filter pills
+    document.querySelectorAll('#consultationFilterPills .filter-pill').forEach((pill) => {
+      pill.addEventListener('click', (e) => {
+        document.querySelectorAll('#consultationFilterPills .filter-pill').forEach(p => p.classList.remove('active'));
+        (e.currentTarget as HTMLElement).classList.add('active');
+        activeConsultationFilter = (e.currentTarget as HTMLElement).getAttribute('data-filter') || 'all';
+        renderConsultationsTable();
+      });
+    });
+
+    // Enquiry status filter pills
+    document.querySelectorAll('#enquiryFilterPills .filter-pill').forEach((pill) => {
+      pill.addEventListener('click', (e) => {
+        document.querySelectorAll('#enquiryFilterPills .filter-pill').forEach(p => p.classList.remove('active'));
+        (e.currentTarget as HTMLElement).classList.add('active');
+        activeEnquiryFilter = (e.currentTarget as HTMLElement).getAttribute('data-filter') || 'all';
+        renderEnquiriesTable();
+      });
+    });
+
+    // Search inputs
+    document.getElementById('consultationSearchInput')?.addEventListener('input', () => {
+      renderConsultationsTable();
+    });
+    document.getElementById('enquirySearchInput')?.addEventListener('input', () => {
+      renderEnquiriesTable();
+    });
+
+    // Close modals on clicking overlay or close buttons
+    document.querySelectorAll('[data-close-modal]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const modalId = (e.currentTarget as HTMLElement).getAttribute('data-close-modal');
+        if (modalId) closeModal(modalId);
+      });
+    });
+
+    document.querySelectorAll('.admin-modal-overlay').forEach((overlay) => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('is-active');
+          overlay.setAttribute('aria-hidden', 'true');
+        }
+      });
+    });
+
+    // Accept availability checkbox enables accept button
+    const acceptCheck = document.getElementById('acceptAvailabilityCheck') as HTMLInputElement;
+    const acceptBtn = document.getElementById('confirmAcceptBtn') as HTMLButtonElement;
+    if (acceptCheck && acceptBtn) {
+      acceptCheck.addEventListener('change', () => {
+        acceptBtn.disabled = !acceptCheck.checked;
+      });
+    }
+
+    // Submit Accept Action
+    acceptBtn?.addEventListener('click', async () => {
+      if (!activeAcceptId) return;
+      acceptBtn.disabled = true;
+      acceptBtn.textContent = 'Accepting & Dispatching Email...';
+
+      const adminNote = (document.getElementById('acceptAdminNote') as HTMLTextAreaElement).value.trim();
+
+      try {
+        const res = await fetch(`/api/admin/consultations/${activeAcceptId}/accept`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentToken}`,
+          },
+          body: JSON.stringify({
+            check_confirmed: true,
+            admin_note: adminNote,
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          showBannerAlert(data.error || 'Failed to accept consultation request.', 'error');
+          return;
+        }
+
+        closeModal('acceptModal');
+        const emailMsg = data.emailSent
+          ? 'Patient confirmation email dispatched successfully via Resend.'
+          : (data.emailError ? `Appointment confirmed, but email could not be sent (${data.emailError}).` : 'Appointment confirmed.');
+
+        showBannerAlert(`Appointment accepted! ${emailMsg}`, data.emailSent ? 'success' : 'error');
+        await loadAllDashboardData();
+      } catch (err) {
+        showBannerAlert('Network error while processing appointment acceptance.', 'error');
+      } finally {
+        acceptBtn.disabled = false;
+        acceptBtn.textContent = 'Confirm & Send Email';
+      }
+    });
+
+    // Submit Reject Action
+    const rejectBtn = document.getElementById('confirmRejectBtn') as HTMLButtonElement;
+    rejectBtn?.addEventListener('click', async () => {
+      if (!activeRejectId) return;
+      rejectBtn.disabled = true;
+      rejectBtn.textContent = 'Declining...';
+
+      const adminNote = (document.getElementById('rejectAdminNote') as HTMLTextAreaElement).value.trim();
+
+      try {
+        const res = await fetch(`/api/admin/consultations/${activeRejectId}/reject`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentToken}`,
+          },
+          body: JSON.stringify({
+            admin_note: adminNote,
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          showBannerAlert(data.error || 'Failed to reject consultation request.', 'error');
+          return;
+        }
+
+        closeModal('rejectModal');
+        if (data.emailSent) {
+          showBannerAlert('Consultation request declined and polite update email sent to patient.', 'success');
+        } else if (data.emailError) {
+          showBannerAlert('Consultation request marked as rejected. Notice: patient email could not be delivered (' + data.emailError + ')', 'warning');
+        } else {
+          showBannerAlert('Consultation request declined.', 'success');
+        }
+        await loadAllDashboardData();
+      } catch (err) {
+        showBannerAlert('Network error while declining consultation.', 'error');
+      } finally {
+        rejectBtn.disabled = false;
+        rejectBtn.textContent = 'Decline Request';
+      }
+    });
+
+    // Retry Patient Email Action (Confirmation or Rejection)
+    (window as any).retryPatientEmail = async function(id: string, status: string = 'confirmed') {
+      const isConfirm = status === 'confirmed';
+      const emailLabel = isConfirm ? 'appointment confirmation' : 'rejection update';
+      if (!confirm(`Re-send ${emailLabel} email to the patient?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/consultations/${id}/retry-email`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${currentToken}` },
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          showBannerAlert(data.error || `Failed to re-send ${emailLabel} email.`, 'error');
+          return;
+        }
+
+        showBannerAlert(`${isConfirm ? 'Confirmation' : 'Rejection'} email dispatched successfully!`, 'success');
+        await loadConsultations();
+      } catch (err) {
+        showBannerAlert('Network error while sending email.', 'error');
+      }
+    };
+
+    // Keep legacy alias for backward compatibility
+    (window as any).retryConfirmationEmail = function(id: string) {
+      return (window as any).retryPatientEmail(id, 'confirmed');
+    };
+
+    // Mark Status Action (Completed / Cancelled)
+    (window as any).markAppointmentStatus = async function(id: string, status: string) {
+      if (!confirm(`Are you sure you want to mark this appointment as ${status}?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/consultations/${id}/status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentToken}`,
+          },
+          body: JSON.stringify({ status }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          showBannerAlert(data.error || 'Failed to update status.', 'error');
+          return;
+        }
+
+        closeModal('detailsModal');
+        showBannerAlert(`Appointment status updated to ${status}.`, 'success');
+        await loadAllDashboardData();
+      } catch (err) {
+        showBannerAlert('Network error while updating status.', 'error');
+      }
+    };
+
+    // Save Inquiry Status & Note
+    document.getElementById('saveInqStatusBtn')?.addEventListener('click', async () => {
+      if (!activeInquiryId) return;
+
+      const newStatus = (document.getElementById('inqStatusSelect') as HTMLSelectElement).value;
+      const adminNote = (document.getElementById('inqAdminNote') as HTMLTextAreaElement).value.trim();
+
+      try {
+        const res = await fetch(`/api/admin/enquiries/${activeInquiryId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${currentToken}`,
+          },
+          body: JSON.stringify({
+            status: newStatus,
+            admin_note: adminNote,
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          showBannerAlert(data.error || 'Failed to update inquiry.', 'error');
+          return;
+        }
+
+        closeModal('inquiryModal');
+        showBannerAlert('Contact inquiry updated successfully.', 'success');
+        await loadAllDashboardData();
+      } catch (err) {
+        showBannerAlert('Network error while saving inquiry.', 'error');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupDashboardEvents();
+    checkAuthAndInit();
+  });
+</script>

@@ -1,5 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+
+const contactFAQs = [
+  {
+    question: "Where is the clinic situated in Rajsamand?",
+    answer: "Ekansh Homoeopathic Clinic is located Near Vijay Travels, Vivekanand Choraya, Bhilwara Road, Kankroli, Rajsamand – 313324, Rajasthan. It is easily accessible from NH 58, Kankroli bus stop, and Nathdwara."
+  },
+  {
+    question: "What are the clinic consultation hours?",
+    answer: "We are open Monday to Saturday with Morning Sessions from 10:00 AM to 2:00 PM and Evening Sessions from 4:00 PM to 8:00 PM. On Sundays, the clinic is open from 10:00 AM to 2:00 PM."
+  },
+  {
+    question: "Can I walk in without a prior appointment?",
+    answer: "While urgent walk-ins are accommodated subject to waiting times, we strongly recommend requesting an appointment in advance so our doctors can reserve adequate, unhurried time (45–60 minutes) for your intake."
+  },
+  {
+    question: "How can I reach the reception desk directly?",
+    answer: "You can call us directly at +91 9799988138 or +91 9521646525, or message our clinic WhatsApp desk at +91 9799988138."
+  }
+];
 ---
 
 <BaseLayout 
@@ -25,7 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- Left: Clinic Coordinates & Operating Hours -->
         <div class="contact-details-col">
           <div class="card-editorial card-beige" style="padding: clamp(1.75rem, 3.5vw, 2.5rem); height: 100%;">
-            <span class="text-eyebrow">Rajsamand Practice</span>
+            <!-- <span class="text-eyebrow">Rajsamand Practice</span> -->
             <h2 class="col-heading">Ekansh Homoeopathic Clinic</h2>
             
             <div class="contact-info-list">
@@ -40,7 +60,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <div>
                   <h4 class="info-title">Physical Address</h4>
                   <p class="info-desc">
-                    Near Vijay Travels, Vivekanand Choraya,<br> Bhilwara Road, Rajsamand, Rajasthan – 313324, India<br/>
+                    Near Vijay Travels, Vivekanand Choraya,<br>
+                    Bhilwara Road, Kankroli, Rajsamand – 313324, Rajasthan, India<br/>
                     <small class="text-muted">(Conveniently accessible from NH 58, Kankroli &amp; Nathdwara)</small>
                   </p>
                 </div>
@@ -56,7 +77,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <div>
                   <h4 class="info-title">Telephone Inquiries</h4>
                   <p class="info-desc">
-                    <a href="tel:+919876543210">+91 7947107147</a>
+                    <a href="tel:+919799988138">+91 9799988138</a> &bull; <a href="tel:+919521646525">+91 9521646525</a>
                   </p>
                 </div>
               </div>
@@ -71,8 +92,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <div>
                   <h4 class="info-title">WhatsApp Booking Desk</h4>
                   <p class="info-desc">
-                    <a href="https://wa.me/919876543210?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20enquire%20about%20a%20consultation." target="_blank" rel="noopener noreferrer">
-                      Direct WhatsApp Messaging Support
+                    <a href="https://wa.me/919799988138?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20enquire%20about%20a%20consultation." target="_blank" rel="noopener noreferrer">
+                      Direct WhatsApp Desk (+91 9799988138)
                     </a>
                   </p>
                 </div>
@@ -84,15 +105,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               <h4 class="hours-box-title">Consultation Schedule</h4>
               <div class="hours-row">
                 <span>Mon – Sat Morning:</span>
-                <strong>10:00 AM – 1:00 PM</strong>
+                <strong>10:00 AM – 2:00 PM</strong>
               </div>
               <div class="hours-row">
                 <span>Mon – Sat Evening:</span>
-                <strong>5:00 PM – 8:00 PM</strong>
+                <strong>4:00 PM – 8:00 PM</strong>
               </div>
               <div class="hours-row">
                 <span>Sunday:</span>
-                <em>Prior Appointment Only</em>
+                <strong>10:00 AM – 2:00 PM</strong>
               </div>
             </div>
           </div>
@@ -108,6 +129,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </p>
 
             <form id="inquiryForm" novalidate>
+              <!-- Anti-bot Honeypot Field (Hidden from real users) -->
+              <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+                <label for="contact_hp">Leave this field blank</label>
+                <input type="text" id="contact_hp" name="website_hp" tabindex="-1" autocomplete="off" />
+              </div>
+
               <div class="form-group">
                 <label for="inqName" class="form-label">Full Name <span class="required">*</span></label>
                 <input type="text" id="inqName" name="inqName" class="form-control" placeholder="Your name" required />
@@ -136,25 +163,51 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 <span class="form-error" id="inqMsgError">Please write your inquiry message.</span>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                <span>Submit Inquiry</span>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <!-- Error Alert Box -->
+              <div id="inquiryErrorAlert" class="inquiry-error-alert" style="display: none;" role="alert">
+                <span id="inquiryErrorMessage"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" id="inqSubmitBtn" style="width: 100%;">
+                <span id="inqSubmitText">Submit Inquiry</span>
+                <svg id="inqSubmitIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
               </button>
             </form>
 
-            <div class="inquiry-success-notice" id="inquirySuccess" style="display: none; margin-top: 1rem;">
-              <div class="verification-callout" style="background-color: var(--color-success-bg); border-color: var(--color-success-text); margin-bottom: 0;">
-                <div>
-                  <strong>Demonstration Notice:</strong> Inquiry noted! To dispatch this message directly to reception, tap below:
-                  <div style="margin-top: 0.5rem;">
-                    <a href="#" id="inqWhatsAppLink" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
-                      Dispatch via WhatsApp
-                    </a>
-                  </div>
+            <!-- Contact Enquiry Success Message -->
+            <div class="inquiry-success-card" id="inquirySuccess" style="display: none;" role="status" aria-live="polite">
+              <!-- ROW 1: Icon + Heading + Acknowledgement -->
+              <div class="inquiry-success-header-row">
+                <div class="inquiry-success-icon-wrap" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
                 </div>
+                <div class="inquiry-success-text-wrap">
+                  <h3 class="inquiry-success-title">Enquiry Received!</h3>
+                  <p class="inquiry-success-desc">
+                    Thank you for contacting Ekansh Homoeopathic Clinic. Your message has been safely received by our clinic desk.
+                  </p>
+                </div>
+              </div>
+
+              <!-- ROW 2: Highlighted Clarification Notice Box -->
+              <div class="inquiry-success-notice-box">
+                <strong>Please Note:</strong> This is a general enquiry submission, not an appointment booking or confirmation.
+              </div>
+
+              <!-- ROW 3: WhatsApp Action Row -->
+              <div class="inquiry-success-action-row">
+                <a href="#" id="inqWhatsAppLink" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                  </svg>
+                  Connect via WhatsApp
+                </a>
               </div>
             </div>
           </div>
@@ -168,7 +221,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container">
       <div class="section-header text-center" style="margin-bottom: 1.75rem;">
         <span class="text-eyebrow">Directions</span>
-        <h2>How to Reach Rajsamand Clinic</h2>
+        <h2>How to Reach Ekansh Clinic</h2>
       </div>
 
       <div class="map-card card-editorial" style="padding: 0; overflow: hidden; max-width: 900px; margin: 0 auto;">
@@ -182,12 +235,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             loading="lazy"
           />
           <div class="map-floating-pill">
-            <span class="badge badge-sage">Rajsamand Location</span>
-            <a href="https://maps.google.com/?q=Rajsamand+Rajasthan" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+            <span class="badge badge-sage">Ekansh Location</span>
+            <a href="https://maps.google.com/?q=Ekansh+Homoeopathic+Clinic+Kankroli+Rajsamand" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
               Open in Google Maps
             </a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compact FAQs Section -->
+  <section class="section-padding-sm contact-faq-section" style="background-color: var(--color-beige-subtle, #FAF9F5);">
+    <div class="container">
+      <div class="section-header text-center" style="margin-bottom: 2rem;">
+        <span class="text-eyebrow">Location &amp; Visiting</span>
+        <h2>Frequently Asked Questions</h2>
+        <p class="text-muted" style="max-width: 560px; margin: 0 auto;">
+          Helpful information about clinic location, visiting guidelines, and contacting our reception desk.
+        </p>
+      </div>
+
+      <FAQAccordion items={contactFAQs} />
+
+      <div class="text-center" style="margin-top: 2rem;">
+        <a href="/faqs" class="btn btn-secondary btn-md">
+          <span>Have more questions? View All FAQs</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
@@ -344,6 +422,146 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: 0.75rem;
     box-shadow: var(--shadow-card);
   }
+
+  /* Inquiry Error Alert Box */
+  .inquiry-error-alert {
+    width: 100%;
+    padding: 0.875rem 1.15rem;
+    background-color: #FDF2F2;
+    border: 1px solid #F8B4B4;
+    border-radius: var(--radius-sm);
+    color: #9B1C1C;
+    font-size: 0.84375rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ==========================================================================
+     Contact Enquiry Success Notification Card
+     Spacious horizontal layout on desktop, responsive stacking on mobile
+     ========================================================================== */
+  .inquiry-success-card {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1.35rem 1.5rem;
+    background-color: var(--color-success-bg, #EDF7EE);
+    border: 1px solid rgba(53, 93, 72, 0.2);
+    border-left: 4px solid var(--color-forest, #355D48);
+    border-radius: var(--radius-sm, 6px);
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .inquiry-success-card.is-active,
+  .inquiry-success-card[style*="display: block"],
+  .inquiry-success-card[style*="display: flex"] {
+    display: flex !important;
+  }
+
+  /* ROW 1: Success Icon + Header & Acknowledgement Text */
+  .inquiry-success-header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .inquiry-success-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #D4EDDA;
+    color: var(--color-forest, #355D48);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .inquiry-success-text-wrap {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .inquiry-success-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-forest, #355D48);
+    margin: 0 0 0.35rem 0;
+    line-height: 1.3;
+    font-family: var(--font-serif, 'Playfair Display', serif);
+  }
+
+  .inquiry-success-desc {
+    font-size: 0.90625rem;
+    color: var(--color-charcoal, #232B25);
+    line-height: 1.55;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* ROW 2: Full Width Highlighted Notice Clarification Box */
+  .inquiry-success-notice-box {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #FEF9E7;
+    border: 1.5px solid #F9E79F;
+    border-radius: var(--radius-xs, 4px);
+    padding: 0.75rem 1rem;
+    font-size: 0.84375rem;
+    color: #7D6608;
+    line-height: 1.5;
+  }
+
+  .inquiry-success-notice-box strong {
+    color: #5D4037;
+  }
+
+  /* ROW 3: Neatly Aligned Action Row */
+  .inquiry-success-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .inquiry-success-card {
+      padding: 1.15rem 1.1rem;
+      gap: 0.85rem;
+    }
+    .inquiry-success-header-row {
+      gap: 0.65rem;
+    }
+    .inquiry-success-icon-wrap {
+      width: 32px;
+      height: 32px;
+    }
+    .inquiry-success-icon-wrap svg {
+      width: 18px;
+      height: 18px;
+    }
+    .inquiry-success-title {
+      font-size: 1.05rem;
+    }
+    .inquiry-success-desc {
+      font-size: 0.875rem;
+    }
+    .inquiry-success-action-row .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
 </style>
 
 <script>
@@ -351,47 +569,105 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const form = document.getElementById('inquiryForm') as HTMLFormElement | null;
     const successBox = document.getElementById('inquirySuccess');
     const waLink = document.getElementById('inqWhatsAppLink') as HTMLAnchorElement | null;
+    const submitBtn = document.getElementById('inqSubmitBtn') as HTMLButtonElement | null;
+    const submitText = document.getElementById('inqSubmitText');
+    const errorAlert = document.getElementById('inquiryErrorAlert');
+    const errorMessage = document.getElementById('inquiryErrorMessage');
 
     if (!form || !successBox) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       let isValid = true;
 
-      const name = (document.getElementById('inqName') as HTMLInputElement).value.trim();
-      const phone = (document.getElementById('inqPhone') as HTMLInputElement).value.trim();
-      const interest = (document.getElementById('inqInterest') as HTMLSelectElement).value;
-      const message = (document.getElementById('inqMessage') as HTMLTextAreaElement).value.trim();
+      if (errorAlert) errorAlert.style.display = 'none';
 
-      if (!name) {
-        document.getElementById('inqName')?.classList.add('is-invalid');
+      const nameInput = document.getElementById('inqName') as HTMLInputElement;
+      const phoneInput = document.getElementById('inqPhone') as HTMLInputElement;
+      const interestSelect = document.getElementById('inqInterest') as HTMLSelectElement;
+      const msgInput = document.getElementById('inqMessage') as HTMLTextAreaElement;
+      const hpInput = document.getElementById('contact_hp') as HTMLInputElement;
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const cleanPhone = phone.replace(/[\s\-\+]/g, '');
+      const interest = interestSelect.value;
+      const message = msgInput.value.trim();
+      const website_hp = hpInput ? hpInput.value : '';
+
+      if (!name || name.length < 2) {
+        nameInput.classList.add('is-invalid');
         isValid = false;
       } else {
-        document.getElementById('inqName')?.classList.remove('is-invalid');
+        nameInput.classList.remove('is-invalid');
       }
 
-      if (!phone || !/^[6-9]\d{9}$/.test(phone.replace(/[\s\-\+]/g, ''))) {
-        document.getElementById('inqPhone')?.classList.add('is-invalid');
+      if (!phone || !/^[6-9]\d{9}$/.test(cleanPhone)) {
+        phoneInput.classList.add('is-invalid');
         isValid = false;
       } else {
-        document.getElementById('inqPhone')?.classList.remove('is-invalid');
+        phoneInput.classList.remove('is-invalid');
       }
 
-      if (!message) {
-        document.getElementById('inqMessage')?.classList.add('is-invalid');
+      if (!message || message.length < 3) {
+        msgInput.classList.add('is-invalid');
         isValid = false;
       } else {
-        document.getElementById('inqMessage')?.classList.remove('is-invalid');
+        msgInput.classList.remove('is-invalid');
       }
 
       if (!isValid) return;
 
-      const textPayload = `Hello Ekansh Clinic,\n\nI have an inquiry from the website:\n- Name: ${name}\n- Phone: ${phone}\n- Topic: ${interest}\n- Message: ${message}`;
-      if (waLink) {
-        waLink.href = `https://wa.me/919876543210?text=${encodeURIComponent(textPayload)}`;
-      }
+      // Loading state
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitText) submitText.textContent = 'Submitting Inquiry...';
 
-      successBox.style.display = 'block';
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            inqName: name,
+            inqPhone: phone,
+            inqInterest: interest,
+            inqMessage: message,
+            website_hp,
+          }),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.success) {
+          const errMsg = result.error || 'Unable to submit your inquiry at this moment. Please connect via WhatsApp or phone.';
+          if (errorAlert && errorMessage) {
+            errorMessage.textContent = errMsg;
+            errorAlert.style.display = 'block';
+          }
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitText) submitText.textContent = 'Submit Inquiry';
+          return;
+        }
+
+        const textPayload = `Hello Ekansh Clinic,\n\nI have submitted an inquiry from the website:\n- Name: ${name}\n- Phone: ${phone}\n- Topic: ${interest}\n- Message: ${message}`;
+        if (waLink) {
+          waLink.href = `https://wa.me/919799988138?text=${encodeURIComponent(textPayload)}`;
+        }
+
+        successBox.classList.add('is-active');
+        successBox.style.display = 'flex';
+        form.reset();
+
+      } catch (networkErr) {
+        if (errorAlert && errorMessage) {
+          errorMessage.textContent = 'Network or connection error. Please reach out to us directly via WhatsApp (+91 9799988138).';
+          errorAlert.style.display = 'block';
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.textContent = 'Submit Inquiry';
+      }
     });
   }
 
