@@ -17,41 +17,52 @@ const navLinks = [
 ---
 
 <header class="site-header">
-  <!-- Top Quick Info Bar -->
-  <!-- Top Quick Info Bar -->
   <div class="top-announcement-bar">
     <div class="container top-bar-inner">
-      <span class="top-bar-item">
-        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+
+      <!-- Location -->
+      <span class="top-bar-item top-location">
+        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14"
+          fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
           <circle cx="12" cy="10" r="3"></circle>
         </svg>
-        <span>Near Vijay Travels, Kankroli, Rajsamand &bull; In-Clinic &amp; Online Tele-Consultations</span>
+        <span>Near Vijay Travels, Kankroli, Rajsamand • In-Clinic &amp; Online Tele-Consultations</span>
       </span>
 
-      <span class="top-bar-item hide-on-mobile">
-        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- Clinic Timings -->
+      <span class="top-bar-item top-timings hide-on-mobile">
+        <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14"
+          fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        <span>Mon–Sat: 10 AM – 2 PM, 4 – 8 PM &bull; Sun: 10 AM – 2 PM</span>
+        <span>Mon–Sat: 10 AM – 2 PM, 4 – 8 PM • Sun: 10 AM – 2 PM</span>
       </span>
 
+      <!-- Phone Numbers -->
       <span class="top-bar-item top-phone-links">
-        <a href="tel:+919799988138" class="top-bar-link" aria-label="Call clinic at +91 9799988138">
-          <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="tel:+919799988138" class="top-bar-link"
+          aria-label="Call clinic at +91 9799988138">
+          <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14"
+            fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
           <span class="phone-text">9799988138</span>
         </a>
+
         <span class="phone-divider" aria-hidden="true">|</span>
-        <a href="tel:+919521646525" class="top-bar-link" aria-label="Call clinic at +91 9521646525">
-          <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+
+        <a href="tel:+919521646525" class="top-bar-link"
+          aria-label="Call clinic at +91 9521646525">
+          <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14"
+            fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
           <span class="phone-text">9521646525</span>
         </a>
       </span>
+
     </div>
   </div>
 
@@ -489,6 +500,84 @@ const navLinks = [
     color: var(--color-accent-red);
     border-color: rgba(169, 88, 69, 0.35);
   }
+
+  /* Top announcement bar */
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.top-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-location {
+  flex: 1;
+  min-width: 0;
+}
+
+.top-location > span {
+  line-height: 1.5;
+}
+
+.top-phone-links {
+  flex-shrink: 0;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.top-bar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Mobile layout */
+@media (max-width: 767px) {
+  .top-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .top-location {
+    width: 100%;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+
+  .top-location .top-icon {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .top-phone-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .top-phone-links .top-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .top-bar-link {
+    gap: 5px;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
 </style>
 
 <script>
