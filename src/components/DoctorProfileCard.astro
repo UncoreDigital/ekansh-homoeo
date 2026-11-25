@@ -357,23 +357,22 @@ const doctors = [
     min-width: 140px;
     justify-content: center;
   }
+    
 
-/* Fix doctor image cropping on mobile */
-@media (max-width: 767px) {
+    @media (max-width: 767px) {
   .doctor-graphic-frame {
     height: auto;
     max-height: none;
-    overflow: hidden;
   }
 
   .doctor-graphic-img {
+    display: block;
     width: 100%;
     height: auto;
     max-height: none;
-    aspect-ratio: 4 / 5;
-    object-fit: contain;
+    aspect-ratio: auto;
+    object-fit: unset;
     object-position: center;
   }
 }
-
 </style>
