@@ -30,13 +30,13 @@ const currentYear = new Date().getFullYear();
           Individual constitutional homeopathic care in Rajsamand. Unhurried case-taking, gentle natural remedies, and direct doctor continuity.
         </p>
 
-        <div class="footer-location-tag">
+        <a href="/contact#clinic-map" class="footer-location-tag" title="View clinic location on map">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
           <span>Kankroli, Rajsamand, Rajasthan &bull; India</span>
-        </div>
+        </a>
 
         <div class="footer-social-wrap">
           <a 
@@ -63,6 +63,7 @@ const currentYear = new Date().getFullYear();
           <li><a href="/">Home</a></li>
           <li><a href="/about">About the Clinic</a></li>
           <li><a href="/services">Consultation Services</a></li>
+          <li><a href="/services#courier">Medicine Courier Policy</a></li>
           <li><a href="/faqs">Frequently Asked Questions</a></li>
           <li><a href="/contact">Clinic Contact &amp; Map</a></li>
           <li><a href="/book-consultation" style="color: var(--color-gold-light); font-weight: 600;">&rarr; Book a Consultation</a></li>
@@ -88,8 +89,14 @@ const currentYear = new Date().getFullYear();
         </div>
 
         <div class="footer-fast-actions">
-          <a href="/book-consultation" class="btn btn-gold btn-sm" style="width: 100%; justify-content: center;">
-            Book an Appointment
+          <a href="/book-consultation" class="footer-action-btn btn-footer-book" aria-label="Book an Appointment at Ekansh Clinic">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>Book Appointment</span>
           </a>
         </div>
       </div>
@@ -103,7 +110,11 @@ const currentYear = new Date().getFullYear();
               <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>Ekansh Homoeopathic Clinic,<br/>Near Vijay Travels, Vivekanand Choraya,<br/>Bhilwara Road, Kankroli, Rajsamand – 313324, Rajasthan, India</span>
+            <span>
+              <a href="/contact#clinic-map" class="footer-address-link" title="Click to view clinic location on map">
+                Ekansh Homoeopathic Clinic,<br/>Near Vijay Travels, Vivekanand Choraya,<br/>Bhilwara Road, Kankroli, Rajsamand – 313324, Rajasthan, India
+              </a>
+            </span>
           </p>
           
           <p class="address-line">
@@ -131,7 +142,7 @@ const currentYear = new Date().getFullYear();
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
             <a href="https://www.instagram.com/ekanshhomeo/" target="_blank" rel="noopener noreferrer">
-              Official Instagram <br>(@ekanshhomeo)
+                  ekanshhomeo
             </a>
           </p>
         </address>
@@ -172,7 +183,7 @@ const currentYear = new Date().getFullYear();
         <span class="sep">&bull;</span>
         <a href="/about#ethics">Clinical Ethics</a>
         <span class="sep">&bull;</span>
-        <a href="/contact">Location Coordinates</a>
+        <a href="/contact#clinic-map">Location Coordinates</a>
         <span class="sep">&bull;</span>
         <a href="/book-consultation">Book Consultation</a>
       </div>
@@ -387,6 +398,82 @@ const currentYear = new Date().getFullYear();
   .hours-row .time {
     color: var(--color-white);
     font-weight: 500;
+  }
+
+  /* Fast Action Buttons in Col 3 */
+  .footer-fast-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.65rem;
+  }
+
+  .footer-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 40px;
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1;
+    box-sizing: border-box;
+    transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+  }
+
+  .footer-action-btn svg {
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+  }
+
+  .btn-footer-book {
+    background-color: var(--color-gold);
+    color: var(--color-forest-dark);
+    border: 1.5px solid var(--color-gold);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-footer-book:hover {
+    background-color: var(--color-gold-light);
+    border-color: var(--color-gold-light);
+    color: var(--color-forest-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(185, 167, 125, 0.35);
+  }
+
+  .btn-footer-whatsapp {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: var(--color-forest-dark);
+    border: 1.5px solid var(--color-beige-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-footer-whatsapp svg {
+    color: #1B7A3E;
+  }
+
+  .btn-footer-whatsapp:hover {
+    background-color: var(--color-white);
+    border-color: var(--color-gold);
+    color: var(--color-forest-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  .footer-address-link {
+    color: rgba(246, 245, 239, 0.9);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    display: inline-block;
+  }
+
+  .footer-address-link:hover {
+    color: var(--color-gold-light);
   }
 
   /* Address Lines */

@@ -9,8 +9,8 @@ const servicesFAQs = [
     answer: "The initial consultation covers your complete 45 to 60 minute in-depth constitutional intake, medical repertorisation by the physician, individualized remedy selection, and nutritional and lifestyle guidance."
   },
   {
-    question: "How do online consultations work without courier delivery?",
-    answer: "Online video/audio tele-consultations focus on thorough constitutional case-taking and clinical diagnosis. Following the session, the doctor issues a digital prescription with guidance on medicine names, potencies, and dosage for procurement from licensed homeopathic pharmacies."
+    question: "How does medicine courier delivery work for online patients?",
+    answer: "Following your video session, authentic remedies are prepared, sealed in tamper-evident packaging, and dispatched via speed post / express courier with tracking details sent to your WhatsApp."
   },
   {
     question: "How often are follow-up sessions scheduled?",
@@ -25,7 +25,7 @@ const servicesFAQs = [
 
 <BaseLayout 
   title="Consultation Services | Ekansh Homoeopathic Clinic, Rajsamand"
-  description="In-clinic and online constitutional homeopathic consultation services in Rajsamand. Unhurried case-taking, follow-up care, and patient-first medical continuity."
+  description="In-clinic and online constitutional homeopathic consultation services in Rajsamand. Unhurried case-taking, follow-up care, and nationwide courier delivery."
   activeNav="services"
 >
   <!-- Header -->
@@ -71,8 +71,8 @@ const servicesFAQs = [
           features={[
             "Full 45-60 min clinical depth via video call",
             "Ayush Telemedicine Guidelines compliant",
-            "Digital prescription & pharmacy guidance",
-            "Direct WhatsApp follow-up communication"
+            "Remedies couriered safely to your doorstep",
+            "WhatsApp prescription & tracking updates"
           ]}
           isPopular={false}
           ctaText="Book Online Consult"
@@ -90,7 +90,7 @@ const servicesFAQs = [
             "Systematic review of symptom improvements",
             "Structured clinical assessment of symptom progression",
             "Potency adjustment and remedy repetition",
-            "Follow-up remedy evaluation & guidance"
+            "Refill remedy dispensation or courier dispatch"
           ]}
           isPopular={false}
           ctaText="Schedule Follow-Up"
@@ -114,6 +114,39 @@ const servicesFAQs = [
           ctaText="Request Acute Care"
           ctaHref="/book-consultation"
         />
+      </div>
+    </div>
+  </section>
+
+  <!-- Courier Timeline Card -->
+  <section class="section-padding-sm courier-section" id="courier">
+    <div class="container">
+      <div class="courier-compact-card card-editorial card-forest">
+        <div class="courier-compact-grid">
+          <div>
+            <span class="text-eyebrow" style="color: var(--color-gold-light);">Medicine Dispatch</span>
+            <h3 style="color: var(--color-white); margin-top: 0.35rem; margin-bottom: 0.75rem;">
+              Nationwide Courier Delivery Protocol
+            </h3>
+            <p style="color: rgba(246, 245, 239, 0.85); font-size: 0.875rem; line-height: 1.5; margin-bottom: 1rem;">
+              For online consultation patients outside Rajsamand, medicines are sealed in protective tamper-evident packaging and dispatched with speed tracking via India Post / Blue Dart.
+            </p>
+            <div class="delivery-pills">
+              <span class="d-pill">Rajasthan: 24–48 Hours</span>
+              <span class="d-pill">Major Metros: 2–3 Days</span>
+              <span class="d-pill">Rest of India: 3–5 Days</span>
+            </div>
+          </div>
+
+          <div class="courier-action-box text-center">
+            <a href="/contact" class="btn btn-gold btn-md" style="width: 100%;">
+              <span>Send an Inquiry</span>
+            </a>
+            <small style="display: block; color: var(--color-sage-light); margin-top: 0.5rem; font-size: 0.75rem;">
+              Tracking number shared via WhatsApp upon dispatch
+            </small>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -176,5 +209,46 @@ const servicesFAQs = [
 
   .faq-cta {
     margin-top: 2rem;
+  }
+
+  /* Courier Card */
+  .courier-compact-card {
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  .courier-compact-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .courier-compact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .delivery-pills {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .d-pill {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-ivory);
+    font-size: 0.78125rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  .courier-action-box {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    padding: 1.25rem;
   }
 </style>
