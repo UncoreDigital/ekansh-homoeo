@@ -1,0 +1,253 @@
+---
+/**
+ * Ekansh Homoeopathic Clinic - Mobile Sticky Action Bar
+ *
+ * Appears ONLY on mobile and small tablet viewports (<= 768px).
+ * Provides three direct, essential patient actions:
+ *   1. Call (+91 9799988138)
+ *   2. WhatsApp (+91 9799988138)
+ *   3. Book Consultation (/book-consultation)
+ *
+ * Engineered with:
+ * - Safe-area-inset-bottom support for modern iOS & Android devices
+ * - 48px comfortable touch targets
+ * - Keyboard & modal awareness (auto-hides when inputs are focused or modals open)
+ * - Zero display on desktop
+ */
+---
+
+<aside class="mobile-sticky-action-bar" id="mobileStickyBar" aria-label="Quick contact and consultation actions">
+  <div class="sticky-bar-container">
+    <!-- Action 1: Call Clinic -->
+    <a 
+      href="tel:+919799988138" 
+      class="sticky-action-btn action-call" 
+      aria-label="Call Ekansh Clinic at +91 9799988138"
+    >
+      <div class="action-icon-wrap">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+      </div>
+      <span class="action-label">Call</span>
+    </a>
+
+    <!-- Action 2: WhatsApp Desk -->
+    <a 
+      href="https://wa.me/919799988138?text=Hello%20Ekansh%20Clinic,%20I%20would%20like%20to%20enquire%20about%20a%20consultation." 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="sticky-action-btn action-whatsapp" 
+      aria-label="Chat on WhatsApp Desk at +91 9799988138"
+    >
+      <div class="action-icon-wrap">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+      </div>
+      <span class="action-label">WhatsApp</span>
+    </a>
+
+    <!-- Action 3: Book Consultation -->
+    <a 
+      href="/book-consultation" 
+      class="sticky-action-btn action-book" 
+      aria-label="Book a consultation at Ekansh Clinic"
+    >
+      <div class="action-icon-wrap">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </div>
+      <span class="action-label">Book</span>
+    </a>
+  </div>
+</aside>
+
+<style>
+  /* Base: Completely hidden on desktop & large viewports */
+  .mobile-sticky-action-bar {
+    display: none;
+  }
+
+  /* Mobile and Small Tablets (<= 768px) */
+  @media (max-width: 768px) {
+    .mobile-sticky-action-bar {
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 990;
+      background-color: rgba(246, 245, 239, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(220, 213, 196, 0.85);
+      box-shadow: 0 -4px 20px rgba(48, 56, 50, 0.08);
+      padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+      transition: transform var(--transition-base), opacity var(--transition-base);
+    }
+
+    /* Auto-hide when class is applied (e.g. keyboard active) */
+    .mobile-sticky-action-bar.is-hidden {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sticky-bar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .sticky-action-btn {
+      flex: 1;
+      min-width: 0;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.5rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1;
+      transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .sticky-action-btn:active {
+      transform: scale(0.97);
+    }
+
+    .action-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .action-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 1. Call Button */
+    .action-call {
+      background-color: var(--color-white);
+      color: var(--color-forest);
+      border: 1px solid var(--color-beige-dark);
+    }
+
+    .action-call:hover, .action-call:focus-visible {
+      background-color: var(--color-ivory);
+      border-color: var(--color-forest);
+    }
+
+    /* 2. WhatsApp Button */
+    .action-whatsapp {
+      background-color: #E7F6EC;
+      color: #1B7A3E;
+      border: 1px solid #BEE7C9;
+    }
+
+    .action-whatsapp:hover, .action-whatsapp:focus-visible {
+      background-color: #D3EFDC;
+    }
+
+    /* 3. Book Consultation Button (Primary High-Visibility Action) */
+    .action-book {
+      background-color: var(--color-forest);
+      color: var(--color-ivory);
+      border: 1px solid var(--color-forest-dark);
+      box-shadow: 0 2px 8px rgba(53, 93, 72, 0.2);
+    }
+
+    .action-book .action-icon-wrap {
+      color: var(--color-gold-light);
+    }
+
+    .action-book:hover, .action-book:focus-visible {
+      background-color: var(--color-forest-dark);
+      color: var(--color-white);
+    }
+  }
+
+  /* Compact phones (< 360px): tight icon & label spacing */
+  @media (max-width: 359px) {
+    .sticky-bar-container {
+      gap: 0.35rem;
+    }
+    .sticky-action-btn {
+      padding: 0.5rem 0.35rem;
+      font-size: 0.75rem;
+      gap: 0.3rem;
+    }
+    .action-icon-wrap svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>
+
+<script>
+  function setupStickyBar() {
+    const bar = document.getElementById('mobileStickyBar');
+    if (!bar) return;
+
+    // Apply padding class to body on mobile so content is never covered
+    if (window.innerWidth <= 768) {
+      document.body.classList.add('has-mobile-sticky-bar');
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768) {
+        document.body.classList.add('has-mobile-sticky-bar');
+      } else {
+        document.body.classList.remove('has-mobile-sticky-bar');
+      }
+    });
+
+    // Hide sticky bar when virtual keyboard opens (focused input or textarea)
+    // to avoid covering submit buttons or form inputs
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        bar.classList.add('is-hidden');
+      });
+      input.addEventListener('blur', () => {
+        bar.classList.remove('is-hidden');
+      });
+    });
+
+    // Observe body modal backdrop changes (e.g. if overflow is hidden)
+    const observer = new MutationObserver(() => {
+      if (document.body.style.overflow === 'hidden') {
+        bar.classList.add('is-hidden');
+      } else {
+        bar.classList.remove('is-hidden');
+      }
+    });
+
+    observer.observe(document.body, { attributes: true, attributeFilter: ['style', 'class'] });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupStickyBar);
+  } else {
+    setupStickyBar();
+  }
+  document.addEventListener('astro:page-load', setupStickyBar);
+</script>

@@ -577,6 +577,13 @@ textarea.form-control {
   }
 }
 
+/* Mobile Sticky Action Bar Safe Bottom Spacing */
+@media (max-width: 768px) {
+  body.has-mobile-sticky-bar {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
 @media (min-width: 992px) {
   .hide-on-desktop {
     display: none !important;

@@ -1,0 +1,292 @@
+---
+/**
+ * Ekansh Homoeopathic Clinic - "Before Your Visit" Component
+ *
+ * Provides clear, practical preparation guidance for in-clinic and online patients:
+ * - 4 distinct, scannable preparation guidance cards
+ * - Quick phone and WhatsApp helpline triggers
+ * - Consistent editorial styling matching the clinic's natural-wellness aesthetic
+ */
+interface Props {
+  id?: string;
+  showContactHelp?: boolean;
+}
+
+const {
+  id = "before-visit",
+  showContactHelp = true
+} = Astro.props;
+
+const preparationSteps = [
+  {
+    step: "01",
+    title: "Bring Your Medical History",
+    desc: "Please keep previous prescriptions, diagnostic reports, blood test results, scans and relevant medical records handy.",
+    icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`
+  },
+  {
+    step: "02",
+    title: "Share Your Current Medication",
+    desc: "Bring a list of all medicines and supplements you currently take, including prescribed conventional medicines. Do not stop any prescribed medication without consulting your treating physician.",
+    icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"></line></svg>`
+  },
+  {
+    step: "03",
+    title: "Allow Time for Your Consultation",
+    desc: "Initial consultations typically take 45–60 minutes. Please arrive a little early for an in-clinic appointment.",
+    icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`
+  },
+  {
+    step: "04",
+    title: "For Online Consultations",
+    desc: "Keep your medical documents accessible and ensure you have a stable internet connection, a working phone or computer, and a quiet, private space.",
+    icon: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`
+  }
+];
+---
+
+<section class="before-visit-section" id={id} aria-labelledby="before-visit-title">
+  <div class="container">
+    <div class="section-header text-center before-visit-header">
+      <span class="badge badge-sage before-visit-eyebrow">Consultation Checklist</span>
+      <h2 id="before-visit-title" class="section-title">Before Your Visit</h2>
+      <p class="section-subtitle text-muted">
+        A little preparation can help us make the most of your consultation.
+      </p>
+    </div>
+
+    <!-- 4 Structured Preparation Cards -->
+    <div class="before-visit-grid">
+      {preparationSteps.map((item) => (
+        <div class="prep-card card-editorial">
+          <div class="prep-card-top">
+            <span class="prep-step-badge">{item.step}</span>
+            <div class="prep-icon-box" set:html={item.icon} />
+          </div>
+          <h3 class="prep-title">{item.title}</h3>
+          <p class="prep-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Contact & Reassurance Callout -->
+    {showContactHelp && (
+      <div class="before-visit-footer-callout">
+        <div class="callout-inner">
+          <div class="callout-text-wrap">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" class="callout-icon" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p class="callout-text">
+              If you have questions before your visit, contact our clinic desk by phone or WhatsApp.
+            </p>
+          </div>
+          <div class="callout-actions">
+            <a href="tel:+919799988138" class="btn btn-secondary btn-sm prep-contact-btn">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span>Call +91 9799988138</span>
+            </a>
+            <a href="https://wa.me/919799988138?text=Hello%20Ekansh%20Clinic,%20I%20have%20a%20question%20before%20my%20visit." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm prep-contact-btn">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span>WhatsApp Desk</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .before-visit-section {
+    background: linear-gradient(180deg, rgba(237, 241, 231, 0.45) 0%, rgba(246, 245, 239, 0.9) 50%, rgba(237, 241, 231, 0.4) 100%);
+    border-top: 1px solid var(--color-beige);
+    border-bottom: 1px solid var(--color-beige);
+    padding: clamp(3.25rem, 5.5vw, 4.5rem) 0;
+    position: relative;
+  }
+
+  .before-visit-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .before-visit-eyebrow {
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-subtitle {
+    max-width: 540px;
+    margin: 0.5rem auto 0;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  /* 4-Column Responsive Grid */
+  .before-visit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.35rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .prep-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-top: 3px solid var(--color-sage);
+    border-radius: var(--radius-md);
+    padding: 1.65rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 18px rgba(48, 56, 50, 0.04);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+
+  .prep-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(48, 56, 50, 0.08);
+    border-top-color: var(--color-forest);
+  }
+
+  .prep-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.15rem;
+  }
+
+  .prep-step-badge {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-charcoal-muted);
+    background-color: var(--color-ivory);
+    border: 1px solid var(--color-beige);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.06em;
+  }
+
+  .prep-icon-box {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-sage-subtle);
+    color: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(163, 177, 138, 0.35);
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .prep-card:hover .prep-icon-box {
+    background-color: var(--color-forest);
+    color: var(--color-ivory);
+  }
+
+  .prep-title {
+    font-size: 1.0625rem;
+    font-family: var(--font-serif);
+    color: var(--color-forest);
+    line-height: 1.35;
+    margin-bottom: 0.65rem;
+  }
+
+  .prep-desc {
+    font-size: 0.84375rem;
+    line-height: 1.6;
+    color: var(--color-charcoal-muted);
+    margin: 0;
+  }
+
+  /* Bottom Callout */
+  .before-visit-footer-callout {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-beige);
+    border-left: 4px solid var(--color-forest);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.65rem;
+    box-shadow: 0 4px 16px rgba(48, 56, 50, 0.04);
+  }
+
+  .callout-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .callout-text-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 320px;
+  }
+
+  .callout-icon {
+    color: var(--color-forest);
+    flex-shrink: 0;
+  }
+
+  .callout-text {
+    font-size: 0.875rem;
+    color: var(--color-charcoal);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .callout-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .prep-contact-btn {
+    white-space: nowrap;
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 991px) {
+    .before-visit-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .before-visit-grid {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .callout-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .callout-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .prep-contact-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

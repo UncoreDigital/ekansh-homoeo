@@ -168,18 +168,18 @@ const initialLetters = availableLetters;
       <div class="modal-body-content">
         <div class="modal-info-section">
           <h4 class="modal-section-title">Clinical Presentation &amp; Symptoms</h4>
-          <p class="modal-section-p" id="modalSummaryText">Summary text goes here.</p>
+          <p class="modal-section-p" id="modalSummaryText">Select a condition from the directory to review its common symptom presentation.</p>
         </div>
 
         <div class="modal-info-section">
-          <h4 class="modal-section-title">Typical Constitutional Triggers</h4>
-          <p class="modal-section-p" id="modalTriggersText">Triggers text goes here.</p>
+          <h4 class="modal-section-title">Common Constitutional Factors</h4>
+          <p class="modal-section-p" id="modalTriggersText">Individual triggers, environmental factors, and lifestyle habits are discussed during consultation.</p>
         </div>
 
         <div class="modal-info-section highlight-box">
-          <h4 class="modal-section-title">Constitutional Homeopathic Approach</h4>
-          <p class="modal-section-p" id="modalApproachText">Approach text goes here.</p>
-          <small class="modal-disclaimer">*Informational note: Remedies are chosen through individual repertorisation of your total symptom totality, not pre-set generic formulas.</small>
+          <h4 class="modal-section-title">Constitutional Consultation Approach</h4>
+          <p class="modal-section-p" id="modalApproachText">An individualised consultation that considers your complete health history, symptoms, and lifestyle.</p>
+          <small class="modal-disclaimer">*Informational note: This educational guide does not substitute professional medical advice. Consultation options and remedy selection are individualized by a registered physician.</small>
         </div>
       </div>
 
@@ -357,11 +357,15 @@ function resetFilters() {
         const triggers = btn.getAttribute('data-triggers') || '';
         const approach = btn.getAttribute('data-approach') || '';
 
+        const defaultSummary = "Common symptoms and health factors can be evaluated in detail during your personalized consultation.";
+        const defaultTriggers = "Individual environmental and lifestyle factors are reviewed during consultation.";
+        const defaultApproach = "An individualised consultation that considers your health history, symptoms, and lifestyle.";
+
         if (modalTitle) modalTitle.textContent = name;
-        if (modalCategory) modalCategory.textContent = category;
-        if (modalSummary) modalSummary.textContent = summary;
-        if (modalTriggers) modalTriggers.textContent = triggers;
-        if (modalApproach) modalApproach.textContent = approach;
+        if (modalCategory) modalCategory.textContent = category || "Clinical Care";
+        if (modalSummary) modalSummary.textContent = summary || defaultSummary;
+        if (modalTriggers) modalTriggers.textContent = triggers || defaultTriggers;
+        if (modalApproach) modalApproach.textContent = approach || defaultApproach;
 
         if (modalBookLink) {
           modalBookLink.href = `/book-consultation?condition=${encodeURIComponent(name)}`;

@@ -93,7 +93,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Digestive Concerns",
     summary: "Infrequent or incomplete bowel movements, sluggish intestinal motility, and abdominal heaviness.",
     triggers: "Low dietary fiber, sedentary habits, travel stress, and prolonged suppression of natural urges.",
-    approach: "Regulates autonomic bowel tone and peristalsis rather than relying on purgative laxatives."
+    approach: "Evaluates digestive habits, hydration, and symptom patterns to support natural bowel regularity."
   },
   {
     id: "childhood-coughs",
@@ -113,7 +113,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Hair & Scalp",
     summary: "Persistent dry or greasy white flakes, scalp itching, and localized follicular irritation.",
     triggers: "Seborrheic imbalance, harsh chemical shampoos, climate dryness, and stress.",
-    approach: "Balances scalp sebaceous regulation internally to address the constitutional cause of flaking."
+    approach: "Evaluates scalp sensitivity and overall constitutional factors during consultation."
   },
   {
     id: "digestive-concerns",
@@ -142,7 +142,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Skin Conditions",
     summary: "Dry, red, itchy skin patches on flexures, hands, or neck with scaling or occasional watery oozing.",
     triggers: "Synthetic fabrics, dry air, harsh soaps, emotional tension, and specific food triggers.",
-    approach: "Addresses atopic systemic predisposition without topical steroids to promote enduring skin comfort."
+    approach: "Considers individual skin sensitivity, personal triggers, and lifestyle factors in selecting remedies."
   },
 
   // F
@@ -211,7 +211,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Women's Health",
     summary: "Unpredictable menstrual timing, premenstrual mood shifts, fluid retention, and weight resistance.",
     triggers: "Circadian rhythm disruptions, high cortisol, nutritional imbalances, and thyroid shifts.",
-    approach: "Constitutional remedies work along the neuro-endocrine axis to restore natural hormonal rhythm."
+    approach: "Constitutional remedies work along the neuro-endocrine axis to support balanced hormonal health."
   },
 
   // I
@@ -222,7 +222,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Stress & Sleep",
     summary: "Inability to fall asleep despite fatigue, frequent midnight awakenings, and unrefreshing rest.",
     triggers: "Blue-light screen use late at night, racing thoughts, caffeinated drinks, and irregular hours.",
-    approach: "Calms mental hyperactivity and restores healthy circadian sleep architecture naturally."
+    approach: "Calms mental hyperactivity and supports restful sleep routines through individualized care."
   },
   {
     id: "ibs",
@@ -397,7 +397,7 @@ export const conditionsDataset: ConditionItem[] = [
     category: "Respiratory Health",
     summary: "Throat inflammation, difficulty swallowing solid foods, tender neck glands, and voice hoarseness.",
     triggers: "Viral exposures, chilled beverages, and sudden weather fluctuations.",
-    approach: "Provides gentle constitutional immune support to prevent recurrence without aggressive suppression."
+    approach: "Provides gentle constitutional care tailored to throat sensitivity and recurring symptom patterns."
   },
 
   // U

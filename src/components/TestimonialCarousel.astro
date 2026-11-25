@@ -14,17 +14,29 @@ import 'swiper/css/pagination';
 
 const testimonials = [
   {
-    quote: "I’ve been taking treatment for my thyroid for the past 2 months, and my levels improved from 10.60 to 4.40. Really happy with the results. The doctor is very kind and supportive. Highly recommended!",
-    patientName: "Mr. R. Sharma"
+    quote: "I’ve been taking treatment for my thyroid for the past 2 months, and my reports have shown positive improvement. Really happy with the results. The doctor is very kind and supportive. Highly recommended!",
+    patientName: "Isha Sharma"
   },
   {
-    quote: "My personal experience with Dr Akshat Chaplot had been extraordinary.",
-    patientName: "Ms. S. Mehta"
+    quote: "I visited this homoeopathic doctor for chest burning (jalan), and I am very happy with the treatment. The doctor listened to my symptoms patiently and explained everything clearly. The medicines worked well, and I started feeling much better within a few weeks. The doctor is caring, professional, and gives enough time to every patient. I highly recommend this doctor to anyone looking for effective homoeopathic treatment.",
+    patientName: "Kuldeep Kumawat"
   },
   {
-    quote: "Very gentle approach with my 7-year-old child. Finding a doctor who takes time to understand recurrent coughs without rushing to strong antibiotics is wonderful.",
-    patientName: "Mrs. P. Choudhary"
-  }
+    quote: "My experience at this clinic has been very good. I consulted the doctor here and explained my health concern in detail. After following the prescribed treatment and taking the medicines, I experienced positive results. My condition has improved significantly, and my health issue has been effectively resolved.",
+    patientName: "Sapna Kamad"
+  },
+  {
+    quote: "My personal experience with Dr Akshat Chaplot had been extraordinary. He listened to all my problems very patiently by giving me enough time on my first consultation. In fact I was having multiple problems like bloating, lower back ache, constipation, etc. Subsequently the remedies prescribed were very effective and helped reduce my symptoms considerably. Thanks to his care I feel relieved.",
+    patientName: "Rajiv Ranjan Kumar"
+  },
+  {
+    quote: "Had wonderful experience with homeopathic medicine by Dr. Akshat for retinal complaint. Was having vision discomfort for which I was suggested surgery, but with detailed consideration of my case and homeopathy medicine my vision feels much better and scan reports have shown clear progress. Highly recommend for those needing patient, thorough consultation.",
+    patientName: "Jesk Sen"
+  },
+  {
+    quote: "I was experiencing severe eczema around my mouth, ears and other areas with extreme dryness. After treatment given by Dr. Akshat there was remarkable improvement over two months. Now I feel confident about myself. Very grateful for his care.",
+    patientName: "Preksha Mehta"
+  },
 ];
 ---
 
@@ -116,7 +128,6 @@ const testimonials = [
       loop: true,
       speed: 650,
       grabCursor: true,
-      autoHeight: true,
       autoplay: {
         delay: 5000,
         disableOnInteraction: false,
@@ -167,11 +178,12 @@ const testimonials = [
   }
 
   .carousel-outer-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
     position: relative;
     width: 100%;
+    padding: 0 3.25rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
   }
 
   .testimonial-swiper {
@@ -179,6 +191,11 @@ const testimonials = [
     overflow: hidden;
     border-radius: var(--radius-md, 8px);
     position: relative;
+    min-height: 290px;
+  }
+
+  .swiper-wrapper {
+    align-items: stretch;
   }
 
   .swiper-slide {
@@ -199,7 +216,8 @@ const testimonials = [
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 210px;
+    min-height: 290px;
+    box-sizing: border-box;
     transition: transform var(--transition-fast, 180ms ease);
   }
 
@@ -254,8 +272,12 @@ const testimonials = [
   }
 
   .carousel-nav-btn {
-    width: 46px;
-    height: 46px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background-color: var(--color-white, #FFFFFF);
     border: 1px solid var(--color-beige-dark, #D8D2C2);
@@ -270,16 +292,24 @@ const testimonials = [
     padding: 0;
   }
 
+  .carousel-prev {
+    left: 0;
+  }
+
+  .carousel-next {
+    right: 0;
+  }
+
   .carousel-nav-btn:hover {
     background-color: var(--color-forest, #355D48);
     color: var(--color-ivory, #F6F5EF);
     border-color: var(--color-forest, #355D48);
-    transform: scale(1.06);
+    transform: translateY(-50%) scale(1.08);
     box-shadow: 0 6px 18px rgba(30, 61, 47, 0.15);
   }
 
   .carousel-nav-btn:active {
-    transform: scale(0.96);
+    transform: translateY(-50%) scale(0.96);
   }
 
   .carousel-nav-btn:focus-visible {
@@ -325,12 +355,12 @@ const testimonials = [
 
   @media (max-width: 680px) {
     .carousel-outer-wrapper {
-      gap: 0.5rem;
+      padding: 0 2.5rem;
     }
 
     .carousel-nav-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
     }
 
     .carousel-nav-btn svg {
@@ -338,9 +368,10 @@ const testimonials = [
       height: 16px;
     }
 
+    .testimonial-swiper,
     .testimonial-card {
+      min-height: 330px;
       padding: 1.5rem 1.25rem;
-      min-height: 220px;
     }
 
     .quote-accent-mark {
@@ -351,9 +382,24 @@ const testimonials = [
   }
 
   @media (max-width: 480px) {
+    .carousel-outer-wrapper {
+      padding: 0 2.2rem;
+    }
+
     .carousel-nav-btn {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
+    }
+
+    .carousel-nav-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .testimonial-swiper,
+    .testimonial-card {
+      min-height: 380px;
+      padding: 1.25rem 1rem;
     }
   }
 </style>

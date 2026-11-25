@@ -9,7 +9,7 @@ const faqCategories = [
     faqs: [
       {
         q: "What is Ekansh Homoeopathic Clinic?",
-        a: "Ekansh Homoeopathic Clinic is an independent homeopathic medical practice located in Rajsamand, Rajasthan. Founded on the principle of 'Care That Begins With Listening', we specialize in classical constitutional care, unhurried 45–60 minute consultations, and gentle non-suppressive healing."
+        a: "Ekansh Homoeopathic Clinic is an independent homeopathic medical practice located in Rajsamand, Rajasthan. Founded on the principle of 'Care That Begins With Listening', we specialize in classical constitutional care, unhurried 45–60 minute consultations, and individualized health guidance."
       },
       {
         q: "Where is the clinic located?",
@@ -32,7 +32,7 @@ const faqCategories = [
       },
       {
         q: "Are homeopathic medicines safe and free from side effects?",
-        a: "Yes. Homeopathic remedies are prepared through systematic serial micro-dilutions under rigorous pharmacopoeial standards. They are non-toxic, gentle, non-habit forming, and safe for all age groups including infants and pregnant individuals when prescribed by a registered physician."
+        a: "Homeopathic remedies are prepared through systematic micro-dilutions adhering to established pharmacopoeial standards. When prescribed appropriately by a qualified physician following an individual assessment, they are gentle and non-habit forming. We encourage patients to discuss their full health history, including pregnancy or concurrent treatments, before starting any regimen."
       },
       {
         q: "Can I take homeopathic medicines alongside my existing allopathic treatments?",
@@ -40,18 +40,18 @@ const faqCategories = [
       },
       {
         q: "Does homeopathy take a long time to work?",
-        a: "Acute conditions (such as sudden seasonal coughs or mild flare-ups) often respond rapidly within hours to days. Long-standing chronic ailments require systematic constitutional treatment over several months to address the deep-rooted predisposition."
+        a: "Response times vary based on the individual and nature of the complaint. Sudden, acute discomfort can often be evaluated quickly, while chronic or recurring conditions typically involve a structured course of consultations and regular follow-ups over several months to monitor progress."
       }
     ]
   },
   {
     id: "doctors",
     title: "Doctors & Clinic",
-    description: "Qualifications, medical council registrations, and physician continuity.",
+    description: "Qualifications, professional background, and physician continuity.",
     faqs: [
       {
         q: "Who are the consulting physicians at Ekansh Clinic?",
-        a: "The clinic is led by Dr. Akshat Chaplot (B.H.M.S.) and Dr. Neha Sukhwal (B.H.M.S.), both registered Homeopathic Physicians holding Bachelor of Homoeopathic Medicine & Surgery degrees with formal university training and state council registrations on file."
+        a: "The clinic is led by Dr. Akshat Chaplot (B.H.M.S.) and Dr. Neha Sukhwal (B.H.M.S.), both Homeopathic Physicians holding Bachelor of Homoeopathic Medicine & Surgery degrees with formal university education."
       },
       {
         q: "What are the focus areas of the physicians?",
@@ -188,7 +188,7 @@ const faqCategories = [
 
           <div class="faq-accordion-list">
   {cat.faqs.map((faq) => (
-    <details class="faq-item card-editorial" name="clinic-faq">
+    <details class="faq-item card-editorial">
       <summary class="faq-question">
         <span class="faq-q-text">{faq.q}</span>
         <span class="faq-icon" aria-hidden="true">
@@ -450,6 +450,18 @@ const faqCategories = [
     color: var(--color-charcoal);
     border-top: 1px solid var(--color-beige-subtle);
     padding-top: 0.85rem;
+    animation: faqSlideDown 0.22s ease-out;
+  }
+
+  @keyframes faqSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .faq-answer p {
@@ -501,18 +513,31 @@ const faqCategories = [
 </style>
 
 
-<script>
-  const faqItems = document.querySelectorAll<HTMLDetailsElement>('.faq-item');
+<script is:inline>
+  function setupFaqAccordion() {
+    const groups = document.querySelectorAll('.faq-accordion-list');
+    groups.forEach((group) => {
+      const items = group.querySelectorAll('details.faq-item');
+      items.forEach((details) => {
+        const summary = details.querySelector('summary.faq-question');
+        if (!summary) return;
 
-  faqItems.forEach((item) => {
-    item.addEventListener('toggle', () => {
-      if (item.open) {
-        faqItems.forEach((other) => {
-          if (other !== item && other.open) {
-            other.open = false;
+        summary.addEventListener('click', () => {
+          if (!details.open) {
+            items.forEach((other) => {
+              if (other !== details && other.open) {
+                other.open = false;
+              }
+            });
           }
         });
-      }
+      });
     });
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupFaqAccordion);
+  } else {
+    setupFaqAccordion();
+  }
 </script>

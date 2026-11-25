@@ -37,6 +37,23 @@ const currentYear = new Date().getFullYear();
           </svg>
           <span>Kankroli, Rajsamand, Rajasthan &bull; India</span>
         </div>
+
+        <div class="footer-social-wrap">
+          <a 
+            href="https://www.instagram.com/ekanshhomeo/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="footer-social-badge"
+            aria-label="Follow Ekansh Homoeopathic Clinic on Instagram"
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>Instagram: @ekanshhomeo</span>
+          </a>
+        </div>
       </div>
 
       <!-- Col 2: Quick Links -->
@@ -106,6 +123,17 @@ const currentYear = new Date().getFullYear();
               WhatsApp Desk Booking <br>(+91 9799988138)
             </a>
           </p>
+
+          <p class="address-line">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <a href="https://www.instagram.com/ekanshhomeo/" target="_blank" rel="noopener noreferrer">
+              Official Instagram <br>(@ekanshhomeo)
+            </a>
+          </p>
         </address>
       </div>
     </div>
@@ -121,10 +149,27 @@ const currentYear = new Date().getFullYear();
 
     <!-- Bottom Bar -->
     <div class="footer-bottom">
-      <p class="copyright-text">
-        &copy; {currentYear} Ekansh Homoeopathic Clinic. Rajsamand, Rajasthan, India.
-      </p>
+      <div class="footer-bottom-left">
+        <p class="copyright-text">
+          &copy; {currentYear} Ekansh Homoeopathic Clinic
+        </p>
+        <span class="sep">&bull;</span>
+        <p class="credit-text">
+          Designed &amp; Developed by 
+          <a 
+            href="https://uncoredigital.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="credit-link"
+          >
+            Uncore Digital
+          </a>
+        </p>
+      </div>
+
       <div class="bottom-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <span class="sep">&bull;</span>
         <a href="/about#ethics">Clinical Ethics</a>
         <span class="sep">&bull;</span>
         <a href="/contact">Location Coordinates</a>
@@ -219,6 +264,30 @@ const currentYear = new Date().getFullYear();
     background-color: rgba(163, 177, 138, 0.18);
     padding: 0.25rem 0.65rem;
     border-radius: var(--radius-full);
+  }
+
+  .footer-social-wrap {
+    margin-top: 0.75rem;
+  }
+
+  .footer-social-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78125rem;
+    color: var(--color-sage-light);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+  }
+
+  .footer-social-badge:hover {
+    color: var(--color-white);
+    background-color: rgba(255, 255, 255, 0.18);
+    border-color: var(--color-gold);
+    transform: translateY(-1px);
   }
 
   /* Headings & Links */
@@ -368,5 +437,28 @@ const currentYear = new Date().getFullYear();
 
   .bottom-links .sep {
     color: rgba(255, 255, 255, 0.3);
+  }
+  .footer-bottom-left {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .copyright-text,
+  .credit-text {
+    margin: 0;
+  }
+
+  .credit-link {
+    color: var(--color-gold-light);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .credit-link:hover {
+    color: var(--color-white);
+    text-decoration: underline;
   }
 </style>

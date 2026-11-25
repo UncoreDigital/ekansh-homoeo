@@ -434,11 +434,14 @@ export async function sendPatientAppointmentConfirmation(
           ` : ''}
 
           <div class="guidelines-box">
-            <h4>Case-Taking Preparation Guidelines</h4>
+            <h4>Before Your Visit – Preparation Guidelines</h4>
             <ul>
-              <li><strong>In-Clinic Patients:</strong> Please arrive 10 minutes prior to your slot. Bring any previous medical records, diagnostic lab reports, or current prescription lists.</li>
-              <li><strong>Online Video/Tele-Consultations:</strong> Our clinic desk will send the video connect link or call you on your registered mobile number at the scheduled slot. Ensure a quiet environment with stable internet.</li>
-              <li>Constitutional homeopathic intake typically takes <strong>45 to 60 minutes</strong> as we listen to your complete health history.</li>
+              <li><strong>Medical Records:</strong> Bring previous prescriptions, medical reports, and diagnostic test results.</li>
+              <li><strong>Current Medications:</strong> Keep a list of all current medicines, supplements, and vitamins.</li>
+              <li><strong>Prescription Continuity:</strong> Do not stop any prescribed conventional medication without consulting your treating physician.</li>
+              <li><strong>Online Consultations:</strong> Ensure a quiet space, stable internet connection, and keep digital medical documents ready.</li>
+              <li><strong>In-Clinic Consultations:</strong> Please arrive 10 minutes before your scheduled slot.</li>
+              <li><strong>Desk Assistance:</strong> If you have questions before your visit, contact our clinic desk by phone or WhatsApp.</li>
             </ul>
           </div>
 
@@ -486,10 +489,13 @@ CLINIC LOCATION & CONTACT:
 - Phone: ${clinicPhone} / +91 9521646525
 - WhatsApp: +91 9799988138
 
-CASE-TAKING PREPARATION:
-1. Constitutional case intake typically takes 45 to 60 minutes.
-2. For in-clinic visits, please arrive 10 minutes before your slot and bring prior diagnostic records.
-3. For online tele-consultations, our desk will connect with you at your confirmed slot.
+BEFORE YOUR VISIT – PREPARATION GUIDELINES:
+1. Bring previous prescriptions, medical reports, and diagnostic test results.
+2. Keep a list of all current medicines, supplements, and vitamins.
+3. Do not stop any prescribed conventional medication without consulting your treating physician.
+4. For online consultations, ensure a quiet space, stable internet connection, and keep digital medical documents ready.
+5. For in-clinic consultations, please arrive 10 minutes before your scheduled slot.
+6. If you have questions before your visit, contact our clinic desk by phone or WhatsApp.
 
 If you need to reschedule, please reach out via phone or WhatsApp.
 

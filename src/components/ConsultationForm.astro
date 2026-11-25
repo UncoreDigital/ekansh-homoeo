@@ -183,6 +183,9 @@ const { defaultModality = 'in-clinic' } = Astro.props;
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </button>
+        <p class="privacy-agreement-note">
+          By submitting this request, you agree to our <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. All health details remain strictly confidential.
+        </p>
         <p class="security-note">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -438,6 +441,20 @@ const { defaultModality = 'in-clinic' } = Astro.props;
 
   .form-submit-row button {
     width: 100%;
+  }
+
+  .privacy-agreement-note {
+    font-size: 0.78125rem;
+    color: var(--color-charcoal-light);
+    margin: 0;
+    text-align: center;
+    line-height: 1.45;
+  }
+
+  .privacy-agreement-note a {
+    color: var(--color-forest);
+    font-weight: 600;
+    text-decoration: underline;
   }
 
   .security-note {

@@ -5,16 +5,17 @@ import DoctorProfileCard from '../components/DoctorProfileCard.astro';
 import TestimonialCarousel from '../components/TestimonialCarousel.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import FindHealthConditions from '../components/FindHealthConditions.astro';
+import BeforeYourVisit from '../components/BeforeYourVisit.astro';
 
 const treatedConditions = [
   {
     title: "Chronic Allergies & Asthma",
-    desc: "Dust allergies, recurrent sneezing, allergic rhinitis, and bronchial sensitivity addressed at the constitutional root.",
+    desc: "Dust allergies, recurrent sneezing, allergic rhinitis, and bronchial sensitivity evaluated through individualized care.",
     image: "/images/asthma.png",
   },
   {
     title: "Skin & Dermatological Care",
-    desc: "Long-standing eczema, urticaria flare-ups, psoriasis discomfort, and acne addressed without harsh suppressants.",
+    desc: "Long-standing eczema, urticaria flare-ups, psoriasis discomfort, and acne evaluated through individualized care.",
     image: "/images/skin.png",
   },
   {
@@ -42,7 +43,7 @@ const treatedConditions = [
 const homeFAQs = [
   {
     question: "What makes constitutional homeopathic care different?",
-    answer: "Constitutional care considers your complete physical, mental, and lifestyle history rather than prescribing for isolated symptoms. A single, individualized remedy is selected to restore natural balance."
+    answer: "Constitutional care considers your complete physical, health, and lifestyle history. An individualized consultation allows the physician to recommend appropriate options tailored to your overall health."
   },
   {
     question: "How long does an initial consultation take?",
@@ -85,7 +86,7 @@ const homeFAQs = [
         </p>
 
         <p class="hero-lead text-lead">
-          We spend 45 to 60 minutes with you to understand your complete health story—treating the root constitutional cause rather than rushing or masking symptoms.
+          We spend 45 to 60 minutes with you—an individualised consultation that considers your complete health history, symptoms, and lifestyle rather than rushing through brief appointments.
         </p>
 
         <!-- High-Visibility Primary CTAs -->
@@ -320,8 +321,8 @@ const homeFAQs = [
         <div class="principle-card card-editorial">
           <span class="principle-icon">👨‍⚕️</span>
           <div class="principle-info">
-            <h4 class="principle-title">Same Doctor Always</h4>
-            <p class="principle-desc">Personal medical continuity. You consult the same qualified homeopathic physician at every follow-up visit.</p>
+            <h4 class="principle-title">Doctor Continuity</h4>
+            <p class="principle-desc">Consistent personal care. You consult the same qualified homeopathic physician at every follow-up visit.</p>
           </div>
         </div>
 
@@ -329,7 +330,7 @@ const homeFAQs = [
           <span class="principle-icon">⚖️</span>
           <div class="principle-info">
             <h4 class="principle-title">Ethical &amp; Transparent</h4>
-            <p class="principle-desc">Compliant with Ayush ethics: zero miracle claims, realistic timelines, and gentle non-toxic remedies.</p>
+            <p class="principle-desc">Ethical medical practice: honest communication, realistic expectations, and transparent guidance.</p>
           </div>
         </div>
       </div>
@@ -372,10 +373,9 @@ const homeFAQs = [
           features={[
             "45–60 min unhurried physical & mental intake",
             "Individual constitutional repertorisation",
-            "Certified quality remedies dispensed on-site",
+            "Prescribed remedies dispensed directly at clinic",
             "Clear dietary and lifestyle guidance"
           ]}
-          feePlaceholder="Verified on Request"
           isPopular={true}
           ctaText="Book Clinic Visit"
           ctaHref="/book-consultation?mode=in-clinic"
@@ -394,7 +394,6 @@ const homeFAQs = [
             "Digital prescription & dispensary guidance",
             "Direct WhatsApp consultation follow-ups"
           ]}
-          feePlaceholder="Verified on Request"
           isPopular={false}
           ctaText="Book Online Consult"
           ctaHref="/book-consultation?mode=online"
@@ -413,7 +412,6 @@ const homeFAQs = [
             "Lifestyle and seasonal health adjustments",
             "Follow-up remedy evaluation & guidance"
           ]}
-          feePlaceholder="Verified on Request"
           isPopular={false}
           ctaText="Schedule Follow-up"
           ctaHref="/book-consultation"
@@ -428,11 +426,10 @@ const homeFAQs = [
           imageAlt="Homeopathic Acute Care Medicine"
           features={[
             "Targeted analysis of acute symptom triggers",
-            "Gentle remedies to support immune defense",
+            "Individualized remedies tailored to acute symptom presentation",
             "Hydration and dietary management advice",
             "Seamless integration with ongoing care"
           ]}
-          feePlaceholder="Verified on Request"
           isPopular={false}
           ctaText="Request Acute Care"
           ctaHref="/book-consultation"
@@ -441,6 +438,10 @@ const homeFAQs = [
     </div>
   </section>
 
+  <!-- =========================================================================
+       SECTION: BEFORE YOUR VISIT (Practical Patient Preparation)
+       ========================================================================= -->
+  <BeforeYourVisit id="before-visit" />
 
   <!-- =========================================================================
        SECTION 7: PATIENT REFLECTIONS (Testimonials Carousel)

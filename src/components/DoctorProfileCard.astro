@@ -8,33 +8,31 @@ const { showBio = true } = Astro.props;
 const doctors = [
   {
     name: "Dr. Akshat Chaplot",
-    degree: "B.H.M.S. • Registered Homeopathic Physician",
+    degree: "B.H.M.S. • Homeopathic Physician",
     title: "Consultant Homeopathic Physician",
     image: "/images/doctor2.jpeg",
     imageAlt: "Dr. Akshat Chaplot - Consultant Homeopathic Physician, Ekansh Homoeopathic Clinic",
-    quote: "Constitutional healing begins with time and patience. We listen to the entire person to identify the true root-cause rather than masking transient symptoms.",
+    quote: "Constitutional care begins with time and patience. We listen carefully to understand your complete health history, symptoms, and lifestyle.",
     style: "Classical Constitutional",
     focus: "Chronic Allergies, Skin & Dermatological Care, Digestive Health",
-    registration: "State Homoeopathic Council • Reg. No. Verified on file",
     highlights: [
       "45–60 minute deep constitutional case-taking",
-      "Single-remedy individualisation based on totality",
+      "Individualized single-remedy selection based on totality",
       "Consistent doctor continuity at every follow-up"
     ]
   },
   {
     name: "Dr. Neha Sukhwal",
-    degree: "B.H.M.S. • Registered Homeopathic Physician",
+    degree: "B.H.M.S. • Homeopathic Physician",
     title: "Consultant Homeopathic Physician",
     image: "/images/doctor.jpeg",
     imageAlt: "Dr. Neha Sukhwal - Consultant Homeopathic Physician, Ekansh Homoeopathic Clinic",
-    quote: "Every patient's healing journey deserves empathy and deep individualization. We treat the person behind the symptoms with gentle, enduring natural medicine.",
+    quote: "Every patient's health journey deserves empathy and individualized attention. We take the time to understand your unique concerns and health history.",
     style: "Classical Constitutional",
     focus: "Pediatric Wellness, Women's Health, Lifestyle & Stress Disorders",
-    registration: "State Homoeopathic Council • Reg. No. Verified on file",
     highlights: [
       "Compassionate, unhurried patient listening",
-      "Gentle non-suppressive constitutional remedies",
+      "Individualized constitutional care & lifestyle support",
       "Holistic approach integrating diet & wellness"
     ]
   }
@@ -49,7 +47,7 @@ const doctors = [
       <line x1="12" y1="8" x2="12" y2="12"></line>
       <line x1="12" y1="16" x2="12.01" y2="16"></line>
     </svg>
-    <span><strong>Practitioner Notice:</strong> Formal university degrees (B.H.M.S.) and council registrations verified on file. Individualized homeopathic medical practice in Rajsamand, Rajasthan.</span>
+    <span><strong>Practitioner Notice:</strong> Qualified homeopathic physicians (B.H.M.S.) practicing individualized constitutional homeopathy in Rajsamand, Rajasthan.</span>
   </div>
 
   <!-- Two-Doctor Side-by-Side Team Grid -->
@@ -113,8 +111,8 @@ const doctors = [
                 <span class="cred-val">Bachelor of Homoeopathic Medicine &amp; Surgery (B.H.M.S.)</span>
               </div>
               <div class="cred-row">
-                <span class="cred-label">Registration:</span>
-                <span class="cred-val">{doc.registration}</span>
+                <span class="cred-label">Modality:</span>
+                <span class="cred-val">In-Clinic (Rajsamand) &amp; Online Consultations</span>
               </div>
               <div class="cred-row">
                 <span class="cred-label">Focus Areas:</span>
