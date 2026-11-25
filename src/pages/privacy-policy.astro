@@ -271,4 +271,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-beige);
   }
+
+  @media (max-width: 600px) {
+    .privacy-card {
+      padding: 1.25rem 1.15rem;
+    }
+
+    .policy-block ul {
+      margin-left: 1rem;
+    }
+
+    .policy-footer-nav {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .policy-footer-nav .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
 </style>

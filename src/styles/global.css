@@ -584,6 +584,37 @@ textarea.form-control {
   }
 }
 
+/* Mobile Layout Tuning (< 600px) */
+@media (max-width: 600px) {
+  .section-padding {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .section-padding-sm {
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .section-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .card-editorial {
+    padding: 1.25rem 1.15rem;
+  }
+
+  .form-control,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
 @media (min-width: 992px) {
   .hide-on-desktop {
     display: none !important;

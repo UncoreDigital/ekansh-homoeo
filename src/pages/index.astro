@@ -628,6 +628,55 @@ const homeFAQs = [
     }
   }
 
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 2.25rem 0 2rem;
+    }
+
+    .hero-heading {
+      font-size: clamp(1.75rem, 6.5vw, 2.2rem);
+    }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-lead {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      margin-bottom: 1.35rem;
+    }
+
+    .hero-cta-group {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-cta-group .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-trust-bar {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      padding-top: 1rem;
+    }
+
+    .floating-timing-card {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      margin: 0.75rem;
+      padding: 0.65rem 0.85rem;
+    }
+  }
+
   .hero-eyebrow-wrap {
     display: flex;
     align-items: center;
@@ -1087,6 +1136,33 @@ const homeFAQs = [
     color: var(--color-sage-light);
   }
 
+  @media (max-width: 768px) {
+    .forest-cta-section {
+      padding: 2.75rem 0;
+    }
+
+    .cta-heading {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.75rem;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .cta-reassurance {
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: center;
+    }
+  }
+
   /* Contact Preview & Map */
   .contact-preview-grid {
     display: grid;
@@ -1097,6 +1173,46 @@ const homeFAQs = [
   @media (max-width: 900px) {
     .contact-preview-grid {
       grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .contact-info-card {
+      padding: 1.35rem 1.15rem;
+      gap: 1.25rem;
+      justify-content: flex-start;
+      height: auto;
+    }
+
+    .direct-contact-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: 0.65rem;
+    }
+
+    .direct-contact-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .map-img-container {
+      min-height: 240px;
+      height: 240px;
+    }
+
+    .map-floating-pill {
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      padding: 0.6rem 0.75rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: stretch;
+      text-align: center;
+    }
+
+    .map-floating-pill .btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 

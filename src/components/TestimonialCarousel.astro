@@ -257,6 +257,8 @@ const testimonials = [
     flex-grow: 1;
     position: relative;
     z-index: 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .testimonial-footer {
@@ -400,6 +402,33 @@ const testimonials = [
     .testimonial-card {
       min-height: 380px;
       padding: 1.25rem 1rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .carousel-outer-wrapper {
+      padding: 0 1.85rem;
+    }
+
+    .carousel-nav-btn {
+      width: 28px;
+      height: 28px;
+    }
+
+    .carousel-nav-btn svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .testimonial-swiper,
+    .testimonial-card {
+      min-height: 400px;
+      padding: 1.15rem 0.85rem;
+    }
+
+    .testimonial-quote {
+      font-size: 0.9375rem;
+      line-height: 1.55;
     }
   }
 </style>

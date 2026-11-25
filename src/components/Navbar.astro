@@ -27,7 +27,8 @@ const navLinks = [
           <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
           <circle cx="12" cy="10" r="3"></circle>
         </svg>
-        <span>Near Vijay Travels, Kankroli, Rajsamand • In-Clinic &amp; Online Tele-Consultations</span>
+        <span class="location-full hide-on-mobile">Near Vijay Travels, Kankroli, Rajsamand • In-Clinic &amp; Online Tele-Consultations</span>
+        <span class="location-short hide-on-desktop">Kankroli, Rajsamand</span>
       </span>
 
       <!-- Clinic Timings -->
@@ -51,9 +52,9 @@ const navLinks = [
           <span class="phone-text">9799988138</span>
         </a>
 
-        <span class="phone-divider" aria-hidden="true">|</span>
+        <span class="phone-divider hide-on-mobile" aria-hidden="true">|</span>
 
-        <a href="tel:+919521646525" class="top-bar-link"
+        <a href="tel:+919521646525" class="top-bar-link hide-on-mobile"
           aria-label="Call clinic at +91 9521646525">
           <svg class="top-icon" viewBox="0 0 24 24" width="14" height="14"
             fill="none" stroke="currentColor" stroke-width="2">
@@ -339,9 +340,11 @@ const navLinks = [
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 42px;
-    height: 42px;
-    padding: 9px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
     border-radius: var(--radius-sm);
     background-color: var(--color-white);
     border: 1px solid var(--color-beige);
@@ -539,39 +542,86 @@ const navLinks = [
 
 /* Mobile layout */
 @media (max-width: 767px) {
+  .top-announcement-bar {
+    padding: 0.25rem 0;
+  }
+
   .top-bar-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   .top-location {
-    width: 100%;
-    align-items: flex-start;
-    font-size: 13px;
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .top-location .top-icon {
     flex-shrink: 0;
-    margin-top: 3px;
+    margin-top: 0;
+  }
+
+  .location-short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.72rem;
   }
 
   .top-phone-links {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 12px;
-    font-size: 13px;
+    flex-shrink: 0;
+    gap: 6px;
+    font-size: 0.72rem;
   }
 
   .top-phone-links .top-icon {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   .top-bar-link {
+    gap: 4px;
+    font-size: 0.72rem;
+  }
+
+  .nav-container {
+    height: 58px;
+  }
+
+  .site-logo-img {
+    height: 38px;
+    max-width: 135px;
+  }
+
+  .mobile-menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .drawer-contact-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .drawer-contact-pill {
+    width: 100%;
   }
 
   .hide-on-mobile {
@@ -605,9 +655,10 @@ const navLinks = [
       document.body.style.overflow = '';
     }
 
-    toggleBtn.addEventListener('click', openMenu);
-    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-    overlay.addEventListener('click', closeMenu);
+    // Remove existing listeners if already bound
+    toggleBtn.onclick = openMenu;
+    if (closeBtn) closeBtn.onclick = closeMenu;
+    overlay.onclick = closeMenu;
 
     // Close menu when any drawer link is selected
     drawer.querySelectorAll('a').forEach(link => {
@@ -621,5 +672,10 @@ const navLinks = [
     });
   }
 
-  document.addEventListener('DOMContentLoaded', setupMobileMenu);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileMenu);
+  } else {
+    setupMobileMenu();
+  }
+  document.addEventListener('astro:page-load', setupMobileMenu);
 </script>
