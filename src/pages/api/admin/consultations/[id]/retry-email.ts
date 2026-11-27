@@ -6,7 +6,7 @@ import { getSupabaseServerClient } from '../../../../../lib/supabase';
 import {
   sendPatientAppointmentConfirmation,
   sendPatientAppointmentRejection,
-} from '../../../../../lib/resend';
+} from '../../../../../lib/mailer';
 
 export const POST: APIRoute = async ({ request, params }) => {
   const auth = await verifyAdminRequest(request);
@@ -85,7 +85,7 @@ export const POST: APIRoute = async ({ request, params }) => {
           sentAt: now,
         });
       } else {
-        const errMsg = emailResult.error || 'Failed to dispatch confirmation email via Resend.';
+        const errMsg = emailResult.error || 'Failed to dispatch confirmation email via SMTP.';
         await supabase
           .from('consultation_requests')
           .update({
@@ -127,7 +127,7 @@ export const POST: APIRoute = async ({ request, params }) => {
           sentAt: now,
         });
       } else {
-        const errMsg = emailResult.error || 'Failed to dispatch rejection email via Resend.';
+        const errMsg = emailResult.error || 'Failed to dispatch rejection email via SMTP.';
         await supabase
           .from('consultation_requests')
           .update({

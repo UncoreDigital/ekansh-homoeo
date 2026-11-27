@@ -3,7 +3,7 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { verifyAdminRequest, jsonResponse } from '../../../../../lib/auth';
 import { getSupabaseServerClient } from '../../../../../lib/supabase';
-import { sendPatientAppointmentConfirmation } from '../../../../../lib/resend';
+import { sendPatientAppointmentConfirmation } from '../../../../../lib/mailer';
 import { sanitizeInput } from '../../../../../lib/security';
 
 export const POST: APIRoute = async ({ request, params }) => {
@@ -103,7 +103,7 @@ export const POST: APIRoute = async ({ request, params }) => {
       );
     }
 
-    // 4. Send Confirmation Email to Patient via Resend
+    // 4. Send Confirmation Email to Patient via SMTP
     let emailSent = false;
     let emailError: string | null = null;
 
@@ -133,7 +133,7 @@ export const POST: APIRoute = async ({ request, params }) => {
           })
           .eq('id', id);
       } else {
-        emailError = emailResult.error || 'Failed to dispatch email notification via Resend.';
+        emailError = emailResult.error || 'Failed to dispatch email notification via SMTP.';
         console.warn(`[Accept Email Failed] Record ${id}:`, emailError);
         // Do NOT revert the appointment status; retain 'confirmed' but record error
         await supabase

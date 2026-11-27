@@ -2,7 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { getSupabaseServerClient } from '../../lib/supabase';
-import { sendConsultationNotification } from '../../lib/resend';
+import { sendConsultationNotification } from '../../lib/mailer';
 import {
   checkRateLimit,
   isHoneypotTriggered,
@@ -144,7 +144,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       );
     }
 
-    // 7. Resend Email Notification (Decoupled - fails gracefully without failing client response)
+    // 7. SMTP Email Notification (Decoupled - fails gracefully without failing client response)
     const emailPromise = sendConsultationNotification({
       id: record.id,
       patient_name: patientName,

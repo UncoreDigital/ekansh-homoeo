@@ -2160,7 +2160,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 
         closeModal('acceptModal');
         const emailMsg = data.emailSent
-          ? 'Patient confirmation email dispatched successfully via Resend.'
+          ? 'Patient confirmation email dispatched successfully.'
           : (data.emailError ? `Appointment confirmed, but email could not be sent (${data.emailError}).` : 'Appointment confirmed.');
 
         showBannerAlert(`Appointment accepted! ${emailMsg}`, data.emailSent ? 'success' : 'error');

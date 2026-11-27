@@ -3,7 +3,7 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { verifyAdminRequest, jsonResponse } from '../../../../../lib/auth';
 import { getSupabaseServerClient } from '../../../../../lib/supabase';
-import { sendPatientAppointmentRejection } from '../../../../../lib/resend';
+import { sendPatientAppointmentRejection } from '../../../../../lib/mailer';
 import { sanitizeInput } from '../../../../../lib/security';
 
 export const POST: APIRoute = async ({ request, params }) => {
@@ -74,7 +74,7 @@ export const POST: APIRoute = async ({ request, params }) => {
       return jsonResponse({ success: false, error: `Failed to update consultation status: ${updateError?.message || 'Update failed'}` }, 500);
     }
 
-    // 3. Dispatch Polite Rejection Email to Patient via Resend
+    // 3. Dispatch Polite Rejection Email to Patient via SMTP
     let emailSent = false;
     let emailError: string | null = null;
 
@@ -104,7 +104,7 @@ export const POST: APIRoute = async ({ request, params }) => {
           })
           .eq('id', id);
       } else {
-        emailError = emailResult.error || 'Failed to dispatch rejection email notification via Resend.';
+        emailError = emailResult.error || 'Failed to dispatch rejection email notification via SMTP.';
         console.warn(`[Reject Email Failed] Record ${id}:`, emailError);
         // Do NOT revert the appointment status; retain 'rejected' but record error
         await supabase
